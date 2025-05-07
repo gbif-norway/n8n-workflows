@@ -1,0 +1,538 @@
+{
+  "active": true,
+  "connections": {
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Price calc 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Price calc 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Price calc 1": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Price calc 2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Final prompts": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Final prompts",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Form1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-02-03T22:46:02.929Z",
+  "id": "QGtMbqWIkPRqKIBu",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "AI4Specimen-form",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "chatgpt-4o-latest",
+          "mode": "list",
+          "cachedResultName": "CHATGPT-4O-LATEST"
+        },
+        "text": "={{ $json.prompt1 }}",
+        "inputType": "base64",
+        "binaryPropertyName": "Image",
+        "simplify": false,
+        "options": {
+          "detail": "auto",
+          "maxTokens": 1000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        500,
+        160
+      ],
+      "id": "d9daf9c1-965c-4756-9211-184bf926836e",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "RfetE9SilB3n9Tnz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $('Final prompts').item.json.prompt2 }}",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.choices[0].message.content }}"
+            }
+          ]
+        },
+        "simplify": false,
+        "jsonOutput": true,
+        "options": {
+          "maxTokens": 1000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        940,
+        160
+      ],
+      "id": "84f4ac55-49e5-432d-811b-76b6f1a6d8a9",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "RfetE9SilB3n9Tnz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "41fde564-3d1d-4622-8e56-e78bc3038756",
+              "name": "=price1",
+              "value": "={{((2.50/1000000) * $json.usage.prompt_tokens) + ((10.0/1000000) * $json.usage.completion_tokens) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        740,
+        160
+      ],
+      "id": "330739c6-11e1-4062-b494-6e1e0d972d5a",
+      "name": "Price calc 1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "41fde564-3d1d-4622-8e56-e78bc3038756",
+              "name": "=price2",
+              "value": "={{((2.50/1000000) * $json.usage.prompt_tokens) + ((10.0/1000000) * $json.usage.completion_tokens) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        160
+      ],
+      "id": "741757bf-e473-4892-8b8b-502b77b00f0f",
+      "name": "Price calc 2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "66942a4d-ca15-4df2-a740-81d741757bb1",
+              "name": "prompt1",
+              "value": "={{ $json.prompt1 }}",
+              "type": "string"
+            },
+            {
+              "id": "102e1bb0-4307-4956-8bb0-ca9c3ef3e1ca",
+              "name": "prompt2",
+              "value": "={{ $json.prompt2 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        280,
+        160
+      ],
+      "id": "e1f77378-9ebb-4ba6-b7a8-66cca1876b64",
+      "name": "Final prompts"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "Image",
+        "name": "={{ $json.submittedAt }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "13OqiXW3rIqjOMOpXG9SU1sohLgC_OyL2",
+          "mode": "list",
+          "cachedResultName": "AI4Specimen",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/13OqiXW3rIqjOMOpXG9SU1sohLgC_OyL2"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        740,
+        -220
+      ],
+      "id": "45a10b81-46ef-4cb1-bd0a-a12505c195c0",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "2hEB8jxgNZNm5w5A",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1520,
+        100
+      ],
+      "id": "b590ef63-af39-4060-ae9b-2e7a4c557932",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Done",
+        "completionMessage": "={{ JSON.stringify($('OpenAI1').first().json.choices[0].message.content, null, 2) }}\n\nPrice per 1k: {{ 1000 * ($('Price calc 1').first().json.price1 + $('Price calc 2').first().json.price2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        100
+      ],
+      "id": "c4f78661-fc5b-4df7-a47e-dbb76956f207",
+      "name": "Form1",
+      "webhookId": "201bc316-4463-41ff-b92f-68644aa0088f"
+    },
+    {
+      "parameters": {
+        "formTitle": "AI4Specimen",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Image",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "prompt1",
+              "fieldType": "textarea",
+              "placeholder": "You are and expert biologist who specializes in describing preserved specimen. You have an eye for detail and are able to describe preserved specimens with a great detail. Your job now is to extract all the information from this image of a preserved specimen, and write a short description that would contain all the information available to you from the image. you never assume higher taxonomical levels of a species you see, except of Kingdom. You also transcribe word by word all that available relevant information you found on any labels you see.",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "prompt2",
+              "fieldType": "textarea",
+              "placeholder": "Your job is to standardize the User's report of a preserved specimen into JSON of Darwin core terms. Resulting JSON should have structure like this: {     \"scientificName\": \"Betula nana\",     \"locality\": \"Oslo\",     ... } Only use valid Darwin Core terms to describe the report.",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "name",
+              "placeholder": "Your Name",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -80,
+        160
+      ],
+      "id": "9ace4369-2314-4706-9191-ae6f10f0d2b5",
+      "name": "On form submission",
+      "webhookId": "0f0c7a78-db9b-44f1-871c-cbd537476ff9"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU",
+          "mode": "list",
+          "cachedResultName": "AI4Specimen - prompt evaluation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "message_id": "={{ $('Merge').item.json.name }}",
+            "image": "={{ $('Merge').first().json.webContentLink }}",
+            "prompt1": "={{ $('Final prompts').first().json.prompt1 }}",
+            "prompt2": "={{ $('Final prompts').first().json.prompt2 }}",
+            "price/1k": "={{ 1000 * ($('Price calc 1').first().json.price1 + $('Price calc 2').first().json.price2) }}",
+            "response": "={{ $('OpenAI1').first().json.choices[0].message.content.toJsonString() }}",
+            "pre-response": "={{ $('OpenAI').first().json.choices[0].message.content }}",
+            "name": "={{ $('On form submission').first().json.name }}"
+          },
+          "matchingColumns": [
+            "message_id"
+          ],
+          "schema": [
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "image",
+              "displayName": "image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "prompt1",
+              "displayName": "prompt1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "prompt2",
+              "displayName": "prompt2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "pre-response",
+              "displayName": "pre-response",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "response",
+              "displayName": "response",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "price/1k",
+              "displayName": "price/1k",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "evaluation",
+              "displayName": "evaluation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1820,
+        100
+      ],
+      "id": "7e266968-99d5-45a6-ae05-19f812cf0079",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Oslo",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-04-14T09:32:43.504Z",
+      "updatedAt": "2025-04-14T09:32:43.504Z",
+      "id": "Fh9E3K23MqTlvBaT",
+      "name": "AI4Specimen"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-04-14T12:42:00.840Z",
+  "versionId": "6ec10970-9358-4b89-a739-568f02536044"
+}
