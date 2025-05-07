@@ -521,11 +521,19 @@
     ]
   },
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
   },
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-04-10T17:04:31.495Z",
+      "updatedAt": "2025-04-10T17:04:31.495Z",
+      "id": "CFjXUKUF3jMewkBv",
+      "name": "nin"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-06T19:12:07.970Z",
-  "versionId": "bca4f416-aaea-48ff-80f6-7cd9b5e30086"
+  "updatedAt": "2025-05-07T17:39:05.839Z",
+  "versionId": "c93f226f-4257-4fca-b5d5-3421649faabe"
 }
