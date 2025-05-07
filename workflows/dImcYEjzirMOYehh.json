@@ -1,0 +1,132 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-05-07T21:44:06.999Z",
+  "id": "dImcYEjzirMOYehh",
+  "meta": null,
+  "name": "📩 NIN Telegram trigger",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "*"
+        ],
+        "additionalFields": {
+          "download": true
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -240,
+        -40
+      ],
+      "id": "66ed95f1-14bb-43ce-a508-b619caa344ae",
+      "name": "Telegram Trigger",
+      "webhookId": "cc302fdf-8eea-44b3-84ad-8ed5298362da",
+      "credentials": {
+        "telegramApi": {
+          "id": "F6cLKLq27rPOBung",
+          "name": "Telegram account - NIN helper"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Telegram Trigger": [
+      {
+        "json": {
+          "update_id": 404507842,
+          "callback_query": {
+            "id": "6981299091866745822",
+            "from": {
+              "id": 1625460361,
+              "is_bot": false,
+              "first_name": "Michal",
+              "last_name": "Torma",
+              "language_code": "en"
+            },
+            "message": {
+              "message_id": 560,
+              "from": {
+                "id": 7575108606,
+                "is_bot": true,
+                "first_name": "NIN helper",
+                "username": "nin_helper_bot"
+              },
+              "chat": {
+                "id": 1625460361,
+                "first_name": "Michal",
+                "last_name": "Torma",
+                "type": "private"
+              },
+              "date": 1746647274,
+              "reply_to_message": {
+                "message_id": 559,
+                "from": {
+                  "id": 7575108606,
+                  "is_bot": true,
+                  "first_name": "NIN helper",
+                  "username": "nin_helper_bot"
+                },
+                "chat": {
+                  "id": 1625460361,
+                  "first_name": "Michal",
+                  "last_name": "Torma",
+                  "type": "private"
+                },
+                "date": 1746647255,
+                "edit_date": 1746647257,
+                "text": "Does NA-T (Fastmarkssystemer) fit your site, given it includes terrestrial ecosystems on mineral soil or solid rock? \nReply: Yes"
+              },
+              "text": "Does NA-TK01 (Semi-naturlig eng) fit your site?",
+              "entities": [
+                {
+                  "offset": 5,
+                  "length": 27,
+                  "type": "text_link",
+                  "url": "https://naturinorge.artsdatabanken.no/Naturtype/NA-TK"
+                }
+              ],
+              "link_preview_options": {
+                "is_disabled": true
+              },
+              "reply_markup": {
+                "inline_keyboard": [
+                  [
+                    {
+                      "text": "Yes",
+                      "callback_data": "answer_1"
+                    }
+                  ],
+                  [
+                    {
+                      "text": "No",
+                      "callback_data": "answer_2"
+                    }
+                  ],
+                  [
+                    {
+                      "text": "I don't know.",
+                      "callback_data": "i_don_t_know"
+                    }
+                  ]
+                ]
+              }
+            },
+            "chat_instance": "8945001616945920245",
+            "data": "answer_1"
+          }
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-07T21:45:03.285Z",
+  "versionId": "f24f18bf-f196-4db8-b3a9-994d153ee812"
+}
