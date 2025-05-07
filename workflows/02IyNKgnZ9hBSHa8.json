@@ -1,0 +1,414 @@
+{
+  "active": true,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter1": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Extract main content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract main content": {
+      "main": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres PGVector Store": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-06T11:09:54.588Z",
+  "id": "02IyNKgnZ9hBSHa8",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "🛠️ NIN Load standardized descriptions of Kartleggingsenhet",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        0
+      ],
+      "id": "acee8b2b-19ca-40ee-8a7e-0f55609b2b59",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "5b7650f6-c8d8-4e23-a50e-c544ab52d046",
+      "name": "Embeddings OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        600
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "RfetE9SilB3n9Tnz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $('Extract main content').item.json.data }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "Kode",
+                "value": "={{ $('Google Sheets').item.json.Kode }}"
+              },
+              {
+                "name": "Langkode",
+                "value": "={{ $('Google Sheets').item.json.Langkode }}"
+              },
+              {
+                "name": "=Navn",
+                "value": "={{ $('Google Sheets').item.json.Navn }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "4b911f9a-92f6-42b2-b1db-5630996ae5ed",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": "nin3_kle_descriptions",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        20
+      ],
+      "id": "47c525bc-bf2e-4a66-bb28-ef9ca3a77025",
+      "name": "Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "chunkSize": 2000,
+        "chunkOverlap": 200,
+        "options": {
+          "splitCode": "markdown"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        620
+      ],
+      "id": "3b900e83-0740-4bae-b571-3cffd9c19b48",
+      "name": "Recursive Character Text Splitter1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k",
+          "mode": "list",
+          "cachedResultName": "nin3_0",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 809164879,
+          "mode": "list",
+          "cachedResultName": "KLE_M005",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k/edit#gid=809164879"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        40,
+        0
+      ],
+      "id": "a3e044e2-1ef1-4cba-a645-45997efe057d",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://naturinorge.artsdatabanken.no/{{ $json.Langkode }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1060,
+        20
+      ],
+      "id": "70d8f7f9-5613-47c8-801d-9a22ef502119",
+      "name": "HTTP Request",
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "data",
+              "cssSelector": "main[role=\"main\"]"
+            }
+          ]
+        },
+        "options": {
+          "trimValues": true,
+          "cleanUpText": true
+        }
+      },
+      "id": "b15c0200-da35-49cc-91ff-4b542c31e17e",
+      "name": "Extract main content",
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1300,
+        20
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "batchSize": 10,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        660,
+        0
+      ],
+      "id": "5a3e33c4-41a0-4f21-ae82-e83bfa4dc621",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2100,
+        20
+      ],
+      "id": "43a52acf-5e76-4846-bd1d-e2860ec3ddd1",
+      "name": "Wait",
+      "webhookId": "9ea942e1-5914-4ad9-b73b-9301bf8ea426"
+    },
+    {
+      "parameters": {
+        "path": "b07430e0-30d1-4f94-823a-fe049729098a",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        240
+      ],
+      "id": "c8944330-a0e9-4bb2-9cca-0c82406ab13e",
+      "name": "Webhook",
+      "webhookId": "b07430e0-30d1-4f94-823a-fe049729098a"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8aaf0e57-b7e6-4f60-ae83-8aadfe4e161e",
+              "leftValue": "={{ $json.Langkode }}",
+              "rightValue": "NA-",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        260,
+        0
+      ],
+      "id": "a7a6a7c2-7cac-4fb3-8453-560fc3c13119",
+      "name": "Filter"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-04-10T17:04:31.495Z",
+      "updatedAt": "2025-04-10T17:04:31.495Z",
+      "id": "CFjXUKUF3jMewkBv",
+      "name": "nin"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-06T13:41:54.486Z",
+  "versionId": "984d706b-d24b-4a50-a1a4-48781695af4a"
+}
