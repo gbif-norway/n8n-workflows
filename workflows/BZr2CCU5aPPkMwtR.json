@@ -1,0 +1,1067 @@
+{
+  "active": false,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Price calc 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Price calc 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Price calc 1": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Price calc 2": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Set def prompt1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set prompt1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set all prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set def prompt1": {
+      "main": [
+        [
+          {
+            "node": "Set def prompt2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set def prompt2": {
+      "main": [
+        [
+          {
+            "node": "Final prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        []
+      ]
+    },
+    "Final prompts": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set prompt1": {
+      "main": [
+        [
+          {
+            "node": "Set def prompt2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set all prompts": {
+      "main": [
+        [
+          {
+            "node": "Final prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-02-03T15:25:14.684Z",
+  "id": "BZr2CCU5aPPkMwtR",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "AI4Specimen",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "download": true,
+          "imageSize": "large"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -640,
+        260
+      ],
+      "id": "e3c365d1-9c81-4640-b2fc-f020f4d31a1b",
+      "name": "Telegram Trigger",
+      "webhookId": "963107f6-1f61-4ebd-b96d-4fe4c2aef4a6",
+      "credentials": {
+        "telegramApi": {
+          "id": "C8DajaR9ybr5tbkp",
+          "name": "Telegram account AI4Specimen"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "chatgpt-4o-latest",
+          "mode": "list",
+          "cachedResultName": "CHATGPT-4O-LATEST"
+        },
+        "text": "={{ $json.prompt1 }}",
+        "inputType": "base64",
+        "simplify": false,
+        "options": {
+          "detail": "auto",
+          "maxTokens": 1000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1140,
+        400
+      ],
+      "id": "262f6d64-c835-42b6-89b7-2ba63bbc48ac",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "RfetE9SilB3n9Tnz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $('Final prompts').item.json.prompt2 }}",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.choices[0].message.content }}"
+            }
+          ]
+        },
+        "simplify": false,
+        "jsonOutput": true,
+        "options": {
+          "maxTokens": 1000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1580,
+        400
+      ],
+      "id": "a84418ea-57c3-48a0-9733-dac10682ad99",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "RfetE9SilB3n9Tnz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
+        "text": "={{ JSON.stringify(JSON.parse($('OpenAI1').item.json.choices[0].message.content.toJsonString()), null, 2) }}\n\nPer 1k spec:\n${{ 1000 * ($('Price calc 1').item.json.price1 + $('Price calc 2').item.json.price2) }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "reply_to_message_id": "={{ $('Telegram Trigger').first().json.message.message_id }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2140,
+        400
+      ],
+      "id": "ab0e333f-da62-4940-9a37-73f406a736ca",
+      "name": "Telegram1",
+      "webhookId": "48f03bb4-3273-44e1-8fc2-f2e3dca853fe",
+      "credentials": {
+        "telegramApi": {
+          "id": "C8DajaR9ybr5tbkp",
+          "name": "Telegram account AI4Specimen"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "41fde564-3d1d-4622-8e56-e78bc3038756",
+              "name": "=price1",
+              "value": "={{((2.50/1000000) * $json.usage.prompt_tokens) + ((10.0/1000000) * $json.usage.completion_tokens) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1380,
+        400
+      ],
+      "id": "1dd860a1-476a-4699-a528-8cc86693d27b",
+      "name": "Price calc 1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "41fde564-3d1d-4622-8e56-e78bc3038756",
+              "name": "=price2",
+              "value": "={{((2.50/1000000) * $json.usage.prompt_tokens) + ((10.0/1000000) * $json.usage.completion_tokens) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1920,
+        400
+      ],
+      "id": "abb8f3b8-c9e1-4dcc-a462-91c20db87d48",
+      "name": "Price calc 2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c0f03ac5-fb75-4e9b-b086-1884a4c4456c",
+              "leftValue": "={{ $json.message.photo.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -420,
+        260
+      ],
+      "id": "64951941-8cc1-465e-8cf7-4db2518184cc",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "Please provide an image to test AI4Specimen pipeline",
+        "additionalFields": {
+          "appendAttribution": false,
+          "reply_to_message_id": "={{ $json.message.message_id }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        100,
+        840
+      ],
+      "id": "faa8c8df-4d78-4a29-bc91-1d0d58a56308",
+      "name": "Telegram",
+      "webhookId": "a0c11751-fa13-4ed6-b069-1c533c120081",
+      "credentials": {
+        "telegramApi": {
+          "id": "C8DajaR9ybr5tbkp",
+          "name": "Telegram account AI4Specimen"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e9ee8b28-f77f-45dc-ad16-1cbd66df6e7f",
+                    "leftValue": "={{ $('Telegram Trigger').item.json.message.keys().includes('caption') }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "false",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "default prompts"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "328bf34b-8fae-45fb-b79d-4fe8139a76f3",
+                    "leftValue": "={{ $('Telegram Trigger').item.json.message.caption }}",
+                    "rightValue": "---",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notContains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "one prompt"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Telegram Trigger').item.json.message.caption }}",
+                    "rightValue": "---",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "two prompts"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        240,
+        160
+      ],
+      "id": "c8fd67ea-fa24-4f5e-9691-0223527119de",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "376f7565-9c5a-4467-8dc2-d4bb849da7ad",
+              "name": "prompt2",
+              "value": "Your job is to standardize the User's report of a preserved specimen into JSON of Darwin core terms. Resulting JSON should have structure like this: {     \"scientificName\": \"Betula nana\",     \"locality\": \"Oslo\",     ... } Only use valid Darwin Core terms to describe the report.",
+              "type": "string"
+            },
+            {
+              "id": "9431ba5e-5397-4044-9761-b77273ac60fa",
+              "name": "prompt1",
+              "value": "={{ $json.prompt1 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        720,
+        140
+      ],
+      "id": "52eb960f-3334-446b-9b5b-cd80feb4b98b",
+      "name": "Set def prompt2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a4e7616e-bea4-4252-8771-35702dd2f94a",
+              "name": "prompt1",
+              "value": "You are and expert biologist who specializes in describing preserved specimen. You have an eye for detail and are able to describe preserved specimens with a great detail. Your job now is to extract all the information from this image of a preserved specimen, and write a short description that would contain all the information available to you from the image. you never assume higher taxonomical levels of a species you see, except of Kingdom. You also transcribe word by word all that available relevant information you found on any labels you see.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        520,
+        -40
+      ],
+      "id": "e3c887d7-f4c9-4762-9d41-df2c9e04d2de",
+      "name": "Set def prompt1"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU",
+          "mode": "list",
+          "cachedResultName": "AI4Specimen - prompt evaluation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "message_id": "={{ $('Merge').last().json.result.message_id }}",
+            "image": "={{ $('Merge').first().json.webContentLink }}",
+            "prompt1": "={{ $('Final prompts').first().json.prompt1 }}",
+            "prompt2": "={{ $('Final prompts').first().json.prompt2 }}",
+            "price/1k": "={{ 1000 * ($('Price calc 1').first().json.price1 + $('Price calc 2').first().json.price2) }}",
+            "response": "={{ $('OpenAI1').first().json.choices[0].message.content.toJsonString() }}",
+            "pre-response": "={{ $('OpenAI').first().json.choices[0].message.content }}"
+          },
+          "matchingColumns": [
+            "message_id"
+          ],
+          "schema": [
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "image",
+              "displayName": "image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "prompt1",
+              "displayName": "prompt1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "prompt2",
+              "displayName": "prompt2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "pre-response",
+              "displayName": "pre-response",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "response",
+              "displayName": "response",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "price/1k",
+              "displayName": "price/1k",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "evaluation",
+              "displayName": "evaluation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2720,
+        380
+      ],
+      "id": "9e9bda36-1932-4a4e-86d1-6a18e277fdba",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "66942a4d-ca15-4df2-a740-81d741757bb1",
+              "name": "prompt1",
+              "value": "={{ $json.prompt1 }}",
+              "type": "string"
+            },
+            {
+              "id": "102e1bb0-4307-4956-8bb0-ca9c3ef3e1ca",
+              "name": "prompt2",
+              "value": "={{ $json.prompt2 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        920,
+        400
+      ],
+      "id": "2eecbbee-6fe1-43ae-bdbe-4c850abb40ed",
+      "name": "Final prompts"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "637e4048-2646-48df-bc7d-198e8808b2c6",
+              "name": "prompt1",
+              "value": "aaaa",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        520,
+        140
+      ],
+      "id": "c84d26f7-0372-4e84-ac41-15020f60a34d",
+      "name": "Set prompt1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7362bb1-8dd8-49c4-81b3-7d09b01ee073",
+              "name": "prompt1",
+              "value": "={{ $('Telegram Trigger').item.json.message.caption.split('---')[0].trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "49f27676-b080-4016-a974-2e99811dabe9",
+              "name": "prompt2",
+              "value": "={{ $('Telegram Trigger').item.json.message.caption.split('---')[1].trim() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        520,
+        380
+      ],
+      "id": "67f0dcb4-f055-4d3f-9312-b56114d2d828",
+      "name": "Set all prompts"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f967948e-2130-48e4-8b46-f8ac93f4de8d",
+              "leftValue": "={{ $('Telegram Trigger').item.json.message.keys() }}",
+              "rightValue": "reply_to_message",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -140,
+        540
+      ],
+      "id": "92ba4a0d-9a82-496a-b497-393f3a1439b7",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU",
+          "mode": "list",
+          "cachedResultName": "AI4Specimen - prompt evaluation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "message_id": "={{ $json.message.reply_to_message.message_id }}",
+            "evaluation": "={{ $json.message.text }}"
+          },
+          "matchingColumns": [
+            "message_id"
+          ],
+          "schema": [
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "image",
+              "displayName": "image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt1",
+              "displayName": "prompt1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt2",
+              "displayName": "prompt2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response",
+              "displayName": "response",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "price/1k",
+              "displayName": "price/1k",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "evaluation",
+              "displayName": "evaluation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        80,
+        440
+      ],
+      "id": "f1f50c6a-f3e0-409d-acf6-fe4956cbe5bd",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "={{ $json.message.message_id }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "13OqiXW3rIqjOMOpXG9SU1sohLgC_OyL2",
+          "mode": "list",
+          "cachedResultName": "AI4Specimen",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/13OqiXW3rIqjOMOpXG9SU1sohLgC_OyL2"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        960,
+        -780
+      ],
+      "id": "0fc5350f-f0d5-4f26-bb94-863691a972da",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "2hEB8jxgNZNm5w5A",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2400,
+        380
+      ],
+      "id": "41278f2d-0d0a-45c7-b38a-e0dbb63c2e97",
+      "name": "Merge"
+    }
+  ],
+  "pinData": {
+    "Telegram Trigger": [
+      {
+        "json": {
+          "update_id": 19474230,
+          "message": {
+            "message_id": 56,
+            "from": {
+              "id": 1625460361,
+              "is_bot": false,
+              "first_name": "Michal",
+              "last_name": "Torma",
+              "language_code": "en"
+            },
+            "chat": {
+              "id": 1625460361,
+              "first_name": "Michal",
+              "last_name": "Torma",
+              "type": "private"
+            },
+            "date": 1738614769,
+            "photo": [
+              {
+                "file_id": "AgACAgQAAxkBAAMSZ6Dh68iR_ISpORKCjzct1xmHVP8AAoTKMRsFoQlRab6AG1GOuk8BAAMCAANzAAM2BA",
+                "file_unique_id": "AQADhMoxGwWhCVF4",
+                "file_size": 1728,
+                "width": 90,
+                "height": 67
+              },
+              {
+                "file_id": "AgACAgQAAxkBAAMSZ6Dh68iR_ISpORKCjzct1xmHVP8AAoTKMRsFoQlRab6AG1GOuk8BAAMCAANtAAM2BA",
+                "file_unique_id": "AQADhMoxGwWhCVFy",
+                "file_size": 21670,
+                "width": 320,
+                "height": 240
+              },
+              {
+                "file_id": "AgACAgQAAxkBAAMSZ6Dh68iR_ISpORKCjzct1xmHVP8AAoTKMRsFoQlRab6AG1GOuk8BAAMCAAN4AAM2BA",
+                "file_unique_id": "AQADhMoxGwWhCVF9",
+                "file_size": 52255,
+                "width": 650,
+                "height": 488
+              }
+            ],
+            "caption": "Describe what's on this image---Standardize the info into valid JSON"
+          }
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Oslo",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-02-04T12:32:30.838Z",
+  "versionId": "38f9d0d2-d2e5-4960-9f82-f9b085b4c946"
+}
