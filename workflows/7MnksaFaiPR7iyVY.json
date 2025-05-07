@@ -1,0 +1,329 @@
+{
+  "active": true,
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "n8n": {
+      "main": [
+        [
+          {
+            "node": "active && no error handler set && not this  handler workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get error handler": {
+      "main": [
+        [
+          {
+            "node": "n8n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set fields": {
+      "main": [
+        [
+          {
+            "node": "n8n | update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "get error handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "active && no error handler set && not this  handler workflow": {
+      "main": [
+        [
+          {
+            "node": "set fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-02-03T23:38:36.515Z",
+  "id": "7MnksaFaiPR7iyVY",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Error handler",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "5a9ab5cb-0afa-4b1a-bb3e-f342a8b76c97",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "position": [
+        60,
+        400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "id": "9c9f8906-939d-4af7-a100-e268469d77c3",
+      "name": "n8n",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        520,
+        60
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "n8nApi": {
+          "id": "IX11E2kdkwSeXwGL",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "requestOptions": {}
+      },
+      "id": "ee049181-6c52-417f-950c-157630ca3a90",
+      "name": "get error handler",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        280,
+        60
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "n8nApi": {
+          "id": "IX11E2kdkwSeXwGL",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.id }}"
+        },
+        "workflowObject": "={{ JSON.stringify($json) }}",
+        "requestOptions": {}
+      },
+      "id": "fef5e681-c79b-468c-8094-a0441e1c5e6e",
+      "name": "n8n | update",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        1120,
+        60
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "n8nApi": {
+          "id": "IX11E2kdkwSeXwGL",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const data = $json\n\ndata.settings.errorWorkflow = $('get error handler').item.json.id ;\ndelete data.settings.callerPolicy;\n\nreturn {\n  id: data.id,\n  name: data.name,\n  nodes: data.nodes,\n  connections: data.connections,\n  settings: data.settings\n}"
+      },
+      "id": "b8e9fcdb-e98f-47f2-b27c-67d0884996e4",
+      "name": "set fields",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        920,
+        60
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "content": "## Default Error Handler\n\nUpdate this to your preferred notification mechanism",
+        "height": 308.64949804469416,
+        "width": 483.4744075807993
+      },
+      "id": "3d7c17da-72fc-42c0-b6dc-aeadae928a34",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        280
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "get ID of self",
+        "height": 216.67545344104974,
+        "width": 232.91556831986873
+      },
+      "id": "9e4caa5e-eaad-43a7-9c38-3ac39aaa89f8",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        360,
+        140
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "id": "a705961e-02a2-46b2-b39e-1b7970ff0a6e",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        60,
+        60
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "content": "Runs every day at midnight to update new workflows",
+        "height": 219.7116384468202,
+        "width": 214.6984582852457
+      },
+      "id": "5fccaa00-a441-4932-894a-56e3ed020f6e",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "290fd302-4e2d-44d6-8a8a-14a0b8f2c360",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.settings.errorWorkflow }}",
+              "rightValue": "=Default Error Handler"
+            },
+            {
+              "id": "2a5799e9-2030-4281-bf11-e7f9777906c5",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              },
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "={{ $('get error handler').item.json.id }}"
+            },
+            {
+              "id": "8bc4c2a0-e094-4426-8ae6-71b6e4fa9842",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.active }}",
+              "rightValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dc68c49e-bbd5-4acc-a205-dd2bc191822c",
+      "name": "active && no error handler set && not this  handler workflow",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        720,
+        60
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "qOFpCaIBhvwBEqNt",
+          "mode": "list",
+          "cachedResultName": "Contact admin"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        280,
+        400
+      ],
+      "id": "6300fc1b-121a-4c28-98f4-08232f3acb75",
+      "name": "Execute Workflow"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-07T15:03:56.585Z",
+  "versionId": "dcdb0564-9efe-4961-9b91-03cc5abe8390"
+}
