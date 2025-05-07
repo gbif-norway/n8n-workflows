@@ -1,0 +1,531 @@
+{
+  "active": true,
+  "connections": {
+    "Hovedtypegruppe": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "KLE_M005": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Grunntype": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Hovedtype": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Extract main content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract main content": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Hovedtypegruppe",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "KLE_M005",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Grunntype",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Hovedtype",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-06T18:49:33.114Z",
+  "id": "suG9KFj4MDozTlJh",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "🛠️ Load Data to nin_docs",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k",
+          "mode": "list",
+          "cachedResultName": "nin3_0",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 368344522,
+          "mode": "list",
+          "cachedResultName": "Hovedtype",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k/edit#gid=368344522"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        220,
+        220
+      ],
+      "id": "2d70a14b-5669-46e4-bd7c-b5e02604314f",
+      "name": "Hovedtype",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k",
+          "mode": "list",
+          "cachedResultName": "nin3_0",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1805693073,
+          "mode": "list",
+          "cachedResultName": "Grunntype",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k/edit#gid=1805693073"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        220,
+        40
+      ],
+      "id": "e1f60f7e-040e-4a6d-ba90-b132987c129a",
+      "name": "Grunntype",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k",
+          "mode": "list",
+          "cachedResultName": "nin3_0",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 809164879,
+          "mode": "list",
+          "cachedResultName": "KLE_M005",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k/edit#gid=809164879"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        220,
+        -120
+      ],
+      "id": "fa138f73-a29c-4298-bce3-140bfd0443be",
+      "name": "KLE_M005",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k",
+          "mode": "list",
+          "cachedResultName": "nin3_0",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 142379052,
+          "mode": "list",
+          "cachedResultName": "Hovedtypegruppe",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wXBpsTC386DrKqyN3LM3CBVAhK2KvfqEUxRY5msK83k/edit#gid=142379052"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        220,
+        -280
+      ],
+      "id": "894beec2-c697-4514-8094-26ebb0f7e016",
+      "name": "Hovedtypegruppe",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        640,
+        -100
+      ],
+      "id": "06938721-5b2a-45e1-8eed-458ca008d42c",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "batchSize": 10,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1440,
+        -100
+      ],
+      "id": "2e5c1422-a3b5-4dd0-a203-f926ff6fd987",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "url": "=https://naturinorge.artsdatabanken.no/{{ $json.Langkode }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        -60
+      ],
+      "id": "ebc710e2-cf0c-40ba-bf5f-43ac3629bafc",
+      "name": "HTTP Request",
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "data",
+              "cssSelector": "main[role=\"main\"]"
+            }
+          ]
+        },
+        "options": {
+          "trimValues": true,
+          "cleanUpText": true
+        }
+      },
+      "id": "1014b7ac-f1e1-4db4-ade2-db0789828d0c",
+      "name": "Extract main content",
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1940,
+        -60
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "nin_docs",
+          "mode": "list",
+          "cachedResultName": "nin_docs"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Langkode": "={{ $('Loop Over Items').item.json.Langkode }}",
+            "docs": "={{ $json.data }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Langkode",
+              "displayName": "Langkode",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "docs",
+              "displayName": "docs",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2560,
+        -80
+      ],
+      "id": "741bbef6-be09-4aca-8439-3a974ab3245d",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "fc49eeec-eeb4-4db5-a7d3-33251793f922",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        0
+      ],
+      "id": "32a5fed0-fc9b-4d6d-8f90-440a42da090a",
+      "name": "Webhook",
+      "webhookId": "fc49eeec-eeb4-4db5-a7d3-33251793f922"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6f451794-5787-4fca-8d75-530fab8dbe8c",
+              "leftValue": "={{ $json.keys() }}",
+              "rightValue": "data",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2160,
+        -60
+      ],
+      "id": "79ec4205-b0b8-4a47-b6dd-71d24343d306",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "amount": 0.14
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2780,
+        -80
+      ],
+      "id": "6517d80f-00d5-4cb5-9a50-37ebed9c726f",
+      "name": "Wait",
+      "webhookId": "770adc0a-0d7f-4326-822b-9770cafb6025"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.svc.gbif.no",
+            "x-request-id": "c6e9e77944ac7ac7fedd533313de7807",
+            "x-real-ip": "10.110.0.21",
+            "x-forwarded-for": "10.110.0.21",
+            "x-forwarded-host": "n8n.svc.gbif.no",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-scheme": "https",
+            "x-scheme": "https",
+            "sec-ch-ua": "\"Not(A:Brand\";v=\"99\", \"Opera\";v=\"118\", \"Chromium\";v=\"133\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"macOS\"",
+            "upgrade-insecure-requests": "1",
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 OPR/118.0.0.0",
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+            "sec-fetch-site": "none",
+            "sec-fetch-mode": "navigate",
+            "sec-fetch-user": "?1",
+            "sec-fetch-dest": "document",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "en-US,en;q=0.9",
+            "priority": "u=0, i",
+            "cookie": "rl_page_init_referrer=RudderEncrypt%3AU2FsdGVkX1%2BWduwdZv97%2BdM9cabXTEKE38uwkNEDE2E%3D; rl_page_init_referring_domain=RudderEncrypt%3AU2FsdGVkX1%2B6PzACWFOBrL4lxAep2jc98e%2FGmrvEkGE%3D; n8n-auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkZjE3ZjcxLWQ4MDItNDlmOS1hYjgyLTc1Mzk5ZTkxOWZiMiIsImhhc2giOiJMVU5ySlVMaklCIiwiYnJvd3NlcklkIjoiMEpNQVpiUWJXWFMvU0U3SGVqZDRCVGJucWZtb2hNdC9ZWFBwVExNQXhaQT0iLCJpYXQiOjE3NDY0NTU4MzYsImV4cCI6MTc0NzA2MDYzNn0.W5umpQMsMsdx7W_tDY1ubo3u09nO6cHphGDxjO_LN3c; rl_anonymous_id=RudderEncrypt%3AU2FsdGVkX1%2FDnH8lRiV6GE1rvMQ9YtoWhrsrZA%2FERJELeo2NFmfDk62F09SmyA%2FKt1x56qXn4UUmweUNbsK70g%3D%3D; rl_user_id=RudderEncrypt%3AU2FsdGVkX1%2FE4DMfSfjQBiP3NVft0IJGTrHZJnSilOwLpPNMOWYNbdKcfnWwPrQMTAC%2B4H1E84EiuBXvTUK5pQabV3%2BnOBwmU4l%2FCO4Qx%2F7NGlc%2BMliadYY1yxlvGt1g8SAvXOKRmgcendF7uTL%2FwFNXP9jLJL4i5QZo7hZaYqo%3D; rl_trait=RudderEncrypt%3AU2FsdGVkX1%2BeSsh0wt6L%2Bf%2FjCz%2B85XJkaPXj6UMflGhfg2lfAkRLcypALOGTeVjDSmjh04zGpWJo1VOe2XfMPlq7tiJv5PystZ0I8QGBaaFJQsoxIQ70ZcuakeCAb36o4Cw7YDMcwBEOU6IasbxqlA%3D%3D; ph_phc_4URIAm1uYfJO7j8kWSe0J8lc8IqnstRLS7Jx8NcakHo_posthog=%7B%22distinct_id%22%3A%22ffdf041b0199aad7cd85ce0ab1c2fb73b851bc069268920f232027703086b2f2%23fdf17f71-d802-49f9-ab82-75399e919fb2%22%2C%22%24sesid%22%3A%5B1746558258860%2C%220196a6ee-b0f6-728c-b9d2-c21c9a2c0d02%22%2C1746557382902%5D%2C%22%24epp%22%3Atrue%2C%22%24initial_person_info%22%3A%7B%22r%22%3A%22%24direct%22%2C%22u%22%3A%22https%3A%2F%2Fn8n.svc.gbif.no%2Fsetup%22%7D%7D; rl_session=RudderEncrypt%3AU2FsdGVkX1%2B6evmfr5HKrbkyby2fHYSKEhgzRh%2B4GhYgub4iX%2FEGLtuXNYWG5zk0Lc9v1ymaH%2BIOTH5CrIduYtCf%2BqvnX9WOBx%2Bx7mBCS78%2B1lH%2F1X2hMARsFS4AzmhzawRV4%2FF7jvVY80bwU8xF%2FA%3D%3D"
+          },
+          "params": {},
+          "query": {},
+          "body": {},
+          "webhookUrl": "https://n8n.svc.gbif.no/webhook/fc49eeec-eeb4-4db5-a7d3-33251793f922",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-06T19:12:07.970Z",
+  "versionId": "bca4f416-aaea-48ff-80f6-7cd9b5e30086"
+}
