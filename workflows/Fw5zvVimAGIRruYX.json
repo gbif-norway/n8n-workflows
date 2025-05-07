@@ -556,7 +556,7 @@
           ]
         },
         "options": {
-          "systemPromptTemplate": "=Task:\nFor any given user input, first decide whether the input is actually a question.\n\t•\tIf the input is not a question, set is_question to false and ignore the rest\n\t•\tIf the input is a question, rewrite it as a question that can be answered with exactly two mutually-exclusive options (e.g., “yes or no,” “Option A or Option B,” etc.).\n\t•\tPreserve the details in the question including http links in markdown.\n\t•\tIf there are any comments about improvments, put them in comments"
+          "systemPromptTemplate": "=Task:\nFor any given user input, first decide whether the input is actually a question.\n    •\tIf there are any comments about improvments, put them in comments\n\t•\tIf the input is not a question, set is_question to false and ignore the rest\n\t•\tIf the input is a question, rewrite it as a question that can be answered with exactly two mutually-exclusive options (e.g., “yes or no,” “Option A or Option B,” etc.).\n\t•\tPreserve the details in the question including http links in markdown."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.informationExtractor",
@@ -1271,15 +1271,30 @@
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "7MnksaFaiPR7iyVY",
+          "value": "qOFpCaIBhvwBEqNt",
           "mode": "list",
-          "cachedResultName": "Error handler"
+          "cachedResultName": "Contact admin"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
-          "value": {},
-          "matchingColumns": [],
-          "schema": [],
+          "value": {
+            "message": "={{ $('If').item.json.output.comment }}"
+          },
+          "matchingColumns": [
+            "message"
+          ],
+          "schema": [
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
           "attemptToConvertTypes": false,
           "convertFieldsToString": true
         },
@@ -1301,9 +1316,9 @@
     "Telegram Trigger": [
       {
         "json": {
-          "update_id": 404507797,
+          "update_id": 404507819,
           "callback_query": {
-            "id": "6981299092881220858",
+            "id": "6981299091563321412",
             "from": {
               "id": 1625460361,
               "is_bot": false,
@@ -1312,7 +1327,7 @@
               "language_code": "en"
             },
             "message": {
-              "message_id": 502,
+              "message_id": 529,
               "from": {
                 "id": 7575108606,
                 "is_bot": true,
@@ -1325,9 +1340,9 @@
                 "last_name": "Torma",
                 "type": "private"
               },
-              "date": 1746629182,
+              "date": 1746633583,
               "reply_to_message": {
-                "message_id": 501,
+                "message_id": 528,
                 "from": {
                   "id": 7575108606,
                   "is_bot": true,
@@ -1340,29 +1355,45 @@
                   "last_name": "Torma",
                   "type": "private"
                 },
-                "date": 1746629113,
-                "edit_date": 1746629167,
-                "text": "Does TB01-M005-01 (Blåbærskog) seem like a good fit for the basic type (Kartleggingsenhet)? \nReply: I don't know."
+                "date": 1746633485,
+                "edit_date": 1746633564,
+                "text": "Is Nardus stricta (Mat-grass) a common grass at your site? \nReply: I don't know."
               },
-              "text": "Do you see a lot of blueberry plants (Vaccinium myrtillus) covering the ground layer?",
+              "text": "Based on your description ('Dense low vegetation, grass-dominated', 'Herbs/Forbs (~15%)') and the context of distinguishing between lime-poor TK01-M005-16 and slightly lime-rich TK01-M005-17 dry meadows (NA-TK01), does the ground layer seem to be dominated by mosses and lichens or is it mostly covered by grasses and herbs?",
               "entities": [
                 {
-                  "offset": 38,
-                  "length": 19,
-                  "type": "bold"
+                  "offset": 142,
+                  "length": 12,
+                  "type": "text_link",
+                  "url": "https://naturinorge.artsdatabanken.no/Naturtype/NiN-3.0-T-C-PE-NA-MB-TK01-M005-16"
+                },
+                {
+                  "offset": 178,
+                  "length": 12,
+                  "type": "text_link",
+                  "url": "https://naturinorge.artsdatabanken.no/Naturtype/NiN-3.0-T-C-PE-NA-MB-TK01-M005-17"
+                },
+                {
+                  "offset": 204,
+                  "length": 7,
+                  "type": "text_link",
+                  "url": "https://naturinorge.artsdatabanken.no/Naturtype/NIN-3.0-T-C-PE-NA-MB-A-TK01"
                 }
               ],
+              "link_preview_options": {
+                "is_disabled": true
+              },
               "reply_markup": {
                 "inline_keyboard": [
                   [
                     {
-                      "text": "Yes",
+                      "text": "dominated by mosses and lichens",
                       "callback_data": "answer_1"
                     }
                   ],
                   [
                     {
-                      "text": "No",
+                      "text": "mostly covered by grasses and herbs",
                       "callback_data": "answer_2"
                     }
                   ],
@@ -1376,7 +1407,7 @@
               }
             },
             "chat_instance": "8945001616945920245",
-            "data": "answer_1"
+            "data": "answer_2"
           }
         }
       }
@@ -1395,19 +1426,19 @@
   },
   "tags": [
     {
-      "createdAt": "2025-04-10T17:04:31.495Z",
-      "updatedAt": "2025-04-10T17:04:31.495Z",
-      "id": "CFjXUKUF3jMewkBv",
-      "name": "nin"
-    },
-    {
       "createdAt": "2025-02-07T11:28:26.663Z",
       "updatedAt": "2025-02-07T11:28:26.663Z",
       "id": "g8oSFBAe80JqymS9",
       "name": "production"
+    },
+    {
+      "createdAt": "2025-04-10T17:04:31.495Z",
+      "updatedAt": "2025-04-10T17:04:31.495Z",
+      "id": "CFjXUKUF3jMewkBv",
+      "name": "nin"
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-07T15:04:37.289Z",
-  "versionId": "5854432b-c849-4c35-8c1f-119b0daada59"
+  "updatedAt": "2025-05-07T17:47:29.745Z",
+  "versionId": "73fd7ae4-3ebf-4e6c-b591-451d445d229a"
 }
