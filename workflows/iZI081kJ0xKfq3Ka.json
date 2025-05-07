@@ -1,0 +1,534 @@
+{
+  "active": true,
+  "connections": {
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Filter valid fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Rotate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI2": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rotate": {
+      "main": [
+        [
+          {
+            "node": "Downscale for AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Downscale for AI": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Get Image": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Resize to small",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resize to small": {
+      "main": [
+        [
+          {
+            "node": "OpenAI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter valid fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-02-06T15:14:48.796Z",
+  "id": "iZI081kJ0xKfq3Ka",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "DISSCo AI4Specimen digitization pipeline v1.0",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "chatgpt-4o-latest",
+          "mode": "list",
+          "cachedResultName": "CHATGPT-4O-LATEST"
+        },
+        "text": "=\"You are and expert biologist who specializes in describing preserved specimen. You have an eye for detail and are able to describe preserved specimens with a great detail. Your job now is to extract all the information from this image of a preserved specimen, and write a short description that would contain all the information available to you from the image. you never assume higher taxonomical levels of a species you see, except of Kingdom. You also transcribe word by word all that available relevant information you found on any labels you see.\n\"",
+        "inputType": "base64",
+        "simplify": false,
+        "options": {
+          "detail": "auto",
+          "maxTokens": 1000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2200,
+        100
+      ],
+      "id": "0361ca0a-4892-4bb4-bc56-c30bb8070a8b",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "RfetE9SilB3n9Tnz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Your job is to standardize the User's report of a preserved specimen into JSON of Darwin core terms. Resulting JSON should have structure like this: {     \"dwc:scientificName\": \"Betula nana\",     \"dwc:locality\": \"Oslo\",     ... }\n\nExtract ONLY the following Darwin Core terms and ONLY if the input supporting it:\n\n- dwc:scientificName: Full scientific name, not containing identification qualifications.\n- dwc:catalogNumber: Unique identifier for the record in the dataset or collection.\n- dwc:recordNumber: Identifier given during recording, often linking field notes and Occurrence record.\n- dwc:recordedBy: List of people, groups, or organizations responsible for recording the original Occurrence.\n- dwc:year: Four-digit year of the Event.\n- dwc:month: Integer for the month of the Event.\n- dwc:day: Integer for the day of the Event, not populated unless month and year are filled in.\n- dwc:dateIdentified: Date when the subject was determined to represent the Taxon.\n- dwc:identifiedBy: Person, group, or organization assigning the Taxon to the subject.\n- dwc:verbatimIdentification: Taxonomic identification as it appeared in the original record.\n- dwc:country: Name of the country or major administrative unit for the Location.\n- dwc:countryCode: Standard code for the country of the Location.\n- dwc:decimalLatitude: Geographic latitude in decimal degrees of the Location's center.\n- dwc:decimalLongitude: Geographic longitude in decimal degrees of the Location's center.\n- dwc:locality: A spatial region or named place.\n- dwc:minimumElevationInMeters: The lower limit of the range of elevation in meters.\n- dwc:maximumElevationInMeters: The upper limit of the range of elevation in meters.\n- dwc:verbatimElevation: The original description of the elevation.",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.choices[0].message.content }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {
+          "maxTokens": 1000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2360,
+        100
+      ],
+      "id": "d84e6cd2-174d-4576-906a-bb9ff8daad68",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "RfetE9SilB3n9Tnz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Orientation fix and language detection",
+        "height": 476,
+        "width": 887,
+        "color": 4
+      },
+      "id": "59a7851f-3844-4dbb-845c-76219f9fddf1",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        660,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "9fa39dd6-63ea-4ed8-b4e1-904051e8a41a",
+        "authentication": "basicAuth",
+        "responseMode": "responseNode",
+        "options": {
+          "binaryPropertyName": "uri"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        220,
+        80
+      ],
+      "id": "e26a9aa1-f039-457a-a4c5-f5b5a89e50af",
+      "name": "Webhook",
+      "webhookId": "9fa39dd6-63ea-4ed8-b4e1-904051e8a41a",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "6GE7DPWRPjjLTwHE",
+          "name": "Unnamed credential 2 BA"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1660,
+        100
+      ],
+      "id": "719cfafe-1cfe-4019-be3a-7a231fd3631e",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "text": "You are an image analysis system. Your task is to process images of preserved specimens (such as herbarium sheets) that include a small label. Focus exclusively on the label region and perform the following steps:\n\n1. **Label Detection & Isolation:**  \n   - Locate the label within the specimen image, as it may only occupy a small portion of the overall image.\n   - Isolate and analyze the text within this label.\n\n2. **Orientation Analysis:**  \n   - Examine the text (both handwritten and typed) on the label.\n   - Determine if any part of the text is rotated in a way that makes it difficult for humans to read or for an LLM to extract.  \n   - If the text is not horizontally aligned, set `\"needs_orientation\"` to `true`; otherwise, set it to `false`.\n\n3. **Rotation Calculation:**  \n   - Compute the degrees of rotation (choose from 0, 90, 180, or 270) needed to make the label’s text horizontally aligned.\n   - Record this value as `\"orientation\"`.\n\n4. **Language Identification:**  \n   - Identify all languages present in the text on the label.\n   - List each recognized language in the `\"languages\"`.\n\n**Output Requirement:**  \nReturn a JSON object exactly following the structure below:\n\n{\n  \"needs_orientation\": <true_or_false>,\n  \"orientation\": <degrees_of_rotation_needed>,\n  \"languages\": [<list_of_recognized_languages>]\n}",
+        "inputType": "base64",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        920,
+        400
+      ],
+      "id": "b6e91594-1582-4d67-a9a0-9fbd925d511a",
+      "name": "OpenAI2",
+      "credentials": {
+        "openAiApi": {
+          "id": "RfetE9SilB3n9Tnz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"needs_orientation\": true,\n  \"orientation\": 90,\n  \"languages\": [\"Handwritten polish\", \"English\", \"Slovak\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1380,
+        620
+      ],
+      "id": "6d92265a-acd2-4545-bab5-f19264b980fb",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1140,
+        640
+      ],
+      "id": "07e00bae-528b-4f20-a500-b369891e0e0f",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "RfetE9SilB3n9Tnz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "rotate",
+        "rotate": "={{ $('Basic LLM Chain').first().json.output.orientation }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        100
+      ],
+      "id": "dcfbd81e-2f37-4587-b2bf-007b10031adf",
+      "name": "Rotate",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "operation": "resize",
+        "width": 2000,
+        "height": 2000,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        100
+      ],
+      "id": "5b960263-f801-4861-886f-b184b3b15686",
+      "name": "Downscale for AI"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"data\": {{ $json.toJsonString() }},\n  \"metadata\": {\n    \"version\": \"1.0\"\n  }\n}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2820,
+        100
+      ],
+      "id": "77f86741-5a95-4119-be61-b0836f39ca56",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Standardize this into a JSON:\n{{ $json.content }}",
+        "hasOutputParser": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        1160,
+        400
+      ],
+      "id": "50209492-c98b-430c-b33b-141ad6ecf2e6",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get all input items (if there are more than one, here we use the first one)\nconst items = $input.all();\n\n// Extract the file URL from the first item's JSON data\nconst fileUri = items[0].json.body.uris[0]\n\n// Configure the request options to download the file as a Buffer\nconst options = {\n  method: 'GET',\n  uri: fileUri,\n  encoding: null, // Set encoding to null to receive a Buffer (binary data)\n};\n\ntry {\n  // Download the file using n8n's helper method.\n  // This returns the file data as a Buffer.\n  const fileBuffer = await this.helpers.request(options);\n  \n  // Attach the binary data to the first item.\n  // n8n expects binary data to be a base64-encoded string.\n  items[0].binary = {\n    data: {\n      data: fileBuffer.toString('base64'),\n      fileName: 'downloadedFile', // Optionally, determine the file name dynamically\n      mimeType: 'application/octet-stream', // Adjust the mime type if known\n    },\n  };\n\n  // Return the updated items so the file can be used further down the workflow\n  return items;\n} catch (error) {\n  // If an error occurs during the download, throw an error to stop the workflow.\n  throw new Error(`Error downloading file from ${fileUri}: ${error.message}`);\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        80
+      ],
+      "id": "6368e0af-c3af-4641-836f-e02aaeccc6a7",
+      "name": "Get Image"
+    },
+    {
+      "parameters": {
+        "operation": "resize",
+        "width": 1000,
+        "height": 1000,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        720,
+        400
+      ],
+      "id": "bcbc8a45-bfc2-491f-aef6-2dd744ad13da",
+      "name": "Resize to small"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the object from your input\nconst content = $input.first().json.message.content;\n\n// Define the list of allowed keys\nconst terms = [\n  \"dwc:scientificName\",\n  \"dwc:catalogNumber\",\n  \"dwc:recordNumber\",\n  \"dwc:recordedBy\",\n  \"dwc:year\",\n  \"dwc:month\",\n  \"dwc:day\",\n  \"dwc:dateIdentified\",\n  \"dwc:identifiedBy\",\n  \"dwc:verbatimIdentification\",\n  \"dwc:country\",\n  \"dwc:countryCode\",\n  \"dwc:decimalLatitude\",\n  \"dwc:decimalLongitude\",\n  \"dwc:locality\",\n  \"dwc:minimumElevationInMeters\",\n  \"dwc:maximumElevationInMeters\",\n  \"dwc:verbatimElevation\"\n];\n\n// Create a new object with only the key-value pairs where the key is in the terms list\nconst filteredContent = Object.keys(content)\n  .filter(key => terms.includes(key))\n  .reduce((acc, key) => {\n    acc[key] = content[key];\n    return acc;\n  }, {});\n\n// Return the filtered object\nreturn { json: filteredContent };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2660,
+        100
+      ],
+      "id": "1dc0ba62-9383-4d7b-aa2d-e47fc2a2658f",
+      "name": "Filter valid fields"
+    },
+    {
+      "parameters": {
+        "content": "## Data extraction",
+        "height": 500,
+        "width": 980
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        -60
+      ],
+      "id": "cac8464f-f93e-458b-9f91-b14504f9cf42",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.svc.gbif.no",
+            "x-request-id": "da628419cc56dcf368e5bd57718517b0",
+            "x-real-ip": "10.244.0.244",
+            "x-forwarded-for": "10.244.0.244",
+            "x-forwarded-host": "n8n.svc.gbif.no",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-scheme": "https",
+            "x-scheme": "https",
+            "content-length": "84",
+            "user-agent": "python-requests/2.32.3",
+            "accept-encoding": "gzip, deflate",
+            "accept": "*/*",
+            "content-type": "application/json",
+            "authorization": "Basic QmVhcmVyOmFmYVRMXUsxUEhFJSx8ek1UTU1YeV14YHleYXQ="
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "uris": [
+              "https://image.bgbm.org/images/internal/HerbarThumbs/BW15123010__1_1700"
+            ]
+          },
+          "webhookUrl": "https://n8n.svc.gbif.no/webhook/9fa39dd6-63ea-4ed8-b4e1-904051e8a41a",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-02-07T11:28:26.663Z",
+      "updatedAt": "2025-02-07T11:28:26.663Z",
+      "id": "g8oSFBAe80JqymS9",
+      "name": "production"
+    },
+    {
+      "createdAt": "2025-02-07T11:28:34.687Z",
+      "updatedAt": "2025-02-07T11:28:34.687Z",
+      "id": "Sn2wVYnm6ddfUJBf",
+      "name": "DISSCo"
+    },
+    {
+      "createdAt": "2025-04-14T09:32:43.504Z",
+      "updatedAt": "2025-04-14T09:32:43.504Z",
+      "id": "Fh9E3K23MqTlvBaT",
+      "name": "AI4Specimen"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-04-14T14:29:14.850Z",
+  "versionId": "7bdda5a5-494d-4ad9-a5d6-77de54ec0f97"
+}
