@@ -1,0 +1,87 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-07T15:01:44.044Z",
+  "id": "qOFpCaIBhvwBEqNt",
+  "meta": null,
+  "name": "Contact admin",
+  "nodes": [
+    {
+      "parameters": {
+        "chatId": "1625460361",
+        "text": "={{ $json.message }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        -140
+      ],
+      "id": "6c352790-5924-4bac-a6ef-06e8153f058c",
+      "name": "Telegram",
+      "webhookId": "58c759e3-2638-4c2f-96e3-4eba073bc954",
+      "credentials": {
+        "telegramApi": {
+          "id": "lgYkrpChPDyw46sR",
+          "name": "Telegram account - michato notify"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "message"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -280,
+        -140
+      ],
+      "id": "64de4ea0-1c2c-42e4-ac1c-d4db3fb03248",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "message": "Test message"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-04-10T17:13:54.372Z",
+      "updatedAt": "2025-04-10T17:13:54.372Z",
+      "id": "DV4EPZYl9AgHRDON",
+      "name": "tools"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-07T15:25:34.814Z",
+  "versionId": "1a365efe-6492-4152-9a7b-5710cd54a287"
+}
