@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Telegram4": {
       "main": [
@@ -254,6 +254,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-05-06T10:45:07.753Z",
+  "updatedAt": "2025-05-07T20:48:08.473Z",
   "versionId": "67d64fb3-c24b-4c79-b643-da69d3a8322c"
 }
