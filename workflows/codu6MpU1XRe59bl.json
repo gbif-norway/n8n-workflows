@@ -397,7 +397,8 @@
   ],
   "pinData": {},
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
   },
   "staticData": null,
   "tags": [
@@ -409,6 +410,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-04-30T15:30:36.836Z",
-  "versionId": "521905a3-4783-4464-b139-0876d236cfd1"
+  "updatedAt": "2025-05-07T17:39:05.910Z",
+  "versionId": "32e84555-f8ff-48fd-bc20-cd5fa29f21d4"
 }
