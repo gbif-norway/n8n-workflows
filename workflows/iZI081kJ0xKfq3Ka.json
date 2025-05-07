@@ -505,15 +505,16 @@
     ]
   },
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
   },
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-02-07T11:28:26.663Z",
-      "updatedAt": "2025-02-07T11:28:26.663Z",
-      "id": "g8oSFBAe80JqymS9",
-      "name": "production"
+      "createdAt": "2025-04-14T09:32:43.504Z",
+      "updatedAt": "2025-04-14T09:32:43.504Z",
+      "id": "Fh9E3K23MqTlvBaT",
+      "name": "AI4Specimen"
     },
     {
       "createdAt": "2025-02-07T11:28:34.687Z",
@@ -522,13 +523,13 @@
       "name": "DISSCo"
     },
     {
-      "createdAt": "2025-04-14T09:32:43.504Z",
-      "updatedAt": "2025-04-14T09:32:43.504Z",
-      "id": "Fh9E3K23MqTlvBaT",
-      "name": "AI4Specimen"
+      "createdAt": "2025-02-07T11:28:26.663Z",
+      "updatedAt": "2025-02-07T11:28:26.663Z",
+      "id": "g8oSFBAe80JqymS9",
+      "name": "production"
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-04-14T14:29:14.850Z",
-  "versionId": "7bdda5a5-494d-4ad9-a5d6-77de54ec0f97"
+  "updatedAt": "2025-05-07T17:39:05.879Z",
+  "versionId": "a4580d80-86e8-4871-ac9f-c2a341109475"
 }
