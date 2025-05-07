@@ -1,0 +1,318 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Data summarizer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Hovdetype Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "KLE Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "Grunntype Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hovdetype Postgres PGVector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "Data summarizer",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "KLE Postgres PGVector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "Data summarizer",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Data summarizer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Grunntype Postgres PGVector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "Data summarizer",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "nin_docs": {
+      "ai_tool": [
+        [
+          {
+            "node": "Data summarizer",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-04-30T15:12:32.438Z",
+  "id": "THOIDosI1jZG3BFE",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "🤖 NIN Data summarizer",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"topic\": \"marsh and vet conditions\"\n}"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8be73c02-dd7a-45b8-a81d-06f2298c10e5",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "find_major_type",
+        "toolDescription": "=Searches for a major type (hovedtype) documentation.\nReturns:\n\t•\tKode (e.g., NA-OC02)\n\t•\tLangkode (e.g., NIN-3.0-T-C-PE-NA-MB-A-OC02)\n\t•\tNavn (e.g., Varm ferskvannskildebunn)\n\t•\tContent pages of documentation from vector store",
+        "tableName": "nin3_hovedtype_descriptions",
+        "topK": 50,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.1,
+      "position": [
+        920,
+        420
+      ],
+      "id": "e376261e-fe01-44f0-b5b3-7006ec67cd8c",
+      "name": "Hovdetype Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-ada-002",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1020,
+        820
+      ],
+      "id": "3b5a5962-cbdd-4463-aeec-940cb7eba227",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "RfetE9SilB3n9Tnz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.topic }}",
+        "options": {
+          "systemMessage": "=Prompt: NIN 3.0 Docs Retrieval Assistant\n\n1. Scope and purpose\n\nHandle exactly one user request at a time.\n\nDetermine which NIN 3.0 hierarchy levels the user explicitly mentions or clearly implies:\n\nHovedtypegrupper (major type groups)\n\nHovedtyper (major types)\n\nKartleggingsenheter (mapping units)\n\nGrunntyper (base types)\n\nFor explanation, Grunntyper and Kartleggingsenheter have many to one relation and we are looking for Kartleggingsenheter in a resolution 1:5000 mapping only\n\nMake a case for possible types that would fit the user's description\n\nFor every level in scope, search the vector store for all matching types and assemble a fluent narrative that includes:\n\nThe authoritative definition(s) reproduced verbatim.\n\nProvide a direct hyperlink for every type code you mention. Build each link as https://naturinorge.artsdatabanken.no/{Langkode} where {Langkode} is the long version of the official NIN 3.0 code that is part of metadata of the vector store.\n\n2. Knowledge boundaries\n\nNever invent or guess codes, names, or definitions.\n\nSuggestions may only include types returned by the vector‑store tools.\n\nIf a requested type or level is missing, state this plainly (e.g., “Ingen treff for … ”).\n\nDo not enrich with outside knowledge, web searches, or prior training data.\n\n3. Tool use\n\nVector‑store tools\n\n  Rely on these metadata fields:\n  \n  Kode – official NIN 3.0 code (e.g., “TC02‑05”)\n  \n  Navn – Norwegian display name\n\n  Langkode – long version of the code that us used in url construction (https://naturinorge.artsdatabanken.no/{Langkode})\n\n  pageContent - contains parts of the documentation relevant to the query\n\nnin_docs postgress tool for lookup of nin documentation for each Langcode individually\n\n4. Failure & ambiguity handling\n\nNo match: state this briefly.\n\nPartial match: present what you found and note the gap.\n\nAmbiguous query: ask one concise clarifying question before searching.\n\n5. Language & style\n\nReproduce Norwegian names and definitions exactly.\n\nAny explanatory text you add may be in English.\n\nKeep the tone precise, and factual. Be elaborate about how to distinguish between individual types and proactive in specifyiong indicative species\n\n",
+          "maxIterations": 10,
+          "returnIntermediateSteps": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        340,
+        0
+      ],
+      "id": "009b72c6-f859-49a4-9415-44f542f6a723",
+      "name": "Data summarizer"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "nin3_kle_descriptions",
+        "toolDescription": "=Searches vector store in mapping units (kartleggingsenheter - KLE) descriptions.\nReturns:\n  metadata:\n\t•\tKode (e.g., T4-1)\n\t•\tLangkode\n\t•\tNavn\n\t•\tContent pages of documentation from vector store",
+        "topK": 50,
+        "options": {
+          "distanceStrategy": "cosine"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        580
+      ],
+      "id": "f01f2cde-9974-4211-9176-efcabda4ea23",
+      "name": "KLE Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        20,
+        480
+      ],
+      "id": "eee6bb89-a912-4e24-967a-37bf80483450",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "fVqq5tXe6fuAG0kz",
+          "name": "OpenAi account - NIN Helper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "nin3_lookup",
+        "toolDescription": "=Looks up documentation on NIN 3.0 minor types (grunntype) documentation.\nReturns:\nmetadata:\n\t•\tKode: e.g., TB01-01\n\t•\tLangkode: e.g., NIN-3.0-T-C-PE-NA-MB-TB01-01\n\t•\tNavn: Name of the grunntype (e.g., Blåbærskog)\n\t•\tContent pages of documentation from vector store",
+        "tableName": "nin3_gronntype_descriptions",
+        "topK": 50,
+        "options": {
+          "distanceStrategy": "cosine"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.1,
+      "position": [
+        1260,
+        440
+      ],
+      "id": "37735275-efc1-453c-b5c8-3280c34bf465",
+      "name": "Grunntype Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get data from postgres with detailed documentation for every Langkode",
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "nin_docs",
+          "mode": "list",
+          "cachedResultName": "nin_docs"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "Langkode",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        280,
+        580
+      ],
+      "id": "e2ed86de-a467-4bae-a0df-ef903a7d1684",
+      "name": "nin_docs",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "topic": "indicator species semi-natural dry meadow calcium"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-04-10T17:04:31.495Z",
+      "updatedAt": "2025-04-10T17:04:31.495Z",
+      "id": "CFjXUKUF3jMewkBv",
+      "name": "nin"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-06T19:25:07.923Z",
+  "versionId": "43bafbd4-a47d-4021-9d71-da704a834d98"
+}
