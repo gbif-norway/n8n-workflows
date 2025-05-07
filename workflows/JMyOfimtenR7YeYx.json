@@ -1,0 +1,102 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-04-09T13:06:44.461Z",
+  "id": "JMyOfimtenR7YeYx",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "vectorstore tester",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -580,
+        -60
+      ],
+      "id": "da2c3026-48df-404e-8e21-4cf78cd5a665",
+      "name": "When chat message received",
+      "webhookId": "869a9273-610b-48e7-83d5-31658d825885"
+    },
+    {
+      "parameters": {
+        "mode": "load",
+        "prompt": "={{ $json.chatInput }}",
+        "includeDocumentMetadata": false,
+        "options": {
+          "distanceStrategy": "euclidean"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.1,
+      "position": [
+        -300,
+        -60
+      ],
+      "id": "b29c4e73-5d23-4661-84f2-b536f6ed51ad",
+      "name": "Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-ada-002",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -320,
+        200
+      ],
+      "id": "157808ea-fa97-4a93-aa80-4d2e82deb2c0",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "RfetE9SilB3n9Tnz",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-04-09T21:28:11.793Z",
+  "versionId": "e132ea41-a256-42cc-af16-265a65ceb8d2"
+}
