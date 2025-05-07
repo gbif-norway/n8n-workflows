@@ -1,0 +1,219 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-01T12:49:56.630Z",
+  "id": "4BBv4i7v3dGn6uzW",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "🛠️ NIN Ask user",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "question"
+            },
+            {
+              "name": "answer_1"
+            },
+            {
+              "name": "answer_2"
+            },
+            {
+              "name": "chat_id",
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "350d2d60-0884-4d69-82e8-22c1d4d3997e",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $json.chat_id }}",
+        "message": "={{ $json.question }}",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double",
+            "approveLabel": "={{ $json.answer_1 }}",
+            "disapproveLabel": "={{ $json.answer_2 }}"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        300,
+        20
+      ],
+      "id": "a7325b8e-5f13-4f3a-9265-d09fb4923706",
+      "name": "Telegram",
+      "webhookId": "e75f564e-6886-45b0-bbe2-3e9264458901",
+      "credentials": {
+        "telegramApi": {
+          "id": "F6cLKLq27rPOBung",
+          "name": "Telegram account - NIN helper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ce87b4f1-4c86-484c-b843-169bb98fe012",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        520,
+        20
+      ],
+      "id": "50550fbc-dc21-44e1-afda-d80dc7ef4687",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b6e92dd8-6074-4a00-a379-356cdeef92c9",
+              "name": "answer",
+              "value": "=The user answered: {{ $('When Executed by Another Workflow').item.json.answer_1 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        780,
+        -120
+      ],
+      "id": "1ccd6322-971c-4786-83c8-295ce63532e5",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "05227c5a-7a6e-45bf-bfbd-f2a5327f74de",
+              "name": "answer",
+              "value": "=The user answered: {{ $('When Executed by Another Workflow').item.json.answer_2 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        780,
+        120
+      ],
+      "id": "891c220e-28bf-461a-b825-67fecedbd7d1",
+      "name": "Edit Fields1"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "question": "Does NA-T (Fastmarkssystemer) fit your site? (yes/no)",
+          "answer_1": "Yes, it fits.",
+          "answer_2": "No, it does not fit.",
+          "chat_id": 1625460361
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-04-10T17:04:31.495Z",
+      "updatedAt": "2025-04-10T17:04:31.495Z",
+      "id": "CFjXUKUF3jMewkBv",
+      "name": "nin"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-01T13:13:47.020Z",
+  "versionId": "e16b2306-0b3e-47b2-985e-c87cf27312a5"
+}
