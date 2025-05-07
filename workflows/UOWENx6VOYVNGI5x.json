@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "On clicking 'execute'": {
       "main": [
@@ -232,7 +232,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "My workflow",
+  "name": "🫨 Backup to GitHub",
   "nodes": [
     {
       "parameters": {},
@@ -713,11 +713,31 @@
   ],
   "pinData": {},
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
   },
-  "staticData": null,
-  "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-05-07T17:29:31.641Z",
-  "versionId": "7b53e825-a129-4182-8ab4-d3a9ee340e63"
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": [
+        14
+      ]
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2025-04-10T17:13:54.372Z",
+      "updatedAt": "2025-04-10T17:13:54.372Z",
+      "id": "DV4EPZYl9AgHRDON",
+      "name": "tools"
+    },
+    {
+      "createdAt": "2025-02-07T11:28:26.663Z",
+      "updatedAt": "2025-02-07T11:28:26.663Z",
+      "id": "g8oSFBAe80JqymS9",
+      "name": "production"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-07T17:39:05.895Z",
+  "versionId": "8f59e62f-f702-4094-ae5c-ba6b3af28cd9"
 }
