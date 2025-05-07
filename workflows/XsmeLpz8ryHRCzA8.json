@@ -1,0 +1,259 @@
+{
+  "active": false,
+  "connections": {
+    "Telegram4": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Telegram4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-06T07:09:21.100Z",
+  "id": "XsmeLpz8ryHRCzA8",
+  "meta": null,
+  "name": "🛠️ NIN Telegram typing action",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "280cf56d-3eb2-4dcd-a554-3c8e2d93e806",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "sendChatAction",
+        "chatId": "={{ $('When Executed by Another Workflow').item.json.message?.chat?.id\n      ?? $('When Executed by Another Workflow').item.json.callback_query?.message?.chat?.id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1140,
+        -80
+      ],
+      "id": "764fd973-8d35-4cd9-867e-4dcf8478418d",
+      "name": "Telegram4",
+      "webhookId": "f0200de1-68e2-433e-995c-75ecb4b5673d",
+      "credentials": {
+        "telegramApi": {
+          "id": "F6cLKLq27rPOBung",
+          "name": "Telegram account - NIN helper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": "=4"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1360,
+        0
+      ],
+      "id": "98bf3209-6dd7-46dd-a081-c8b6afaa8ca3",
+      "name": "Wait1",
+      "webhookId": "bf8c148e-c4b5-47f3-9e8a-ffaffeecb6e7"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "36988008-b30a-4b66-98ca-a65bcc9b039d",
+              "leftValue": "={{ $json.done }}",
+              "rightValue": "Typing",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        840,
+        -80
+      ],
+      "id": "19c35c4d-6fbe-4bce-a54f-06a0362bdff9",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "telegram_trigger",
+          "mode": "list",
+          "cachedResultName": "telegram_trigger"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "update_id",
+              "value": "={{ $json.update_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        340,
+        0
+      ],
+      "id": "64f3fc7d-4515-4375-a191-ba6ebb259e76",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "update_id": 404507665,
+          "message": {
+            "message_id": 332,
+            "from": {
+              "id": 1625460361,
+              "is_bot": false,
+              "first_name": "Michal",
+              "last_name": "Torma",
+              "language_code": "en"
+            },
+            "chat": {
+              "id": 1625460361,
+              "first_name": "Michal",
+              "last_name": "Torma",
+              "type": "private"
+            },
+            "date": 1746515504,
+            "photo": [
+              {
+                "file_id": "AgACAgQAAxkBAAIBA2gY_BVKNu-OMfevTNY441rHKHtrAAK4yTEbsN3JUHyqeQNKGUbVAQADAgADcwADNgQ",
+                "file_unique_id": "AQADuMkxG7DdyVB4",
+                "file_size": 1307,
+                "width": 68,
+                "height": 90
+              },
+              {
+                "file_id": "AgACAgQAAxkBAAIBA2gY_BVKNu-OMfevTNY441rHKHtrAAK4yTEbsN3JUHyqeQNKGUbVAQADAgADbQADNgQ",
+                "file_unique_id": "AQADuMkxG7DdyVBy",
+                "file_size": 30827,
+                "width": 241,
+                "height": 320
+              },
+              {
+                "file_id": "AgACAgQAAxkBAAIBA2gY_BVKNu-OMfevTNY441rHKHtrAAK4yTEbsN3JUHyqeQNKGUbVAQADAgADeAADNgQ",
+                "file_unique_id": "AQADuMkxG7DdyVB9",
+                "file_size": 202712,
+                "width": 602,
+                "height": 800
+              },
+              {
+                "file_id": "AgACAgQAAxkBAAIBA2gY_BVKNu-OMfevTNY441rHKHtrAAK4yTEbsN3JUHyqeQNKGUbVAQADAgADeQADNgQ",
+                "file_unique_id": "AQADuMkxG7DdyVB-",
+                "file_size": 457984,
+                "width": 964,
+                "height": 1280
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-04-10T17:04:31.495Z",
+      "updatedAt": "2025-04-10T17:04:31.495Z",
+      "id": "CFjXUKUF3jMewkBv",
+      "name": "nin"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-06T10:45:07.753Z",
+  "versionId": "67d64fb3-c24b-4c79-b643-da69d3a8322c"
+}
