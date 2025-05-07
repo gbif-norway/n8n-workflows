@@ -66,6 +66,17 @@
           }
         ]
       ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "get error handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-02-03T23:38:36.515Z",
@@ -73,7 +84,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "Error handler",
+  "name": "🫨 Error handler",
   "nodes": [
     {
       "parameters": {},
@@ -188,21 +199,6 @@
     },
     {
       "parameters": {
-        "content": "get ID of self",
-        "height": 216.67545344104974,
-        "width": 232.91556831986873
-      },
-      "id": "9e4caa5e-eaad-43a7-9c38-3ac39aaa89f8",
-      "name": "Sticky Note1",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        360,
-        140
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
         "rule": {
           "interval": [
             {}
@@ -311,6 +307,17 @@
       ],
       "id": "6300fc1b-121a-4c28-98f4-08232f3acb75",
       "name": "Execute Workflow"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        60,
+        -140
+      ],
+      "id": "16bc695d-6753-4afb-aaeb-581efb2b7ce2",
+      "name": "When clicking ‘Test workflow’"
     }
   ],
   "pinData": {},
@@ -322,8 +329,21 @@
       "recurrenceRules": []
     }
   },
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-04-10T17:13:54.372Z",
+      "updatedAt": "2025-04-10T17:13:54.372Z",
+      "id": "DV4EPZYl9AgHRDON",
+      "name": "tools"
+    },
+    {
+      "createdAt": "2025-02-07T11:28:26.663Z",
+      "updatedAt": "2025-02-07T11:28:26.663Z",
+      "id": "g8oSFBAe80JqymS9",
+      "name": "production"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-07T15:03:56.585Z",
-  "versionId": "dcdb0564-9efe-4961-9b91-03cc5abe8390"
+  "updatedAt": "2025-05-07T17:39:22.015Z",
+  "versionId": "69605532-3562-4c24-b70c-da0ac16129ef"
 }
