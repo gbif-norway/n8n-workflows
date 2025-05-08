@@ -1,6 +1,18 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "createdAt": "2025-05-07T21:44:06.999Z",
   "id": "dImcYEjzirMOYehh",
   "meta": null,
@@ -8,125 +20,104 @@
   "nodes": [
     {
       "parameters": {
-        "updates": [
-          "*"
-        ],
-        "additionalFields": {
-          "download": true
-        }
+        "workflowId": {
+          "__rl": true,
+          "value": "Fw5zvVimAGIRruYX",
+          "mode": "list",
+          "cachedResultName": "🤖 NIN helper bot"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "source": "={{ $json.source }}",
+            "chat_id": "={{ $json.chat_id }}",
+            "message_id": "={{ $json.message_id }}",
+            "type": "={{ $json.type }}",
+            "message": "={{ $json.message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "type",
+              "displayName": "type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
       },
-      "type": "n8n-nodes-base.telegramTrigger",
+      "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        -240,
+        280,
         -40
       ],
-      "id": "66ed95f1-14bb-43ce-a508-b619caa344ae",
-      "name": "Telegram Trigger",
-      "webhookId": "cc302fdf-8eea-44b3-84ad-8ed5298362da",
-      "credentials": {
-        "telegramApi": {
-          "id": "F6cLKLq27rPOBung",
-          "name": "Telegram account - NIN helper"
-        }
-      }
+      "id": "912bbbb6-2d6d-4c4f-8aab-9b1b22611294",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\nconst binary = $input.first().binary;\n\nlet type = null;\nlet message_id = null;\nlet reply_to_id = null;\nlet chat_id = null;\nlet message = null;\nlet file = null;\n\nif ('callback_query' in data) {\n  const callback = data.callback_query;\n  type = \"callback_query\";\n  chat_id = callback.message.chat.id;\n  message_id = callback.message.message_id;\n  reply_to_id = callback.message.reply_to_message?.message_id || null;\n  message = \"Question: \" + callback.message.text +\n            \"\\nAnswer: \" + (\n              callback.message.reply_markup.inline_keyboard\n                .flat()\n                .find(b => b.callback_data === callback.data)?.text || ''\n            );\n}\n\nelse if ('message' in data) {\n  const msg = data.message;\n  chat_id = msg.chat.id;\n  message_id = msg.message_id;\n  reply_to_id = msg.reply_to_message?.message_id || null;\n\n  if ('text' in msg) {\n    type = reply_to_id ? \"text_reply\" : \"text\";\n    message = msg.text;\n  }\n\n  else if ('photo' in msg) {\n    type = msg.caption ? \"photo_with_caption\" : \"photo\";\n    file = msg.photo.sort((a, b) => b.file_size - a.file_size)[0];  // largest\n    message = msg.caption || \"[Photo]\";\n  }\n\n  else if ('document' in msg) {\n    type = msg.caption ? \"document_with_caption\" : \"document\";\n    file = msg.document;\n    message = msg.caption || \"[Document]\";\n  }\n\n  else {\n    type = \"unknown\";\n    message = \"[Unsupported message type]\";\n  }\n}\n\n// Build the result object\nconst output = {\n  json: {\n    source: \"telegram\",\n    type,\n    message_id,\n    reply_to_id,\n    chat_id,\n    message,\n    file_meta: file || null  // optional metadata about the binary\n  }\n};\n\n// Include binary if present\nif (binary) {\n  output.binary = binary;\n}\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -60,
+        -40
+      ],
+      "id": "66c87531-3b64-4e20-820f-255c1266bd0a",
+      "name": "Code"
     }
   ],
-  "pinData": {
-    "Telegram Trigger": [
-      {
-        "json": {
-          "update_id": 404507842,
-          "callback_query": {
-            "id": "6981299091866745822",
-            "from": {
-              "id": 1625460361,
-              "is_bot": false,
-              "first_name": "Michal",
-              "last_name": "Torma",
-              "language_code": "en"
-            },
-            "message": {
-              "message_id": 560,
-              "from": {
-                "id": 7575108606,
-                "is_bot": true,
-                "first_name": "NIN helper",
-                "username": "nin_helper_bot"
-              },
-              "chat": {
-                "id": 1625460361,
-                "first_name": "Michal",
-                "last_name": "Torma",
-                "type": "private"
-              },
-              "date": 1746647274,
-              "reply_to_message": {
-                "message_id": 559,
-                "from": {
-                  "id": 7575108606,
-                  "is_bot": true,
-                  "first_name": "NIN helper",
-                  "username": "nin_helper_bot"
-                },
-                "chat": {
-                  "id": 1625460361,
-                  "first_name": "Michal",
-                  "last_name": "Torma",
-                  "type": "private"
-                },
-                "date": 1746647255,
-                "edit_date": 1746647257,
-                "text": "Does NA-T (Fastmarkssystemer) fit your site, given it includes terrestrial ecosystems on mineral soil or solid rock? \nReply: Yes"
-              },
-              "text": "Does NA-TK01 (Semi-naturlig eng) fit your site?",
-              "entities": [
-                {
-                  "offset": 5,
-                  "length": 27,
-                  "type": "text_link",
-                  "url": "https://naturinorge.artsdatabanken.no/Naturtype/NA-TK"
-                }
-              ],
-              "link_preview_options": {
-                "is_disabled": true
-              },
-              "reply_markup": {
-                "inline_keyboard": [
-                  [
-                    {
-                      "text": "Yes",
-                      "callback_data": "answer_1"
-                    }
-                  ],
-                  [
-                    {
-                      "text": "No",
-                      "callback_data": "answer_2"
-                    }
-                  ],
-                  [
-                    {
-                      "text": "I don't know.",
-                      "callback_data": "i_don_t_know"
-                    }
-                  ]
-                ]
-              }
-            },
-            "chat_instance": "8945001616945920245",
-            "data": "answer_1"
-          }
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "settings": {
     "executionOrder": "v1"
   },
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-05-07T21:45:03.285Z",
-  "versionId": "f24f18bf-f196-4db8-b3a9-994d153ee812"
+  "triggerCount": 1,
+  "updatedAt": "2025-05-07T22:29:47.502Z",
+  "versionId": "e32be313-85e1-438c-9a0c-6dea18d98db9"
 }
