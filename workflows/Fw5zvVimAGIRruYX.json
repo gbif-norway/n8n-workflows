@@ -35,7 +35,23 @@
     },
     "Telegram Trigger": {
       "main": [
-        []
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Set thread record",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Save to DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "AI Agent": {
@@ -107,7 +123,13 @@
     },
     "Save to DB": {
       "main": [
-        []
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
       ]
     },
     "Merge": {
@@ -146,7 +168,7 @@
       "main": [
         [
           {
-            "node": "Set thread record1",
+            "node": "Set thread record2",
             "type": "main",
             "index": 0
           }
@@ -226,6 +248,11 @@
             "node": "Execute Workflow",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Set thread record2",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -261,7 +288,13 @@
     },
     "nin_docs": {
       "ai_tool": [
-        []
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
       ]
     },
     "Set thread record": {
@@ -282,27 +315,6 @@
             "node": "Merge",
             "type": "main",
             "index": 1
-          }
-        ]
-      ]
-    },
-    "When Executed by Another Workflow": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Set thread record",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Save to DB",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -426,7 +438,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        1380,
+        480,
         -1050.5
       ],
       "id": "e267fed7-99e9-4244-8daa-0508618f1af8",
@@ -446,7 +458,7 @@
       "typeVersion": 1.2,
       "position": [
         -400,
-        -1160
+        -1065
       ],
       "id": "df374081-bd96-4d0a-ba8a-8df77c9eb66d",
       "name": "Telegram Trigger",
@@ -470,8 +482,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.8,
       "position": [
-        2352,
-        -829.5
+        1452,
+        -929.5
       ],
       "id": "b2d968e7-511f-4e82-b655-1afa72b2fde6",
       "name": "AI Agent",
@@ -480,15 +492,15 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "={{ $('Telegram Trigger').item.json.message?.chat?.id\n      ?? $('Telegram Trigger').item.json.callback_query?.message?.chat?.id }}-{{ $('Get thread id').first().json.thread_id }}",
+        "sessionKey": "={{ $('Get thread id').item.first().json.thread_id }}",
         "tableName": "=nin_chat_histories",
         "contextWindowLength": 10
       },
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        2380,
-        -609.5
+        1480,
+        -700
       ],
       "id": "f02cb7c7-a8cf-4151-bba5-60b80b570f42",
       "name": "Postgres Chat Memory",
@@ -535,8 +547,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        2500,
-        -609.5
+        1600,
+        -709.5
       ],
       "id": "c20b1dea-c002-44e6-aeb8-2d5ba300abab",
       "name": "nin_docs_query"
@@ -577,8 +589,8 @@
       "type": "@n8n/n8n-nodes-langchain.informationExtractor",
       "typeVersion": 1,
       "position": [
-        2820,
-        -829.5
+        1920,
+        -929.5
       ],
       "id": "894c62d6-7743-4d00-91d2-8c2d04dd4303",
       "name": "Information Extractor"
@@ -611,8 +623,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3196,
-        -765
+        2296,
+        -890
       ],
       "id": "65caf9f6-dc7d-4e4e-bdf7-7ed0ba732848",
       "name": "If"
@@ -677,8 +689,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        420,
-        -780
+        -60,
+        -820
       ],
       "id": "62fa5135-2ccf-4b07-bdba-7982a6360f0b",
       "name": "Save to DB",
@@ -691,12 +703,13 @@
     },
     {
       "parameters": {
-        "mode": "chooseBranch"
+        "mode": "chooseBranch",
+        "numberInputs": 3
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        1160,
+        260,
         -1140
       ],
       "id": "58978e39-6f4d-4020-a652-77d3c1d40eb6",
@@ -710,8 +723,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        2260,
-        -609.5
+        1360,
+        -709.5
       ],
       "id": "955758a6-1de4-4726-a09f-978084d8ede9",
       "name": "Google Gemini Chat Model",
@@ -775,8 +788,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3540,
-        -1020
+        2516,
+        -1090
       ],
       "id": "be80bc98-9f88-4e0e-acf0-c33acc586445",
       "name": "Ask question",
@@ -800,8 +813,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3416,
-        -765
+        2516,
+        -790
       ],
       "id": "e5e28ea5-6e45-4581-9fe2-ba1aa67b77af",
       "name": "Finalize",
@@ -836,7 +849,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        1380,
+        480,
         -1250.5
       ],
       "id": "40f78bb9-ced5-4ff5-a710-a7f2fca113ab",
@@ -859,7 +872,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2040,
+        1140,
         -929.5
       ],
       "id": "b294fd33-9188-476d-8638-bbdac3d532cb",
@@ -882,8 +895,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2040,
-        -590
+        1140,
+        -679.5
       ],
       "id": "a24e9a3c-c782-43e2-87df-1a6ca604dd3b",
       "name": "User free question"
@@ -897,7 +910,7 @@
       "type": "n8n-nodes-base.editImage",
       "typeVersion": 1,
       "position": [
-        1820,
+        920,
         -1340
       ],
       "id": "a00ac025-efea-4477-a465-ee43fc711ca8",
@@ -922,7 +935,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        2040,
+        1140,
         -1340
       ],
       "id": "1f2619ed-6b51-455b-be01-58bfdf641d60",
@@ -996,8 +1009,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        3196,
-        -965
+        2296,
+        -1090
       ],
       "id": "695172d3-000f-4b8a-be5b-67465fb71d09",
       "name": "Mark as done",
@@ -1019,7 +1032,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1600,
+        700,
         -1129.5
       ],
       "id": "d71ee35f-74ed-4539-8291-8d9381f76ff5",
@@ -1094,7 +1107,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1820,
+        920,
         -1129.5
       ],
       "id": "b4f738d7-4854-41b6-a332-e9bac1254c7e",
@@ -1118,7 +1131,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1820,
+        920,
         -929.5
       ],
       "id": "b7d09e66-e925-4669-9234-b42f5181e4cd",
@@ -1159,8 +1172,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1600,
-        -590
+        700,
+        -679.5
       ],
       "id": "f558c5ca-f64f-4332-9565-a1852358f4ba",
       "name": "If1"
@@ -1176,8 +1189,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1820,
-        -729.5
+        920,
+        -604.5
       ],
       "id": "f22c0e7e-47fe-41dc-8281-78bb566a5b53",
       "name": "Make reply permanent1",
@@ -1227,8 +1240,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        3636,
-        -715
+        2736,
+        -690
       ],
       "id": "39cecdf5-1aa5-4a2f-886e-e284ac21c201",
       "name": "Execute Workflow"
@@ -1262,8 +1275,8 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        1960,
-        -609.5
+        1720,
+        -709.5
       ],
       "id": "f2e8a734-8028-4ef8-99ee-e5da271bc03c",
       "name": "nin_docs",
@@ -1290,10 +1303,10 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "chat_id": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-            "massage_id": "={{ $('Telegram Trigger').item.json.message.message_id }}",
+            "chat_id": "={{ $('Telegram Trigger').item.json.message?.chat?.id\n      ?? $('Telegram Trigger').item.json.callback_query?.message?.chat?.id }}",
+            "massage_id": "={{ $('Telegram Trigger').first().json.message?.message_id ??  $('Telegram Trigger').first().json.callback_query.message.message_id}}",
             "timestamp": "={{ $now }}",
-            "reply_to_id": "={{ $('Telegram Trigger').item.json.message.reply_to_message?.message_id ?? 'NULL' }}"
+            "reply_to_id": "={{ $('Telegram Trigger').item.json.message?.reply_to_message?.message_id ?? $('Telegram Trigger').item.json.callback_query.message.reply_to_message.message_id }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -1342,7 +1355,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        300,
+        -180,
         -1040
       ],
       "id": "77a7f7f2-28e1-4f8c-9e70-4d042a7f402d",
@@ -1375,6 +1388,10 @@
             {
               "column": "massage_id",
               "value": "={{ $('Telegram Trigger').item.json.message.message_id }}"
+            },
+            {
+              "column": "chat_id",
+              "value": "={{ $('Telegram Trigger').item.json.message?.chat?.id       ?? $('Telegram Trigger').item.json.callback_query?.message?.chat?.id }}"
             }
           ]
         },
@@ -1387,8 +1404,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        520,
-        -1040
+        -20,
+        -1060
       ],
       "id": "14c13033-3f3a-4347-8aec-96d117abb79b",
       "name": "Get thread id",
@@ -1415,10 +1432,10 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "chat_id": "={{ $('Telegram Trigger').first().json }}",
-            "massage_id": "={{ $('Telegram Trigger').item.json.message.message_id }}",
+            "chat_id": "={{ $('Telegram Trigger').item.json.message?.chat?.id\n      ?? $('Telegram Trigger').item.json.callback_query?.message?.chat?.id }}",
+            "massage_id": "={{ $json.result.message_id }}",
             "timestamp": "={{ $now }}",
-            "reply_to_id": "={{ $('Telegram Trigger').item.json.message.reply_to_message?.message_id ?? 'NULL' }}"
+            "reply_to_id": "={{ $('Telegram Trigger').first().json.message?.message_id ??  $('Telegram Trigger').first().json.callback_query.message.message_id}}"
           },
           "matchingColumns": [],
           "schema": [
@@ -1467,40 +1484,26 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        3780,
-        -1020
+        2740,
+        -1080
       ],
-      "id": "a57efa3f-3b84-4fb1-99c1-da8143e10eb7",
-      "name": "Set thread record1",
+      "id": "b9f8eed3-f9fe-499e-a573-f90f39454507",
+      "name": "Set thread record2",
       "credentials": {
         "postgres": {
           "id": "9Dpjwh2i1R7PMsSP",
           "name": "Postgres account"
         }
       }
-    },
-    {
-      "parameters": {
-        "inputSource": "jsonExample",
-        "jsonExample": "{\n  \"source\": \"telegram\",\n  \"type\": \"new_message\",\n  \"message\": \"This is a message\",\n  \"chat_id\": 123,\n  \"message_id\": 1234\n}"
-      },
-      "type": "n8n-nodes-base.executeWorkflowTrigger",
-      "typeVersion": 1.1,
-      "position": [
-        -140,
-        -1160
-      ],
-      "id": "e4557247-b904-4df8-858b-d5b56b77ec65",
-      "name": "When Executed by Another Workflow"
     }
   ],
   "pinData": {
     "Telegram Trigger": [
       {
         "json": {
-          "update_id": 404507842,
-          "callback_query": {
-            "id": "6981299091866745822",
+          "update_id": 404507846,
+          "message": {
+            "message_id": 565,
             "from": {
               "id": 1625460361,
               "is_bot": false,
@@ -1508,88 +1511,61 @@
               "last_name": "Torma",
               "language_code": "en"
             },
-            "message": {
-              "message_id": 560,
-              "from": {
-                "id": 7575108606,
-                "is_bot": true,
-                "first_name": "NIN helper",
-                "username": "nin_helper_bot"
-              },
-              "chat": {
-                "id": 1625460361,
-                "first_name": "Michal",
-                "last_name": "Torma",
-                "type": "private"
-              },
-              "date": 1746647274,
-              "reply_to_message": {
-                "message_id": 559,
-                "from": {
-                  "id": 7575108606,
-                  "is_bot": true,
-                  "first_name": "NIN helper",
-                  "username": "nin_helper_bot"
-                },
-                "chat": {
-                  "id": 1625460361,
-                  "first_name": "Michal",
-                  "last_name": "Torma",
-                  "type": "private"
-                },
-                "date": 1746647255,
-                "edit_date": 1746647257,
-                "text": "Does NA-T (Fastmarkssystemer) fit your site, given it includes terrestrial ecosystems on mineral soil or solid rock? \nReply: Yes"
-              },
-              "text": "Does NA-TK01 (Semi-naturlig eng) fit your site?",
-              "entities": [
-                {
-                  "offset": 5,
-                  "length": 27,
-                  "type": "text_link",
-                  "url": "https://naturinorge.artsdatabanken.no/Naturtype/NA-TK"
-                }
-              ],
-              "link_preview_options": {
-                "is_disabled": true
-              },
-              "reply_markup": {
-                "inline_keyboard": [
-                  [
-                    {
-                      "text": "Yes",
-                      "callback_data": "answer_1"
-                    }
-                  ],
-                  [
-                    {
-                      "text": "No",
-                      "callback_data": "answer_2"
-                    }
-                  ],
-                  [
-                    {
-                      "text": "I don't know.",
-                      "callback_data": "i_don_t_know"
-                    }
-                  ]
-                ]
-              }
+            "chat": {
+              "id": 1625460361,
+              "first_name": "Michal",
+              "last_name": "Torma",
+              "type": "private"
             },
-            "chat_instance": "8945001616945920245",
-            "data": "answer_1"
+            "date": 1746657673,
+            "photo": [
+              {
+                "file_id": "AgACAgQAAxkBAAICM2gb3AVYd7Tom2RQL5RP5Pz9NsPzAAJqxzEb3iHgUCACVg7Wy5ohAQADAgADcwADNgQ",
+                "file_unique_id": "AQADascxG94h4FB4",
+                "file_size": 2011,
+                "width": 68,
+                "height": 90
+              },
+              {
+                "file_id": "AgACAgQAAxkBAAICM2gb3AVYd7Tom2RQL5RP5Pz9NsPzAAJqxzEb3iHgUCACVg7Wy5ohAQADAgADbQADNgQ",
+                "file_unique_id": "AQADascxG94h4FBy",
+                "file_size": 31620,
+                "width": 241,
+                "height": 320
+              },
+              {
+                "file_id": "AgACAgQAAxkBAAICM2gb3AVYd7Tom2RQL5RP5Pz9NsPzAAJqxzEb3iHgUCACVg7Wy5ohAQADAgADeAADNgQ",
+                "file_unique_id": "AQADascxG94h4FB9",
+                "file_size": 136507,
+                "width": 602,
+                "height": 800
+              },
+              {
+                "file_id": "AgACAgQAAxkBAAICM2gb3AVYd7Tom2RQL5RP5Pz9NsPzAAJqxzEb3iHgUCACVg7Wy5ohAQADAgADeQADNgQ",
+                "file_unique_id": "AQADascxG94h4FB-",
+                "file_size": 247604,
+                "width": 964,
+                "height": 1280
+              }
+            ]
           }
         }
       }
     ],
-    "When Executed by Another Workflow": [
+    "Get thread id": [
       {
         "json": {
-          "source": "telegram",
-          "type": "new_message",
-          "message": "This is a message",
-          "chat_id": 123,
-          "message_id": 1234
+          "thread_id": "564"
+        }
+      }
+    ],
+    "Set thread record": [
+      {
+        "json": {
+          "chat_id": "1625460361",
+          "massage_id": "565",
+          "reply_to_id": null,
+          "timestamp": "2025-05-07T22:41:13.600Z"
         }
       }
     ]
@@ -1620,6 +1596,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-07T21:43:11.366Z",
-  "versionId": "85b00017-2cff-49b9-92d8-21478e735e02"
+  "updatedAt": "2025-05-07T22:46:36.763Z",
+  "versionId": "b5cc10e2-7a63-4d1d-8f13-e732737747a8"
 }
