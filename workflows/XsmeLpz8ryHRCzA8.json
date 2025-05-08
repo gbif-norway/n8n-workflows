@@ -242,7 +242,8 @@
     ]
   },
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
   },
   "staticData": null,
   "tags": [
@@ -254,6 +255,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-05-07T20:48:08.473Z",
-  "versionId": "67d64fb3-c24b-4c79-b643-da69d3a8322c"
+  "updatedAt": "2025-05-08T04:00:15.728Z",
+  "versionId": "16cf360a-89db-4bb9-af85-1cff1dcc7ecd"
 }
