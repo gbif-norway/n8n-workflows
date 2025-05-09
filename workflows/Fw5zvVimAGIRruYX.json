@@ -174,7 +174,7 @@
       "main": [
         [
           {
-            "node": "AI Agent",
+            "node": "Set inputs",
             "type": "main",
             "index": 0
           }
@@ -185,7 +185,7 @@
       "main": [
         [
           {
-            "node": "AI Agent",
+            "node": "Set inputs",
             "type": "main",
             "index": 0
           }
@@ -207,7 +207,7 @@
       "main": [
         [
           {
-            "node": "AI Agent",
+            "node": "Set inputs",
             "type": "main",
             "index": 0
           }
@@ -310,6 +310,17 @@
             "node": "Merge",
             "type": "main",
             "index": 1
+          }
+        ]
+      ]
+    },
+    "Set inputs": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -477,8 +488,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.8,
       "position": [
-        1452,
-        -890
+        1800,
+        -900
       ],
       "id": "b2d968e7-511f-4e82-b655-1afa72b2fde6",
       "name": "AI Agent",
@@ -487,14 +498,14 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "={{ $('Telegram Trigger').item.json.message?.chat?.id\n      ?? $('Telegram Trigger').item.json.callback_query?.message?.chat?.id }}-{{ $('Merge').item.json.thread_id }}",
+        "sessionKey": "={{ $json.thread_id}}",
         "tableName": "=nin_chat_histories",
         "contextWindowLength": 10
       },
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        1480,
+        1700,
         -670
       ],
       "id": "f02cb7c7-a8cf-4151-bba5-60b80b570f42",
@@ -542,7 +553,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        1600,
+        1820,
         -670
       ],
       "id": "c20b1dea-c002-44e6-aeb8-2d5ba300abab",
@@ -584,7 +595,7 @@
       "type": "@n8n/n8n-nodes-langchain.informationExtractor",
       "typeVersion": 1,
       "position": [
-        1920,
+        2140,
         -890
       ],
       "id": "894c62d6-7743-4d00-91d2-8c2d04dd4303",
@@ -618,7 +629,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2296,
+        2516,
         -890
       ],
       "id": "65caf9f6-dc7d-4e4e-bdf7-7ed0ba732848",
@@ -720,7 +731,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1360,
+        1580,
         -670
       ],
       "id": "955758a6-1de4-4726-a09f-978084d8ede9",
@@ -785,7 +796,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2516,
+        2736,
         -1040
       ],
       "id": "be80bc98-9f88-4e0e-acf0-c33acc586445",
@@ -810,7 +821,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2516,
+        2736,
         -790
       ],
       "id": "e5e28ea5-6e45-4581-9fe2-ba1aa67b77af",
@@ -883,7 +894,7 @@
             {
               "id": "568ec40a-82c8-4046-8288-a8bbe39d4c8e",
               "name": "content",
-              "value": "={{ $json.message.text }}",
+              "value": "={{ $('Telegram Trigger').item.json.message.text }}",
               "type": "string"
             }
           ]
@@ -897,7 +908,8 @@
         -690
       ],
       "id": "a24e9a3c-c782-43e2-87df-1a6ca604dd3b",
-      "name": "User free question"
+      "name": "User free question",
+      "executeOnce": true
     },
     {
       "parameters": {
@@ -1007,7 +1019,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2296,
+        2516,
         -1090
       ],
       "id": "695172d3-000f-4b8a-be5b-67465fb71d09",
@@ -1188,7 +1200,7 @@
       "typeVersion": 1.2,
       "position": [
         920,
-        -615
+        -780
       ],
       "id": "f22c0e7e-47fe-41dc-8281-78bb566a5b53",
       "name": "Make reply permanent1",
@@ -1238,7 +1250,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        2736,
+        2956,
         -740
       ],
       "id": "39cecdf5-1aa5-4a2f-886e-e284ac21c201",
@@ -1273,7 +1285,7 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        1720,
+        1940,
         -670
       ],
       "id": "f2e8a734-8028-4ef8-99ee-e5da271bc03c",
@@ -1433,7 +1445,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2736,
+        2956,
         -990
       ],
       "id": "b9f8eed3-f9fe-499e-a573-f90f39454507",
@@ -1493,15 +1505,44 @@
           "name": "Postgres account"
         }
       }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7d0c756e-18f2-4219-a644-f6dcf6e8a5ba",
+              "name": "content",
+              "value": "={{ $json.content }}",
+              "type": "string"
+            },
+            {
+              "id": "9ab6efd0-dc3e-47d4-8c4d-fcc10a109d8f",
+              "name": "thread_id",
+              "value": "={{ $('Telegram Trigger').item.json.message?.chat?.id       ?? $('Telegram Trigger').item.json.callback_query?.message?.chat?.id }}-{{ $('Merge').item.json.thread_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1500,
+        -900
+      ],
+      "id": "0613ff4a-2273-4b9f-8c03-63259ddbbaa8",
+      "name": "Set inputs"
     }
   ],
   "pinData": {
     "Telegram Trigger": [
       {
         "json": {
-          "update_id": 404507853,
-          "callback_query": {
-            "id": "6981299095287896191",
+          "update_id": 404507873,
+          "message": {
+            "message_id": 596,
             "from": {
               "id": 1625460361,
               "is_bot": false,
@@ -1509,8 +1550,15 @@
               "last_name": "Torma",
               "language_code": "en"
             },
-            "message": {
-              "message_id": 572,
+            "chat": {
+              "id": 1625460361,
+              "first_name": "Michal",
+              "last_name": "Torma",
+              "type": "private"
+            },
+            "date": 1746781958,
+            "reply_to_message": {
+              "message_id": 595,
               "from": {
                 "id": 7575108606,
                 "is_bot": true,
@@ -1523,66 +1571,15 @@
                 "last_name": "Torma",
                 "type": "private"
               },
-              "date": 1746776767,
-              "reply_to_message": {
-                "message_id": 571,
-                "from": {
-                  "id": 1625460361,
-                  "is_bot": false,
-                  "first_name": "Michal",
-                  "last_name": "Torma",
-                  "language_code": "en"
-                },
-                "chat": {
-                  "id": 1625460361,
-                  "first_name": "Michal",
-                  "last_name": "Torma",
-                  "type": "private"
-                },
-                "date": 1746776754,
-                "photo": [
-                  {
-                    "file_id": "AgACAgQAAxkBAAICCmgbgfM7LZPMhN_816vyWk4drzMDAAJ3xjEb3iHgUP7xFVXmW79JAQADAgADcwADNgQ",
-                    "file_unique_id": "AQADd8YxG94h4FB4",
-                    "file_size": 1272,
-                    "width": 51,
-                    "height": 90
-                  },
-                  {
-                    "file_id": "AgACAgQAAxkBAAICCmgbgfM7LZPMhN_816vyWk4drzMDAAJ3xjEb3iHgUP7xFVXmW79JAQADAgADbQADNgQ",
-                    "file_unique_id": "AQADd8YxG94h4FBy",
-                    "file_size": 23245,
-                    "width": 180,
-                    "height": 320
-                  },
-                  {
-                    "file_id": "AgACAgQAAxkBAAICCmgbgfM7LZPMhN_816vyWk4drzMDAAJ3xjEb3iHgUP7xFVXmW79JAQADAgADeAADNgQ",
-                    "file_unique_id": "AQADd8YxG94h4FB9",
-                    "file_size": 102832,
-                    "width": 450,
-                    "height": 800
-                  },
-                  {
-                    "file_id": "AgACAgQAAxkBAAICCmgbgfM7LZPMhN_816vyWk4drzMDAAJ3xjEb3iHgUP7xFVXmW79JAQADAgADeQADNgQ",
-                    "file_unique_id": "AQADd8YxG94h4FB-",
-                    "file_size": 190396,
-                    "width": 720,
-                    "height": 1280
-                  }
-                ]
-              },
-              "text": "Does NA-T (Fastmarkssystemer) fit your site?",
+              "date": 1746781849,
+              "text": "Is Deschampsia flexuosa (Wavy Hair-grass) present and common (e.g., covering more than 10% of the ground) at your site?",
               "entities": [
                 {
-                  "offset": 5,
-                  "length": 24,
-                  "type": "text_link",
-                  "url": "https://naturinorge.artsdatabanken.no/Naturtype/NA-T"
+                  "offset": 3,
+                  "length": 20,
+                  "type": "bold"
                 }
               ],
-              "link_preview_options": {
-                "is_disabled": true
-              },
               "reply_markup": {
                 "inline_keyboard": [
                   [
@@ -1606,9 +1603,269 @@
                 ]
               }
             },
-            "chat_instance": "8945001616945920245",
-            "data": "answer_1"
+            "text": "No but deshchampsia cespitosa is there"
           }
+        }
+      }
+    ],
+    "Make reply permanent1": [
+      {
+        "json": {
+          "ok": true,
+          "result": {
+            "message_id": 595,
+            "from": {
+              "id": 7575108606,
+              "is_bot": true,
+              "first_name": "NIN helper",
+              "username": "nin_helper_bot"
+            },
+            "chat": {
+              "id": 1625460361,
+              "first_name": "Michal",
+              "last_name": "Torma",
+              "type": "private"
+            },
+            "date": 1746781849,
+            "edit_date": 1746781958,
+            "text": "Is Deschampsia flexuosa (Wavy Hair-grass) present and common (e.g., covering more than 10% of the ground) at your site?"
+          }
+        }
+      }
+    ],
+    "If1": [
+      {
+        "json": {
+          "update_id": 404507873,
+          "message": {
+            "message_id": 596,
+            "from": {
+              "id": 1625460361,
+              "is_bot": false,
+              "first_name": "Michal",
+              "last_name": "Torma",
+              "language_code": "en"
+            },
+            "chat": {
+              "id": 1625460361,
+              "first_name": "Michal",
+              "last_name": "Torma",
+              "type": "private"
+            },
+            "date": 1746781958,
+            "reply_to_message": {
+              "message_id": 595,
+              "from": {
+                "id": 7575108606,
+                "is_bot": true,
+                "first_name": "NIN helper",
+                "username": "nin_helper_bot"
+              },
+              "chat": {
+                "id": 1625460361,
+                "first_name": "Michal",
+                "last_name": "Torma",
+                "type": "private"
+              },
+              "date": 1746781849,
+              "text": "Is Deschampsia flexuosa (Wavy Hair-grass) present and common (e.g., covering more than 10% of the ground) at your site?",
+              "entities": [
+                {
+                  "offset": 3,
+                  "length": 20,
+                  "type": "bold"
+                }
+              ],
+              "reply_markup": {
+                "inline_keyboard": [
+                  [
+                    {
+                      "text": "yes",
+                      "callback_data": "answer_1"
+                    }
+                  ],
+                  [
+                    {
+                      "text": "no",
+                      "callback_data": "answer_2"
+                    }
+                  ],
+                  [
+                    {
+                      "text": "I don't know.",
+                      "callback_data": "i_don_t_know"
+                    }
+                  ]
+                ]
+              }
+            },
+            "text": "No but deshchampsia cespitosa is there"
+          },
+          "thread_id": "586"
+        }
+      }
+    ],
+    "Save to DB": [
+      {
+        "json": {
+          "update_id": "404507873",
+          "content": {
+            "message": {
+              "chat": {
+                "id": 1625460361,
+                "type": "private",
+                "last_name": "Torma",
+                "first_name": "Michal"
+              },
+              "date": 1746781958,
+              "from": {
+                "id": 1625460361,
+                "is_bot": false,
+                "last_name": "Torma",
+                "first_name": "Michal",
+                "language_code": "en"
+              },
+              "text": "No but deshchampsia cespitosa is there",
+              "message_id": 596,
+              "reply_to_message": {
+                "chat": {
+                  "id": 1625460361,
+                  "type": "private",
+                  "last_name": "Torma",
+                  "first_name": "Michal"
+                },
+                "date": 1746781849,
+                "from": {
+                  "id": 7575108606,
+                  "is_bot": true,
+                  "username": "nin_helper_bot",
+                  "first_name": "NIN helper"
+                },
+                "text": "Is Deschampsia flexuosa (Wavy Hair-grass) present and common (e.g., covering more than 10% of the ground) at your site?",
+                "entities": [
+                  {
+                    "type": "bold",
+                    "length": 20,
+                    "offset": 3
+                  }
+                ],
+                "message_id": 595,
+                "reply_markup": {
+                  "inline_keyboard": [
+                    [
+                      {
+                        "text": "yes",
+                        "callback_data": "answer_1"
+                      }
+                    ],
+                    [
+                      {
+                        "text": "no",
+                        "callback_data": "answer_2"
+                      }
+                    ],
+                    [
+                      {
+                        "text": "I don't know.",
+                        "callback_data": "i_don_t_know"
+                      }
+                    ]
+                  ]
+                }
+              }
+            },
+            "update_id": 404507873
+          },
+          "done": false
+        }
+      }
+    ],
+    "Set thread record": [
+      {
+        "json": {
+          "chat_id": "1625460361",
+          "massage_id": "596",
+          "reply_to_id": "595",
+          "timestamp": "2025-05-09T09:12:38.549Z"
+        }
+      }
+    ],
+    "Get thread id": [
+      {
+        "json": {
+          "thread_id": "586"
+        }
+      }
+    ],
+    "Telegram typing action": [
+      {
+        "json": {
+          "update_id": 404507873,
+          "message": {
+            "message_id": 596,
+            "from": {
+              "id": 1625460361,
+              "is_bot": false,
+              "first_name": "Michal",
+              "last_name": "Torma",
+              "language_code": "en"
+            },
+            "chat": {
+              "id": 1625460361,
+              "first_name": "Michal",
+              "last_name": "Torma",
+              "type": "private"
+            },
+            "date": 1746781958,
+            "reply_to_message": {
+              "message_id": 595,
+              "from": {
+                "id": 7575108606,
+                "is_bot": true,
+                "first_name": "NIN helper",
+                "username": "nin_helper_bot"
+              },
+              "chat": {
+                "id": 1625460361,
+                "first_name": "Michal",
+                "last_name": "Torma",
+                "type": "private"
+              },
+              "date": 1746781849,
+              "text": "Is Deschampsia flexuosa (Wavy Hair-grass) present and common (e.g., covering more than 10% of the ground) at your site?",
+              "entities": [
+                {
+                  "offset": 3,
+                  "length": 20,
+                  "type": "bold"
+                }
+              ],
+              "reply_markup": {
+                "inline_keyboard": [
+                  [
+                    {
+                      "text": "yes",
+                      "callback_data": "answer_1"
+                    }
+                  ],
+                  [
+                    {
+                      "text": "no",
+                      "callback_data": "answer_2"
+                    }
+                  ],
+                  [
+                    {
+                      "text": "I don't know.",
+                      "callback_data": "i_don_t_know"
+                    }
+                  ]
+                ]
+              }
+            },
+            "text": "No but deshchampsia cespitosa is there"
+          },
+          "thread_id": "586"
         }
       }
     ]
@@ -1639,6 +1896,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-09T07:48:40.449Z",
-  "versionId": "66f85570-860f-4e24-9201-22798c1c713c"
+  "updatedAt": "2025-05-09T09:19:15.187Z",
+  "versionId": "5e567575-c678-46af-8311-bcd10d312b41"
 }
