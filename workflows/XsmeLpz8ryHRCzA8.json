@@ -163,7 +163,7 @@
           "values": [
             {
               "column": "update_id",
-              "value": "={{ $json.update_id }}"
+              "value": "={{ $('When Executed by Another Workflow').item.json.update_id }}"
             }
           ]
         },
@@ -189,9 +189,9 @@
     "When Executed by Another Workflow": [
       {
         "json": {
-          "update_id": 404507665,
+          "update_id": 404507848,
           "message": {
-            "message_id": 332,
+            "message_id": 567,
             "from": {
               "id": 1625460361,
               "is_bot": false,
@@ -205,34 +205,34 @@
               "last_name": "Torma",
               "type": "private"
             },
-            "date": 1746515504,
+            "date": 1746775168,
             "photo": [
               {
-                "file_id": "AgACAgQAAxkBAAIBA2gY_BVKNu-OMfevTNY441rHKHtrAAK4yTEbsN3JUHyqeQNKGUbVAQADAgADcwADNgQ",
-                "file_unique_id": "AQADuMkxG7DdyVB4",
-                "file_size": 1307,
-                "width": 68,
+                "file_id": "AgACAgQAAxkBAAICCmgbgfM7LZPMhN_816vyWk4drzMDAAJ3xjEb3iHgUP7xFVXmW79JAQADAgADcwADNgQ",
+                "file_unique_id": "AQADd8YxG94h4FB4",
+                "file_size": 1272,
+                "width": 51,
                 "height": 90
               },
               {
-                "file_id": "AgACAgQAAxkBAAIBA2gY_BVKNu-OMfevTNY441rHKHtrAAK4yTEbsN3JUHyqeQNKGUbVAQADAgADbQADNgQ",
-                "file_unique_id": "AQADuMkxG7DdyVBy",
-                "file_size": 30827,
-                "width": 241,
+                "file_id": "AgACAgQAAxkBAAICCmgbgfM7LZPMhN_816vyWk4drzMDAAJ3xjEb3iHgUP7xFVXmW79JAQADAgADbQADNgQ",
+                "file_unique_id": "AQADd8YxG94h4FBy",
+                "file_size": 23245,
+                "width": 180,
                 "height": 320
               },
               {
-                "file_id": "AgACAgQAAxkBAAIBA2gY_BVKNu-OMfevTNY441rHKHtrAAK4yTEbsN3JUHyqeQNKGUbVAQADAgADeAADNgQ",
-                "file_unique_id": "AQADuMkxG7DdyVB9",
-                "file_size": 202712,
-                "width": 602,
+                "file_id": "AgACAgQAAxkBAAICCmgbgfM7LZPMhN_816vyWk4drzMDAAJ3xjEb3iHgUP7xFVXmW79JAQADAgADeAADNgQ",
+                "file_unique_id": "AQADd8YxG94h4FB9",
+                "file_size": 102832,
+                "width": 450,
                 "height": 800
               },
               {
-                "file_id": "AgACAgQAAxkBAAIBA2gY_BVKNu-OMfevTNY441rHKHtrAAK4yTEbsN3JUHyqeQNKGUbVAQADAgADeQADNgQ",
-                "file_unique_id": "AQADuMkxG7DdyVB-",
-                "file_size": 457984,
-                "width": 964,
+                "file_id": "AgACAgQAAxkBAAICCmgbgfM7LZPMhN_816vyWk4drzMDAAJ3xjEb3iHgUP7xFVXmW79JAQADAgADeQADNgQ",
+                "file_unique_id": "AQADd8YxG94h4FB-",
+                "file_size": 190396,
+                "width": 720,
                 "height": 1280
               }
             ]
@@ -243,7 +243,9 @@
   },
   "settings": {
     "executionOrder": "v1",
-    "errorWorkflow": "7MnksaFaiPR7iyVY"
+    "errorWorkflow": "7MnksaFaiPR7iyVY",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": 120
   },
   "staticData": null,
   "tags": [
@@ -255,6 +257,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-05-08T04:00:15.728Z",
-  "versionId": "16cf360a-89db-4bb9-af85-1cff1dcc7ecd"
+  "updatedAt": "2025-05-09T07:32:34.571Z",
+  "versionId": "008efff0-d27a-4f0f-867d-3074ba7f77b3"
 }
