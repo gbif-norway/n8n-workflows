@@ -22,7 +22,9 @@
       "parameters": {
         "chatId": "1625460361",
         "text": "={{ $json.message }}",
-        "additionalFields": {}
+        "additionalFields": {
+          "appendAttribution": false
+        }
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
@@ -88,6 +90,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-05-07T17:32:51.862Z",
-  "versionId": "66431169-6190-4142-85d8-ec1f248de43f"
+  "updatedAt": "2025-05-09T14:36:22.732Z",
+  "versionId": "ed90eccd-89f1-4188-888c-9aba933e6ffb"
 }
