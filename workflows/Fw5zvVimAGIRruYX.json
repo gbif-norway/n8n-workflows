@@ -599,7 +599,9 @@
         -890
       ],
       "id": "894c62d6-7743-4d00-91d2-8c2d04dd4303",
-      "name": "Information Extractor"
+      "name": "Information Extractor",
+      "retryOnFail": true,
+      "waitBetweenTries": 0
     },
     {
       "parameters": {
@@ -1537,77 +1539,6 @@
     }
   ],
   "pinData": {
-    "Telegram Trigger": [
-      {
-        "json": {
-          "update_id": 404507873,
-          "message": {
-            "message_id": 596,
-            "from": {
-              "id": 1625460361,
-              "is_bot": false,
-              "first_name": "Michal",
-              "last_name": "Torma",
-              "language_code": "en"
-            },
-            "chat": {
-              "id": 1625460361,
-              "first_name": "Michal",
-              "last_name": "Torma",
-              "type": "private"
-            },
-            "date": 1746781958,
-            "reply_to_message": {
-              "message_id": 595,
-              "from": {
-                "id": 7575108606,
-                "is_bot": true,
-                "first_name": "NIN helper",
-                "username": "nin_helper_bot"
-              },
-              "chat": {
-                "id": 1625460361,
-                "first_name": "Michal",
-                "last_name": "Torma",
-                "type": "private"
-              },
-              "date": 1746781849,
-              "text": "Is Deschampsia flexuosa (Wavy Hair-grass) present and common (e.g., covering more than 10% of the ground) at your site?",
-              "entities": [
-                {
-                  "offset": 3,
-                  "length": 20,
-                  "type": "bold"
-                }
-              ],
-              "reply_markup": {
-                "inline_keyboard": [
-                  [
-                    {
-                      "text": "yes",
-                      "callback_data": "answer_1"
-                    }
-                  ],
-                  [
-                    {
-                      "text": "no",
-                      "callback_data": "answer_2"
-                    }
-                  ],
-                  [
-                    {
-                      "text": "I don't know.",
-                      "callback_data": "i_don_t_know"
-                    }
-                  ]
-                ]
-              }
-            },
-            "text": "No but deshchampsia cespitosa is there"
-          }
-        }
-      }
-    ],
     "Make reply permanent1": [
       {
         "json": {
@@ -1705,167 +1636,55 @@
         }
       }
     ],
-    "Save to DB": [
+    "Telegram Trigger": [
       {
         "json": {
-          "update_id": "404507873",
-          "content": {
-            "message": {
-              "chat": {
-                "id": 1625460361,
-                "type": "private",
-                "last_name": "Torma",
-                "first_name": "Michal"
-              },
-              "date": 1746781958,
-              "from": {
-                "id": 1625460361,
-                "is_bot": false,
-                "last_name": "Torma",
-                "first_name": "Michal",
-                "language_code": "en"
-              },
-              "text": "No but deshchampsia cespitosa is there",
-              "message_id": 596,
-              "reply_to_message": {
-                "chat": {
-                  "id": 1625460361,
-                  "type": "private",
-                  "last_name": "Torma",
-                  "first_name": "Michal"
-                },
-                "date": 1746781849,
-                "from": {
-                  "id": 7575108606,
-                  "is_bot": true,
-                  "username": "nin_helper_bot",
-                  "first_name": "NIN helper"
-                },
-                "text": "Is Deschampsia flexuosa (Wavy Hair-grass) present and common (e.g., covering more than 10% of the ground) at your site?",
-                "entities": [
-                  {
-                    "type": "bold",
-                    "length": 20,
-                    "offset": 3
-                  }
-                ],
-                "message_id": 595,
-                "reply_markup": {
-                  "inline_keyboard": [
-                    [
-                      {
-                        "text": "yes",
-                        "callback_data": "answer_1"
-                      }
-                    ],
-                    [
-                      {
-                        "text": "no",
-                        "callback_data": "answer_2"
-                      }
-                    ],
-                    [
-                      {
-                        "text": "I don't know.",
-                        "callback_data": "i_don_t_know"
-                      }
-                    ]
-                  ]
-                }
-              }
-            },
-            "update_id": 404507873
-          },
-          "done": false
-        }
-      }
-    ],
-    "Set thread record": [
-      {
-        "json": {
-          "chat_id": "1625460361",
-          "massage_id": "596",
-          "reply_to_id": "595",
-          "timestamp": "2025-05-09T09:12:38.549Z"
-        }
-      }
-    ],
-    "Get thread id": [
-      {
-        "json": {
-          "thread_id": "586"
-        }
-      }
-    ],
-    "Telegram typing action": [
-      {
-        "json": {
-          "update_id": 404507873,
+          "update_id": 404507946,
           "message": {
-            "message_id": 596,
+            "message_id": 692,
             "from": {
-              "id": 1625460361,
+              "id": 7617249808,
               "is_bot": false,
-              "first_name": "Michal",
-              "last_name": "Torma",
+              "first_name": "Peter",
               "language_code": "en"
             },
             "chat": {
-              "id": 1625460361,
-              "first_name": "Michal",
-              "last_name": "Torma",
+              "id": 7617249808,
+              "first_name": "Peter",
               "type": "private"
             },
-            "date": 1746781958,
-            "reply_to_message": {
-              "message_id": 595,
-              "from": {
-                "id": 7575108606,
-                "is_bot": true,
-                "first_name": "NIN helper",
-                "username": "nin_helper_bot"
+            "date": 1746856069,
+            "photo": [
+              {
+                "file_id": "AgACAgQAAxkBAAICtGge6IXiUrJJJ_gBgZq62Y0brxcFAALzyDEbo4z5UKktdHxv2jj4AQADAgADcwADNgQ",
+                "file_unique_id": "AQAD88gxG6OM-VB4",
+                "file_size": 1744,
+                "width": 67,
+                "height": 90
               },
-              "chat": {
-                "id": 1625460361,
-                "first_name": "Michal",
-                "last_name": "Torma",
-                "type": "private"
+              {
+                "file_id": "AgACAgQAAxkBAAICtGge6IXiUrJJJ_gBgZq62Y0brxcFAALzyDEbo4z5UKktdHxv2jj4AQADAgADbQADNgQ",
+                "file_unique_id": "AQAD88gxG6OM-VBy",
+                "file_size": 43167,
+                "width": 240,
+                "height": 320
               },
-              "date": 1746781849,
-              "text": "Is Deschampsia flexuosa (Wavy Hair-grass) present and common (e.g., covering more than 10% of the ground) at your site?",
-              "entities": [
-                {
-                  "offset": 3,
-                  "length": 20,
-                  "type": "bold"
-                }
-              ],
-              "reply_markup": {
-                "inline_keyboard": [
-                  [
-                    {
-                      "text": "yes",
-                      "callback_data": "answer_1"
-                    }
-                  ],
-                  [
-                    {
-                      "text": "no",
-                      "callback_data": "answer_2"
-                    }
-                  ],
-                  [
-                    {
-                      "text": "I don't know.",
-                      "callback_data": "i_don_t_know"
-                    }
-                  ]
-                ]
+              {
+                "file_id": "AgACAgQAAxkBAAICtGge6IXiUrJJJ_gBgZq62Y0brxcFAALzyDEbo4z5UKktdHxv2jj4AQADAgADeAADNgQ",
+                "file_unique_id": "AQAD88gxG6OM-VB9",
+                "file_size": 276056,
+                "width": 600,
+                "height": 800
+              },
+              {
+                "file_id": "AgACAgQAAxkBAAICtGge6IXiUrJJJ_gBgZq62Y0brxcFAALzyDEbo4z5UKktdHxv2jj4AQADAgADeQADNgQ",
+                "file_unique_id": "AQAD88gxG6OM-VB-",
+                "file_size": 475194,
+                "width": 960,
+                "height": 1280
               }
-            },
-            "text": "No but deshchampsia cespitosa is there"
-          },
-          "thread_id": "586"
+            ]
+          }
         }
       }
     ]
@@ -1896,6 +1715,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-09T09:19:15.187Z",
-  "versionId": "5e567575-c678-46af-8311-bcd10d312b41"
+  "updatedAt": "2025-05-10T06:58:19.790Z",
+  "versionId": "b9f82fa7-abb5-471e-be11-0c07c5e11669"
 }
