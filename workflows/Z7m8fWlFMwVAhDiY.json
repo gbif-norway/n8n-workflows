@@ -1,0 +1,25 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-05-12T12:40:05.440Z",
+  "id": "Z7m8fWlFMwVAhDiY",
+  "meta": null,
+  "name": "NIN Helper WhatApp interface",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-04-10T17:04:31.495Z",
+      "updatedAt": "2025-04-10T17:04:31.495Z",
+      "id": "CFjXUKUF3jMewkBv",
+      "name": "nin"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-12T12:40:09.728Z",
+  "versionId": "fefb6920-1346-46d4-ab95-985fa1e559e2"
+}
