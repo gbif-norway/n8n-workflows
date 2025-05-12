@@ -55,18 +55,8 @@
     },
     {
       "parameters": {
-        "operation": "select",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "nin_chat_histories",
-          "mode": "list",
-          "cachedResultName": "nin_chat_histories"
-        },
+        "operation": "executeQuery",
+        "query": "SELECT json_agg(json_build_object('session_id', session_id, 'history', message)) FROM public.nin_chat_histories\nGROUP by session_id",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -138,6 +128,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-05-11T19:00:43.496Z",
-  "versionId": "b560683c-4019-455d-b08a-7701d8cd417a"
+  "updatedAt": "2025-05-12T11:21:21.370Z",
+  "versionId": "ca63a8d6-96ed-4be4-b792-10813f5a507f"
 }
