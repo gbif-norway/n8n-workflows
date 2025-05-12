@@ -40,7 +40,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "My workflow",
+  "name": "🛠️ Export conversations",
   "nodes": [
     {
       "parameters": {},
@@ -56,7 +56,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT json_agg(json_build_object('session_id', session_id, 'history', message)) FROM public.nin_chat_histories\nGROUP by session_id",
+        "query": "SELECT json_agg(json_build_object('session_id', session_id, 'history', message)) as history FROM public.nin_chat_histories\nGROUP by session_id",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -89,13 +89,16 @@
           "mode": "list",
           "cachedResultName": "n8n-workflows",
           "cachedResultUrl": "https://github.com/gbif-norway/n8n-workflows"
-        }
+        },
+        "filePath": "=conversations/{{ $('Postgres').item.json.history[0].session_id }}.md",
+        "fileContent": "={{ $json.markdown }}",
+        "commitMessage": "=Add chat history for session_id {{ $('Postgres').item.json.history[0].session_id }}"
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
       "position": [
-        920,
-        -20
+        940,
+        0
       ],
       "id": "c53962cd-a873-4844-8f2e-9d32865c0746",
       "name": "GitHub",
@@ -109,7 +112,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+        "jsCode": "// -------------------------------------------------------------\n// n8n Code node (JavaScript)\n// Input:  1 item whose JSON is the array you pasted\n// Output: 1 item with property  markdown  = pretty transcript\n// -------------------------------------------------------------\n\nvar res = [];\n// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n    // 2. Build the Markdown\n  let md = '';\n  const transcript = item.json       \n    for (const m of transcript.history) {                  // inner history list\n      const role = m.history.type === 'human' ? 'Human' : 'AI';\n      const text = m.history.content?.trim() ?? '';\n      md += `**${role}:** ${text}\\n\\n`;               // blank line = MD paragraph\n  }\n  \n  // 3. Return one clean item\n  \n  const jsn = {\n        markdown: md.trimEnd(),   // tidy trailing newline\n    };\n  res.push(jsn)\n}\n\nreturn res;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -117,8 +120,9 @@
         440,
         0
       ],
-      "id": "e4c41b90-e97d-4f6c-91f4-dfce6d975c8a",
-      "name": "Code"
+      "id": "80d01511-3d3f-44fc-b7cd-d10e2cefd34a",
+      "name": "Code",
+      "executeOnce": false
     }
   ],
   "pinData": {},
@@ -126,8 +130,15 @@
     "executionOrder": "v1"
   },
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-04-10T17:04:31.495Z",
+      "updatedAt": "2025-04-10T17:04:31.495Z",
+      "id": "CFjXUKUF3jMewkBv",
+      "name": "nin"
+    }
+  ],
   "triggerCount": 0,
-  "updatedAt": "2025-05-12T11:21:21.370Z",
-  "versionId": "ca63a8d6-96ed-4be4-b792-10813f5a507f"
+  "updatedAt": "2025-05-12T12:39:06.855Z",
+  "versionId": "ac53306d-7f0f-493a-8690-5386613b0440"
 }
