@@ -1,12 +1,106 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Business Cloud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "createdAt": "2025-05-12T12:40:05.440Z",
   "id": "Z7m8fWlFMwVAhDiY",
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "NIN Helper WhatApp interface",
-  "nodes": [],
-  "pinData": {},
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -260,
+        -40
+      ],
+      "id": "35833300-e590-434d-862b-0dcd919e27f2",
+      "name": "WhatsApp Trigger",
+      "webhookId": "9f9a40f2-2c40-4deb-8832-8784efca41c5",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "lkqMPNKFakbQUGpV",
+          "name": "WhatsApp OAuth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "637663046095527",
+        "recipientPhoneNumber": "=+4796694778",
+        "textBody": "hi",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        240,
+        -40
+      ],
+      "id": "91cff682-a264-4c5c-bb28-650c142f02fb",
+      "name": "WhatsApp Business Cloud",
+      "webhookId": "f0a41360-af06-44c3-a9c8-cde11d3073dd",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "2fF8n5nPmjxVyoOj",
+          "name": "WhatsApp account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "WhatsApp Trigger": [
+      {
+        "json": {
+          "messaging_product": "whatsapp",
+          "metadata": {
+            "display_phone_number": "16505551111",
+            "phone_number_id": "123456123"
+          },
+          "contacts": [
+            {
+              "profile": {
+                "name": "test user name"
+              },
+              "wa_id": "16315551181"
+            }
+          ],
+          "messages": [
+            {
+              "from": "16315551181",
+              "id": "ABGGFlA5Fpa",
+              "timestamp": "1504902988",
+              "type": "text",
+              "text": {
+                "body": "this is a text message"
+              }
+            }
+          ],
+          "field": "messages"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -20,6 +114,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-05-12T12:40:09.728Z",
-  "versionId": "fefb6920-1346-46d4-ab95-985fa1e559e2"
+  "updatedAt": "2025-05-13T17:55:02.099Z",
+  "versionId": "6d9394ba-da5a-4397-8446-bd6801d9718e"
 }
