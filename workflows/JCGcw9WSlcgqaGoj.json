@@ -1,0 +1,555 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Global": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-15T14:03:05.518Z",
+  "id": "JCGcw9WSlcgqaGoj",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "👩‍💼 Export DO invoices - NIE",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e2597912-2b3b-463a-b553-2a7a7a008104",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://api.digitalocean.com/v2/customers/my/invoices",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "digitalOceanApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "bbf506ea-180a-4430-b500-b4cf7d053d06",
+      "name": "HTTP Request",
+      "credentials": {
+        "digitalOceanApi": {
+          "id": "dOKJkncNBo7acEFZ",
+          "name": "Digital Ocean NIE account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "invoices",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "958c73dc-554c-4574-8a4f-721a04b9d37d",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "batchSize": 5,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1580,
+        100
+      ],
+      "id": "13e8d9e1-fe39-43de-9fa8-5a41c88e11e2",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.digitalocean.com/v2/customers/my/invoices/{{ $json.invoice_uuid }}/pdf",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "digitalOceanApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1900,
+        120
+      ],
+      "id": "4d0c4714-1ef5-497f-893e-56400df45a11",
+      "name": "HTTP Request1",
+      "credentials": {
+        "digitalOceanApi": {
+          "id": "dOKJkncNBo7acEFZ",
+          "name": "Digital Ocean NIE account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1N4DgKH59QepTnw5_3vjedR6P1brZfNA8u1cX8lHTlyI",
+          "mode": "list",
+          "cachedResultName": "Finance UIO",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N4DgKH59QepTnw5_3vjedR6P1brZfNA8u1cX8lHTlyI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "DO Invoices",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N4DgKH59QepTnw5_3vjedR6P1brZfNA8u1cX8lHTlyI/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "project_id",
+              "lookupValue": "={{ $('Global').item.json.project_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1160,
+        -320
+      ],
+      "id": "dc791f4d-9abe-4a8d-83e0-00c0c3a34141",
+      "name": "Google Sheets",
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "invoice_uuid",
+        "joinMode": "keepNonMatches",
+        "outputDataFrom": "input2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1320,
+        100
+      ],
+      "id": "aa30ad8b-3afc-43fb-b62f-00e113e30cf5",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "name": "=DO-{{ $('Global').item.json.project_id }}-{{ $json.invoice_period }}.pdf",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1KynQzEap_7yrJbChfoaapYQMEccG8VU8",
+          "mode": "list",
+          "cachedResultName": "Invoices",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1KynQzEap_7yrJbChfoaapYQMEccG8VU8"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2180,
+        120
+      ],
+      "id": "ab2220c1-e70b-42b0-b1a8-09da9dc743a2",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "2hEB8jxgNZNm5w5A",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f2b60b41-9ecd-47b2-9f65-59a848f26352",
+              "name": "project_id",
+              "value": "nie",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "id": "8ac181ae-2509-4567-a927-bdacf3729c15",
+      "name": "Global"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1N4DgKH59QepTnw5_3vjedR6P1brZfNA8u1cX8lHTlyI",
+          "mode": "list",
+          "cachedResultName": "Finance UIO",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N4DgKH59QepTnw5_3vjedR6P1brZfNA8u1cX8lHTlyI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "DO Invoices",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N4DgKH59QepTnw5_3vjedR6P1brZfNA8u1cX8lHTlyI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "project_id": "={{ $('Global').item.json.project_id }}",
+            "pdf": "={{ $json.webContentLink }}",
+            "reimbursed": "False",
+            "submitted": "False",
+            "invoice_uuid": "={{ $('Loop Over Items').item.json.invoice_uuid }}",
+            "amount": "={{ $('Loop Over Items').item.json.amount }}",
+            "invoice_period": "={{ $('Loop Over Items').item.json.invoice_period }}",
+            "invoice_id": "={{ $('Loop Over Items').item.json.invoice_id }}",
+            "status": "={{ $('Loop Over Items').item.json.status }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "project_id",
+              "displayName": "project_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "invoice_uuid",
+              "displayName": "invoice_uuid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "amount",
+              "displayName": "amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "invoice_period",
+              "displayName": "invoice_period",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "invoice_id",
+              "displayName": "invoice_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "submitted",
+              "displayName": "submitted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reimbursed",
+              "displayName": "reimbursed",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "pdf",
+              "displayName": "pdf",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "useAppend": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2400,
+        120
+      ],
+      "id": "b61461c9-c5d0-4fdd-af12-674b35d73f07",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "qOFpCaIBhvwBEqNt",
+          "mode": "list",
+          "cachedResultName": "Contact admin"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "message": "=DO - NEW invoice extraction for {{ $('Global').item.json.project_id }} finished"
+          },
+          "matchingColumns": [
+            "message"
+          ],
+          "schema": [
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1920,
+        -280
+      ],
+      "id": "c6adb4fb-7b96-435d-8184-695d1bd59188",
+      "name": "Execute Workflow",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        200
+      ],
+      "id": "02a127bf-8fca-4b2c-b84b-8a5722fa77fb",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-15T14:06:35.192Z",
+  "versionId": "66fb6ebf-60c1-4c33-b6de-64667d72584b"
+}
