@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "When clicking ‘Test workflow’": {
       "main": [
@@ -122,6 +122,17 @@
           }
         ]
       ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-05-15T12:41:53.400Z",
@@ -129,7 +140,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "My workflow",
+  "name": "👩‍💼 Export DO invoices - gbif-norway",
   "nodes": [
     {
       "parameters": {},
@@ -506,15 +517,45 @@
       ],
       "id": "34248d11-d1ab-4b2a-a4a9-790a75adf22a",
       "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        200
+      ],
+      "id": "cdf66277-46eb-45fa-a80d-9b72ec245ea9",
+      "name": "Schedule Trigger"
     }
   ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
-  "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-05-15T14:00:03.896Z",
-  "versionId": "a6d76864-2cc0-4f6c-accc-453a47483766"
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2025-05-15T14:02:27.816Z",
+      "updatedAt": "2025-05-15T14:02:27.816Z",
+      "id": "8InhUicPRAEJuYeU",
+      "name": "GBIF"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-15T14:02:34.136Z",
+  "versionId": "eab7a156-22d3-4a17-a4df-30ce02db3add"
 }
