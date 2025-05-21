@@ -1,0 +1,475 @@
+{
+  "active": false,
+  "connections": {
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Image": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-21T13:33:24.775Z",
+  "id": "VMh3rEGCtuevcGuJ",
+  "isArchived": false,
+  "meta": null,
+  "name": "SPLAT run - chatgpt-4o",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"prompt1\": \"a string\",\n  \"prompt2\": \"\",\n  \"img_url\": \"url\",\n  \"gbif_key\": 123\n}"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "03761769-cb3d-45b7-ad4f-1d3fca8675c1",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When Executed by Another Workflow').item.json.prompt1}}",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "imageDetail": "high"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        880,
+        -20
+      ],
+      "id": "4bcc882d-c481-4a83-a139-4ef6a538c4ec",
+      "name": "Basic LLM Chain",
+      "retryOnFail": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        800,
+        260
+      ],
+      "id": "fbfbc379-2275-4242-9d4c-68665ec9fb3d",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "fVqq5tXe6fuAG0kz",
+          "name": "OpenAi account - NIN Helper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.text }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "dwc:scientificName",
+              "description": "scientific name"
+            },
+            {
+              "name": "dwc:catalogNumber",
+              "description": "catalog number"
+            },
+            {
+              "name": "dwc:recordNumber",
+              "description": "record identifier"
+            },
+            {
+              "name": "dwc:recordedBy",
+              "description": "recorded By"
+            },
+            {
+              "name": "dwc:year",
+              "type": "number",
+              "description": "year of collection event"
+            },
+            {
+              "name": "dwc:month",
+              "type": "number",
+              "description": "month of collection event"
+            },
+            {
+              "name": "dwc:day",
+              "type": "number",
+              "description": "day of collection event"
+            },
+            {
+              "name": "dwc:dateIdentified",
+              "type": "date",
+              "description": "date identified"
+            },
+            {
+              "name": "dwc:identifiedBy",
+              "description": "identified by"
+            },
+            {
+              "name": "dwc:verbatimIdentification",
+              "description": "verbatim identification"
+            },
+            {
+              "name": "dwc:country",
+              "description": "country"
+            },
+            {
+              "name": "dwc:countryCode",
+              "description": "country code"
+            },
+            {
+              "name": "dwc:decimalLatitude",
+              "type": "number",
+              "description": "decimal latitude"
+            },
+            {
+              "name": "dwc:decimalLongitude",
+              "description": "decimal longitude"
+            },
+            {
+              "name": "dwc:locality",
+              "description": "locality"
+            },
+            {
+              "name": "dwc:minimumElevationInMeters",
+              "type": "number",
+              "description": "minimum elevation in meters"
+            },
+            {
+              "name": "dwc:maximumElevationInMeters",
+              "type": "number",
+              "description": "maximum elevation in meters"
+            },
+            {
+              "name": "dwc:verbatimElevation",
+              "description": "verbatim elevation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        -20
+      ],
+      "id": "6231609e-7b8e-4687-bf2c-4fccc12365cf",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "={{ $('When Executed by Another Workflow').item.json.prompt2}}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        1320,
+        -20
+      ],
+      "id": "ef2d6165-701f-45df-9a97-fc8caabb65e9",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU",
+          "mode": "list",
+          "cachedResultName": "AI4Specimen - prompt evaluation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1779488695,
+          "mode": "list",
+          "cachedResultName": "Results",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit#gid=1779488695"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "prompt1": "={{ $('When Executed by Another Workflow').item.json.prompt1}}",
+            "prompt2": "={{ $('When Executed by Another Workflow').item.json.prompt2}}",
+            "gbif_key": "={{ $('When Executed by Another Workflow').item.json.gbif_key}}",
+            "result": "={{ JSON.stringify($json.output) }}",
+            "model": "={{ $json.model }}",
+            "image_url": "={{ $('When Executed by Another Workflow').item.json.img_url}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "image_url",
+              "displayName": "image_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "creator",
+              "displayName": "creator",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "prompt1",
+              "displayName": "prompt1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt2",
+              "displayName": "prompt2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "result",
+              "displayName": "result",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "gbif_key",
+              "displayName": "gbif_key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2540,
+        20
+      ],
+      "id": "d6554ad2-3f41-4e7a-b658-73fb630a8316",
+      "name": "Google Sheets2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "11cdca30-ce13-4e06-ac9c-b546dd15cbe4",
+              "name": "output",
+              "value": "={{ $json.output }}",
+              "type": "object"
+            },
+            {
+              "id": "45e06fe1-5bd4-4180-974c-e956b2a559bd",
+              "name": "model",
+              "value": "openai/gpt-4o",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2060,
+        -20
+      ],
+      "id": "89e80651-e2a1-4f4c-9ba8-ba963ee0c8a1",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.img_url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        360,
+        -20
+      ],
+      "id": "ee8b786c-2f3a-4c02-8393-5595cbe200a1",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "resize",
+        "width": 2000,
+        "height": 2000,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        620,
+        -20
+      ],
+      "id": "96d44489-8c3f-48bc-857e-cdae53393e57",
+      "name": "Edit Image"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-21T13:38:25.295Z",
+  "versionId": "8e23f268-4a0c-4d86-ae0c-2160b6f19f4b"
+}
