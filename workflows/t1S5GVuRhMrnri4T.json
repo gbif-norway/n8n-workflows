@@ -1,0 +1,226 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Image": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-21T13:47:08.750Z",
+  "id": "t1S5GVuRhMrnri4T",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fffc5bc2-3c5e-42c7-93a7-d4af69c412a6",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1F9zvo2qD9EZ4LdBRiVGxZXRn5B1ba7-4cP9Uaee74vg",
+          "mode": "list",
+          "cachedResultName": "AI4Specimen - DISSCo test exmaples",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1F9zvo2qD9EZ4LdBRiVGxZXRn5B1ba7-4cP9Uaee74vg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1F9zvo2qD9EZ4LdBRiVGxZXRn5B1ba7-4cP9Uaee74vg/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "7e8a4301-add4-4e55-be41-7d039ed76e9d",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json['Image URL'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "f5dfe822-efda-41e2-81c1-dc653fc36d9f",
+      "name": "HTTP Request",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "operation": "resize",
+        "width": 2000,
+        "height": 2000,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        700,
+        0
+      ],
+      "id": "738bc2d5-29b7-42d8-9dd6-e4fdf0226bd7",
+      "name": "Edit Image"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        920,
+        20
+      ],
+      "id": "9adfd4ce-3adb-4613-8376-7e1f37371abc",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "splat_img",
+          "mode": "list",
+          "cachedResultName": "splat_img"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "gbif_key": 0
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "gbif_key",
+              "displayName": "gbif_key",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "base64",
+              "displayName": "base64",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1140,
+        20
+      ],
+      "id": "17701c08-fc6d-43a2-a3f1-b9db3025c9f8",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-21T13:59:35.138Z",
+  "versionId": "d7c797b5-7ab8-4030-9fef-191c513333db"
+}
