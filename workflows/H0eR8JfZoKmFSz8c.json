@@ -250,7 +250,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        1480,
+        1180,
         120
       ],
       "id": "a9ba0b11-ba00-4296-8175-91b9685800e5",
@@ -258,13 +258,13 @@
     },
     {
       "parameters": {
-        "batchSize": 100,
+        "batchSize": 50,
         "options": {}
       },
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1880,
+        2100,
         200
       ],
       "id": "63115cf0-b07d-4b0b-babb-d8678df6f98f",
@@ -456,25 +456,25 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        2100,
-        300
+        2640,
+        220
       ],
       "id": "5a50c3d0-3988-49f1-a55e-54f54d97396d",
       "name": "Execute Workflow"
     },
     {
       "parameters": {
-        "amount": 1
+        "amount": 30
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2320,
-        300
+        2860,
+        220
       ],
-      "id": "d1e41b48-6dec-4289-931e-cc31d26465e9",
+      "id": "95426dd9-ca43-465e-9667-5db4583b0025",
       "name": "Wait",
-      "webhookId": "4d4ed8b2-4c92-4b56-a16c-544d073ff4a9"
+      "webhookId": "7e24c973-1ca5-4739-8156-70a20c382deb"
     }
   ],
   "pinData": {
@@ -492,6 +492,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-05-21T13:43:33.788Z",
-  "versionId": "b6aa6afc-42d2-45b6-9ed3-7f9654624c3c"
+  "updatedAt": "2025-05-21T15:10:18.377Z",
+  "versionId": "603ea682-8686-45b1-9887-62efe7847199"
 }
