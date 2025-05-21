@@ -63,7 +63,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "My workflow",
+  "name": "SPLAT test load images to DB",
   "nodes": [
     {
       "parameters": {},
@@ -170,7 +170,8 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "gbif_key": 0
+            "gbif_key": "={{ $('Google Sheets').item.json['GBIF KEY'] }}",
+            "base64": "={{ $json.data }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -221,6 +222,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-05-21T13:59:35.138Z",
-  "versionId": "d7c797b5-7ab8-4030-9fef-191c513333db"
+  "updatedAt": "2025-05-21T14:05:55.188Z",
+  "versionId": "16f55304-52ae-408d-b1b4-34552305daa8"
 }
