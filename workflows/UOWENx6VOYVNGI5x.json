@@ -719,7 +719,7 @@
   "staticData": {
     "node:Schedule Trigger": {
       "recurrenceRules": [
-        20
+        22
       ]
     }
   },
