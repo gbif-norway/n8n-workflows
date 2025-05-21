@@ -229,6 +229,7 @@
   },
   "createdAt": "2025-05-07T17:29:05.246Z",
   "id": "UOWENx6VOYVNGI5x",
+  "isArchived": false,
   "meta": {
     "templateCredsSetupCompleted": true
   },
@@ -719,7 +720,7 @@
   "staticData": {
     "node:Schedule Trigger": {
       "recurrenceRules": [
-        8
+        10
       ]
     }
   },
