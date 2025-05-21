@@ -5,12 +5,7 @@
       "main": [
         [
           {
-            "node": "Google Sheets",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Google Sheets1",
+            "node": "No Operation, do nothing",
             "type": "main",
             "index": 0
           }
@@ -18,17 +13,6 @@
       ]
     },
     "Google Sheets": {
-      "main": [
-        [
-          {
-            "node": "Get unique",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get unique": {
       "main": [
         [
           {
@@ -43,9 +27,9 @@
       "main": [
         [
           {
-            "node": "Merge",
+            "node": "Edit Fields1",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
@@ -61,93 +45,12 @@
         ]
       ]
     },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Basic LLM Chain",
-            "type": "ai_languageModel",
-            "index": 0
-          },
-          {
-            "node": "Information Extractor",
-            "type": "ai_languageModel",
-            "index": 0
-          },
-          {
-            "node": "Basic LLM Chain1",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Basic LLM Chain": {
-      "main": [
-        [
-          {
-            "node": "Basic LLM Chain1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Information Extractor": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Basic LLM Chain1": {
-      "main": [
-        [
-          {
-            "node": "Information Extractor",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields": {
-      "main": [
-        [
-          {
-            "node": "Google Sheets2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Gemini Chat Model": {
-      "ai_languageModel": [
-        []
-      ]
-    },
     "Loop Over Items": {
       "main": [
         [],
         [
           {
-            "node": "Basic LLM Chain",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Sheets2": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
+            "node": "Execute Workflow",
             "type": "main",
             "index": 0
           }
@@ -155,6 +58,28 @@
       ]
     },
     "Webhook": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing": {
       "main": [
         [
           {
@@ -166,6 +91,66 @@
             "node": "Google Sheets1",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -173,67 +158,22 @@
   },
   "createdAt": "2025-05-21T08:22:37.890Z",
   "id": "H0eR8JfZoKmFSz8c",
+  "isArchived": false,
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "SPLAT prompt evaluation - chatgpt-4o",
+  "name": "SPLAT prompt evaluation",
   "nodes": [
     {
       "parameters": {},
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -880,
+        -960,
         -40
       ],
       "id": "a88ad81c-8a11-423d-ba47-fea44d2e39ee",
       "name": "When clicking ‘Test workflow’"
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU",
-          "mode": "list",
-          "cachedResultName": "AI4Specimen - prompt evaluation",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit#gid=0"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
-      "position": [
-        -140,
-        -40
-      ],
-      "id": "5b57b834-bf7e-4797-be39-b3f7e18e12a5",
-      "name": "Google Sheets",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "q0iQAvGFBFgqU0OX",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const seen = new Set();\nconst uniqueItems = [];\n\nfor (const item of $input.all()) {\n  const key = `${item.json.prompt1}||${item.json.prompt2}`;\n  if (!seen.has(key)) {\n    seen.add(key);\n    uniqueItems.push(item);\n  }\n}\n\nreturn uniqueItems;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        300,
-        -40
-      ],
-      "id": "30c074b2-4002-4bb4-b893-261cf6f04a8e",
-      "name": "Get unique"
     },
     {
       "parameters": {
@@ -256,8 +196,41 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        -80,
-        300
+        -140,
+        -40
+      ],
+      "id": "5b57b834-bf7e-4797-be39-b3f7e18e12a5",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1INtxDuPN3uYISMUGNbzoWoz9IAdvppD_vPGsdVT6QM0",
+          "mode": "list",
+          "cachedResultName": "SPLAT prompts condensed",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1INtxDuPN3uYISMUGNbzoWoz9IAdvppD_vPGsdVT6QM0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1800479861,
+          "mode": "list",
+          "cachedResultName": "prompt1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1INtxDuPN3uYISMUGNbzoWoz9IAdvppD_vPGsdVT6QM0/edit#gid=1800479861"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -160,
+        460
       ],
       "id": "c30f1f02-b002-41c4-aca3-f895ca75146c",
       "name": "Google Sheets1",
@@ -277,7 +250,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        1040,
+        1480,
         120
       ],
       "id": "a9ba0b11-ba00-4296-8175-91b9685800e5",
@@ -285,348 +258,14 @@
     },
     {
       "parameters": {
-        "promptType": "define",
-        "text": "={{ $json.prompt1 }}",
-        "messages": {
-          "messageValues": [
-            {
-              "type": "HumanMessagePromptTemplate",
-              "messageType": "imageUrl",
-              "imageUrl": "={{ $json['Image URL'] }}",
-              "imageDetail": "high"
-            }
-          ]
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.chainLlm",
-      "typeVersion": 1.6,
-      "position": [
-        1860,
-        800
-      ],
-      "id": "26ec9a6e-62aa-4c05-bc2b-3dc2b0c9c57c",
-      "name": "Basic LLM Chain",
-      "retryOnFail": false,
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4o",
-          "mode": "list",
-          "cachedResultName": "gpt-4o"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        1780,
-        1080
-      ],
-      "id": "fd7a1f58-5ccf-4fc0-83e6-19c5a2dfac9c",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "fVqq5tXe6fuAG0kz",
-          "name": "OpenAi account - NIN Helper"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "text": "={{ $json.text }}",
-        "attributes": {
-          "attributes": [
-            {
-              "name": "dwc:scientificName",
-              "description": "scientific name"
-            },
-            {
-              "name": "dwc:catalogNumber",
-              "description": "catalog number"
-            },
-            {
-              "name": "dwc:recordNumber",
-              "description": "record identifier"
-            },
-            {
-              "name": "dwc:recordedBy",
-              "description": "recorded By"
-            },
-            {
-              "name": "dwc:year",
-              "type": "number",
-              "description": "year of collection event"
-            },
-            {
-              "name": "dwc:month",
-              "type": "number",
-              "description": "month of collection event"
-            },
-            {
-              "name": "dwc:day",
-              "type": "number",
-              "description": "day of collection event"
-            },
-            {
-              "name": "dwc:dateIdentified",
-              "type": "date",
-              "description": "date identified"
-            },
-            {
-              "name": "dwc:identifiedBy",
-              "description": "identified by"
-            },
-            {
-              "name": "dwc:verbatimIdentification",
-              "description": "verbatim identification"
-            },
-            {
-              "name": "dwc:country",
-              "description": "country"
-            },
-            {
-              "name": "dwc:countryCode",
-              "description": "country code"
-            },
-            {
-              "name": "dwc:decimalLatitude",
-              "type": "number",
-              "description": "decimal latitude"
-            },
-            {
-              "name": "dwc:decimalLongitude",
-              "description": "decimal longitude"
-            },
-            {
-              "name": "dwc:locality",
-              "description": "locality"
-            },
-            {
-              "name": "dwc:minimumElevationInMeters",
-              "type": "number",
-              "description": "minimum elevation in meters"
-            },
-            {
-              "name": "dwc:maximumElevationInMeters",
-              "type": "number",
-              "description": "maximum elevation in meters"
-            },
-            {
-              "name": "dwc:verbatimElevation",
-              "description": "verbatim elevation"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
-      "typeVersion": 1,
-      "position": [
-        2680,
-        800
-      ],
-      "id": "265b164e-d022-4361-8d15-0ae029cd9380",
-      "name": "Information Extractor"
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "={{ $json.text }}",
-        "hasOutputParser": true,
-        "messages": {
-          "messageValues": [
-            {
-              "message": "={{ $('Loop Over Items').first().json.prompt2 }}"
-            }
-          ]
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.chainLlm",
-      "typeVersion": 1.6,
-      "position": [
-        2300,
-        800
-      ],
-      "id": "e5ef48c3-8104-485b-9277-7c0ca7c90260",
-      "name": "Basic LLM Chain1"
-    },
-    {
-      "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU",
-          "mode": "list",
-          "cachedResultName": "AI4Specimen - prompt evaluation",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1779488695,
-          "mode": "list",
-          "cachedResultName": "Results",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit#gid=1779488695"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "prompt1": "={{ $('Loop Over Items').first().json.prompt1 }}",
-            "prompt2": "={{ $('Loop Over Items').first().json.prompt2 }}",
-            "gbif_key": "={{ $('Loop Over Items').first().json['GBIF KEY'] }}",
-            "result": "={{ JSON.stringify($json.output) }}",
-            "model": "={{ $json.model }}",
-            "creator": "={{ $('Loop Over Items').first().json.name }}",
-            "image_url": "={{ $('Loop Over Items').first().json['Image URL'] }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "image_url",
-              "displayName": "image_url",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "creator",
-              "displayName": "creator",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "prompt1",
-              "displayName": "prompt1",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "prompt2",
-              "displayName": "prompt2",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "model",
-              "displayName": "model",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "result",
-              "displayName": "result",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "gbif_key",
-              "displayName": "gbif_key",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
-      "position": [
-        3560,
-        120
-      ],
-      "id": "b25c6cc9-f886-4275-8def-883fa87a7b1d",
-      "name": "Google Sheets2",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "q0iQAvGFBFgqU0OX",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "11cdca30-ce13-4e06-ac9c-b546dd15cbe4",
-              "name": "output",
-              "value": "={{ $json.output }}",
-              "type": "object"
-            },
-            {
-              "id": "45e06fe1-5bd4-4180-974c-e956b2a559bd",
-              "name": "model",
-              "value": "openai/gpt-4o",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        3040,
-        800
-      ],
-      "id": "4c0c9d30-12e6-4ead-9d68-bbb25dbcc971",
-      "name": "Edit Fields"
-    },
-    {
-      "parameters": {
-        "modelName": "models/gemini-2.5-flash-preview-04-17",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [
-        1760,
-        1500
-      ],
-      "id": "9c862c22-00a9-4216-bee1-259cc9beef20",
-      "name": "Google Gemini Chat Model",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "9gqkrc0qZ9ukSFh1",
-          "name": "Google Gemini(PaLM) Api account"
-        }
-      }
-    },
-    {
-      "parameters": {
+        "batchSize": 100,
         "options": {}
       },
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1260,
-        120
+        1880,
+        200
       ],
       "id": "63115cf0-b07d-4b0b-babb-d8678df6f98f",
       "name": "Loop Over Items"
@@ -639,49 +278,210 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -860,
+        -960,
         360
       ],
       "id": "4d875c6b-6fde-4812-8fb7-bc1b57cce3b9",
       "name": "Webhook",
       "webhookId": "76665000-9db8-44cc-905f-b19a58375959"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1INtxDuPN3uYISMUGNbzoWoz9IAdvppD_vPGsdVT6QM0",
+          "mode": "list",
+          "cachedResultName": "SPLAT prompts condensed",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1INtxDuPN3uYISMUGNbzoWoz9IAdvppD_vPGsdVT6QM0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1193806644,
+          "mode": "list",
+          "cachedResultName": "prompt2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1INtxDuPN3uYISMUGNbzoWoz9IAdvppD_vPGsdVT6QM0/edit#gid=1193806644"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -140,
+        680
+      ],
+      "id": "7c4bc935-5fed-4764-a3a6-a375fb78a03d",
+      "name": "Google Sheets3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -660,
+        180
+      ],
+      "id": "ed7e6e34-55da-45dc-99de-41fb10a7cf89",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        760,
+        520
+      ],
+      "id": "c1f55520-4a51-446d-aaf6-5f53bd33da5c",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "56a63db8-253c-42f3-a5a7-86cd48928e9b",
+              "name": "prompt1",
+              "value": "={{ $json['Prompt Text'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        60,
+        460
+      ],
+      "id": "bc6f5f29-2f00-441a-b59c-38d93cf71597",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6a66a8a5-a411-46ba-9189-f058cd88f74a",
+              "name": "prompt2",
+              "value": "={{ $json['Prompt Text'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        80,
+        680
+      ],
+      "id": "71719062-fa7b-4a0e-a5ed-1cb9b298cf6e",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "VMh3rEGCtuevcGuJ",
+          "mode": "list",
+          "cachedResultName": "SPLAT run - chatgpt-4o"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "gbif_key": "={{ $json['GBIF KEY'] }}",
+            "prompt1": "={{ $json.prompt1 }}",
+            "prompt2": "={{ $json.prompt2 }}",
+            "img_url": "={{ $json['Image URL'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt1",
+              "displayName": "prompt1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "prompt2",
+              "displayName": "prompt2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "img_url",
+              "displayName": "img_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "gbif_key",
+              "displayName": "gbif_key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2100,
+        300
+      ],
+      "id": "5a50c3d0-3988-49f1-a55e-54f54d97396d",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2320,
+        300
+      ],
+      "id": "d1e41b48-6dec-4289-931e-cc31d26465e9",
+      "name": "Wait",
+      "webhookId": "4d4ed8b2-4c92-4b56-a16c-544d073ff4a9"
     }
   ],
   "pinData": {
     "Webhook": [
       {
         "json": {
-          "headers": {
-            "host": "n8n.svc.gbif.no",
-            "x-request-id": "e392698aab5ae2352de4a9d01052e47e",
-            "x-real-ip": "10.110.0.15",
-            "x-forwarded-for": "10.110.0.15",
-            "x-forwarded-host": "n8n.svc.gbif.no",
-            "x-forwarded-port": "443",
-            "x-forwarded-proto": "https",
-            "x-forwarded-scheme": "https",
-            "x-scheme": "https",
-            "sec-ch-ua": "\"Not(A:Brand\";v=\"99\", \"Opera\";v=\"118\", \"Chromium\";v=\"133\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"macOS\"",
-            "upgrade-insecure-requests": "1",
-            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 OPR/118.0.0.0",
-            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-            "sec-fetch-site": "none",
-            "sec-fetch-mode": "navigate",
-            "sec-fetch-user": "?1",
-            "sec-fetch-dest": "document",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "en-US,en;q=0.9",
-            "if-none-match": "W/\"22-6OS7cK0FzqnV2NeDHdOSGS1bVUs\"",
-            "priority": "u=0, i",
-            "cookie": "rl_page_init_referrer=RudderEncrypt%3AU2FsdGVkX1%2BWduwdZv97%2BdM9cabXTEKE38uwkNEDE2E%3D; rl_page_init_referring_domain=RudderEncrypt%3AU2FsdGVkX1%2B6PzACWFOBrL4lxAep2jc98e%2FGmrvEkGE%3D; n8n-auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkZjE3ZjcxLWQ4MDItNDlmOS1hYjgyLTc1Mzk5ZTkxOWZiMiIsImhhc2giOiJMVU5ySlVMaklCIiwiYnJvd3NlcklkIjoiMEpNQVpiUWJXWFMvU0U3SGVqZDRCVGJucWZtb2hNdC9ZWFBwVExNQXhaQT0iLCJpYXQiOjE3NDc1ODczNDksImV4cCI6MTc0ODE5MjE0OX0.aJSQIA0mJZUPoPmxeoWK3nLEcbaxG8K6GN6B1grxLiM; rl_anonymous_id=RudderEncrypt%3AU2FsdGVkX183V8jOWkfPMMSM9aRbGs%2Fu9sJ0opK4NLSoXRv9YyLhbEIG2jS%2Fjz1z5uwi7HIsePfEjCedxTsOmQ%3D%3D; rl_user_id=RudderEncrypt%3AU2FsdGVkX1%2FO%2BeIibzioaj9%2B%2B7H6V2amX7jJakoT24oD3j8DsN1dSbze9AB08AaH5BuIoVeRZND5moT8qjUDVDKVH1PwfORTY4cMZuGQJ5kNFX5p%2FK65m3JuSHteJOl6M6bksgeoVfHiXubRYvOXT5oZlDMLR4McB6OKEz0lBlg%3D; rl_trait=RudderEncrypt%3AU2FsdGVkX1%2Bxeq4sWlg%2FOZ3UWvTZrQqDGVkIQUzA%2FXZpu0jOULQx6YGQuUtp%2B93%2F7vAhuzbrBi%2FcIxeZl7XiY6KOmLPhqmZpUVUe5I%2FHUFMgKuVjhzMnzi73e5xijhMLy8%2Bm%2FDsbKRROJYGzLPhhzA%3D%3D; ph_phc_4URIAm1uYfJO7j8kWSe0J8lc8IqnstRLS7Jx8NcakHo_posthog=%7B%22distinct_id%22%3A%22ffdf041b0199aad7cd85ce0ab1c2fb73b851bc069268920f232027703086b2f2%23fdf17f71-d802-49f9-ab82-75399e919fb2%22%2C%22%24sesid%22%3A%5B1747826797352%2C%220196f26c-5fa6-760e-9c80-e9007f307909%22%2C1747823910821%5D%2C%22%24epp%22%3Atrue%2C%22%24initial_person_info%22%3A%7B%22r%22%3A%22%24direct%22%2C%22u%22%3A%22https%3A%2F%2Fn8n.svc.gbif.no%2Fsetup%22%7D%7D; rl_session=RudderEncrypt%3AU2FsdGVkX19MWGyAvHUBgfkDaHmTH3%2FGTMPa5MgUKTz0sdkUFQjp4jLX5w0ROghaCGFtc9QCByWF%2Fh25S7t0H4K2bo%2FMi2dx5x6aHMFRMsg2hTfEkmkSEZ8Ij2Nv45IdtibyZJ75pt7YX8JevZEJfw%3D%3D"
-          },
-          "params": {},
-          "query": {},
-          "body": {},
-          "webhookUrl": "https://n8n.svc.gbif.no/webhook/start-eval",
-          "executionMode": "production"
+          "isArtificialRecoveredEventItem": true
         }
       }
     ]
@@ -692,6 +492,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-05-21T11:57:38.612Z",
-  "versionId": "b582fbb2-076f-4779-b0bb-57a0ba30e31f"
+  "updatedAt": "2025-05-21T13:43:33.788Z",
+  "versionId": "b6aa6afc-42d2-45b6-9ed3-7f9654624c3c"
 }
