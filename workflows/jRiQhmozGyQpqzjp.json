@@ -1,0 +1,742 @@
+{
+  "active": true,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Get unique",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get unique": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Image": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-21T11:42:25.267Z",
+  "id": "jRiQhmozGyQpqzjp",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "SPLAT prompt evaluation - gemini-2.5-flash",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        -40
+      ],
+      "id": "218c2914-e627-466b-866c-fd88e3453513",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU",
+          "mode": "list",
+          "cachedResultName": "AI4Specimen - prompt evaluation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -140,
+        -40
+      ],
+      "id": "22c65792-e818-4c8d-bad9-2e34a70bea78",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const seen = new Set();\nconst uniqueItems = [];\n\nfor (const item of $input.all()) {\n  const key = `${item.json.prompt1}||${item.json.prompt2}`;\n  if (!seen.has(key)) {\n    seen.add(key);\n    uniqueItems.push(item);\n  }\n}\n\nreturn uniqueItems;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        300,
+        -40
+      ],
+      "id": "d381be5e-3bc5-4902-9908-ee72dbe9bca5",
+      "name": "Get unique"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1F9zvo2qD9EZ4LdBRiVGxZXRn5B1ba7-4cP9Uaee74vg",
+          "mode": "list",
+          "cachedResultName": "AI4Specimen - DISSCo test exmaples",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1F9zvo2qD9EZ4LdBRiVGxZXRn5B1ba7-4cP9Uaee74vg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1F9zvo2qD9EZ4LdBRiVGxZXRn5B1ba7-4cP9Uaee74vg/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -80,
+        300
+      ],
+      "id": "89bbb915-05b3-4fc3-9242-d93a2f78b276",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        840,
+        120
+      ],
+      "id": "5ba4636b-ac98-4898-9137-75f0886fc653",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.prompt1 }}",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "imageDetail": "high"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        2520,
+        800
+      ],
+      "id": "ea0d3e2b-be23-4d2c-a061-a9356bb89bbf",
+      "name": "Basic LLM Chain",
+      "retryOnFail": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.text }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "dwc:scientificName",
+              "description": "scientific name"
+            },
+            {
+              "name": "dwc:catalogNumber",
+              "description": "catalog number"
+            },
+            {
+              "name": "dwc:recordNumber",
+              "description": "record identifier"
+            },
+            {
+              "name": "dwc:recordedBy",
+              "description": "recorded By"
+            },
+            {
+              "name": "dwc:year",
+              "type": "number",
+              "description": "year of collection event"
+            },
+            {
+              "name": "dwc:month",
+              "type": "number",
+              "description": "month of collection event"
+            },
+            {
+              "name": "dwc:day",
+              "type": "number",
+              "description": "day of collection event"
+            },
+            {
+              "name": "dwc:dateIdentified",
+              "type": "date",
+              "description": "date identified"
+            },
+            {
+              "name": "dwc:identifiedBy",
+              "description": "identified by"
+            },
+            {
+              "name": "dwc:verbatimIdentification",
+              "description": "verbatim identification"
+            },
+            {
+              "name": "dwc:country",
+              "description": "country"
+            },
+            {
+              "name": "dwc:countryCode",
+              "description": "country code"
+            },
+            {
+              "name": "dwc:decimalLatitude",
+              "type": "number",
+              "description": "decimal latitude"
+            },
+            {
+              "name": "dwc:decimalLongitude",
+              "description": "decimal longitude"
+            },
+            {
+              "name": "dwc:locality",
+              "description": "locality"
+            },
+            {
+              "name": "dwc:minimumElevationInMeters",
+              "type": "number",
+              "description": "minimum elevation in meters"
+            },
+            {
+              "name": "dwc:maximumElevationInMeters",
+              "type": "number",
+              "description": "maximum elevation in meters"
+            },
+            {
+              "name": "dwc:verbatimElevation",
+              "description": "verbatim elevation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        3340,
+        800
+      ],
+      "id": "ebbaa10a-1b02-4f8d-a1cf-60d8d6526324",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "={{ $('Loop Over Items').first().json.prompt2 }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        2960,
+        800
+      ],
+      "id": "4c547128-f778-4713-908b-f72cfddf9e68",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU",
+          "mode": "list",
+          "cachedResultName": "AI4Specimen - prompt evaluation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1779488695,
+          "mode": "list",
+          "cachedResultName": "Results",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yRqa4ArQnFbF9lT-akFFygOEjKnofKIKR7pbdsHm0vU/edit#gid=1779488695"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "prompt1": "={{ $('Loop Over Items').first().json.prompt1 }}",
+            "prompt2": "={{ $('Loop Over Items').first().json.prompt2 }}",
+            "gbif_key": "={{ $('Loop Over Items').first().json['GBIF KEY'] }}",
+            "result": "={{ JSON.stringify($json.output) }}",
+            "model": "={{ $json.model }}",
+            "creator": "={{ $('Loop Over Items').first().json.name }}",
+            "image_url": "={{ $('Loop Over Items').first().json['Image URL'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "image_url",
+              "displayName": "image_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "creator",
+              "displayName": "creator",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "prompt1",
+              "displayName": "prompt1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt2",
+              "displayName": "prompt2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "result",
+              "displayName": "result",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "gbif_key",
+              "displayName": "gbif_key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        4220,
+        120
+      ],
+      "id": "de45775e-f36c-40c5-8daa-2ec7b1e14f9f",
+      "name": "Google Sheets2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "11cdca30-ce13-4e06-ac9c-b546dd15cbe4",
+              "name": "output",
+              "value": "={{ $json.output }}",
+              "type": "object"
+            },
+            {
+              "id": "45e06fe1-5bd4-4180-974c-e956b2a559bd",
+              "name": "model",
+              "value": "google/gemini-2.5-flash",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3700,
+        800
+      ],
+      "id": "b4266163-c145-4625-93ff-c5925b0c8179",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-04-17",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2480,
+        1080
+      ],
+      "id": "5c0332c7-dd95-41d5-878b-b1b02c9bd44b",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "9gqkrc0qZ9ukSFh1",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 10,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1480,
+        120
+      ],
+      "id": "87ce5575-5570-40d2-8dfb-b8f6dbe12f04",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "path": "ae0f9fda-aded-44e2-a6fa-ce34bad927ec",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -860,
+        360
+      ],
+      "id": "87c17447-0a63-447e-aa70-0deb4dbbe9af",
+      "name": "Webhook",
+      "webhookId": "ae0f9fda-aded-44e2-a6fa-ce34bad927ec"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.image }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1740,
+        740
+      ],
+      "id": "42bd983b-bad4-4b95-a844-594ae8c601c9",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "resize",
+        "width": 2000,
+        "height": 2000,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        760
+      ],
+      "id": "0cdcc255-d363-4679-b041-a4e41885acfc",
+      "name": "Edit Image"
+    },
+    {
+      "parameters": {
+        "maxItems": 20
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        120
+      ],
+      "id": "5f91c3a2-abf8-4e31-807a-2981b78a8082",
+      "name": "Limit"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.svc.gbif.no",
+            "x-request-id": "ae55b4faf11245e862f74bd43ff77cf3",
+            "x-real-ip": "10.110.0.14",
+            "x-forwarded-for": "10.110.0.14",
+            "x-forwarded-host": "n8n.svc.gbif.no",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-scheme": "https",
+            "x-scheme": "https",
+            "sec-ch-ua": "\"Not(A:Brand\";v=\"99\", \"Opera\";v=\"118\", \"Chromium\";v=\"133\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"macOS\"",
+            "upgrade-insecure-requests": "1",
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 OPR/118.0.0.0",
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+            "sec-fetch-site": "none",
+            "sec-fetch-mode": "navigate",
+            "sec-fetch-user": "?1",
+            "sec-fetch-dest": "document",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "en-US,en;q=0.9",
+            "priority": "u=0, i",
+            "cookie": "rl_page_init_referrer=RudderEncrypt%3AU2FsdGVkX1%2BWduwdZv97%2BdM9cabXTEKE38uwkNEDE2E%3D; rl_page_init_referring_domain=RudderEncrypt%3AU2FsdGVkX1%2B6PzACWFOBrL4lxAep2jc98e%2FGmrvEkGE%3D; n8n-auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkZjE3ZjcxLWQ4MDItNDlmOS1hYjgyLTc1Mzk5ZTkxOWZiMiIsImhhc2giOiJMVU5ySlVMaklCIiwiYnJvd3NlcklkIjoiMEpNQVpiUWJXWFMvU0U3SGVqZDRCVGJucWZtb2hNdC9ZWFBwVExNQXhaQT0iLCJpYXQiOjE3NDc1ODczNDksImV4cCI6MTc0ODE5MjE0OX0.aJSQIA0mJZUPoPmxeoWK3nLEcbaxG8K6GN6B1grxLiM; rl_anonymous_id=RudderEncrypt%3AU2FsdGVkX19SsnGp0owOIsoqDTbw7YplOLgKXAJYpvnXEi7%2FJSyLKJi3rMll2UGpu6mALdE%2FVH%2F69nyI51rBXQ%3D%3D; rl_user_id=RudderEncrypt%3AU2FsdGVkX1%2B9KCoQUULacbX4c26geWebihwoyjypNMP27yMDnUE2YO2co65pvcjMqweLVA7%2Bem9EWFtL2yoJEu05vdHeB6lHeDtvC1Da9ZWhWTmw32PdqXs1XVj8JGoLBHoj6KTYa%2B3iLx%2FDHG7om29%2B9L%2BgsBSAkUz2V6CghFE%3D; rl_trait=RudderEncrypt%3AU2FsdGVkX187Zf5zuULtzfco%2FKSvgfWtB5oiN%2BmJbpw%2BCmNx13m86OxLBvCdU1U8aZKD7zLSyhSkYut4F2fbMcHUmd35Lw%2FGIERBwr0DTu7n8sjNAWuxykEbZR3mXxXpWsLY0Yzvd5NnVFEX0O7hbg%3D%3D; ph_phc_4URIAm1uYfJO7j8kWSe0J8lc8IqnstRLS7Jx8NcakHo_posthog=%7B%22distinct_id%22%3A%22ffdf041b0199aad7cd85ce0ab1c2fb73b851bc069268920f232027703086b2f2%23fdf17f71-d802-49f9-ab82-75399e919fb2%22%2C%22%24sesid%22%3A%5B1747827745957%2C%220196f26c-5fa6-760e-9c80-e9007f307909%22%2C1747823910821%5D%2C%22%24epp%22%3Atrue%2C%22%24initial_person_info%22%3A%7B%22r%22%3A%22%24direct%22%2C%22u%22%3A%22https%3A%2F%2Fn8n.svc.gbif.no%2Fsetup%22%7D%7D; rl_session=RudderEncrypt%3AU2FsdGVkX19CI1GZYz4Ca65DE41%2BRKW%2BKnwE6IpzRErYA1ct1wRryyoDVn2FNmV0%2BzEnPaCh2UwcvIi6jbgwIh111sIxFCMGFBqqSeQL2xO7lC0CXyb7nrbemmu8kLbHyUDQxRp%2Fv1LZ9kbNBQiO8g%3D%3D"
+          },
+          "params": {},
+          "query": {},
+          "body": {},
+          "webhookUrl": "https://n8n.svc.gbif.no/webhook/ae0f9fda-aded-44e2-a6fa-ce34bad927ec",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-21T11:52:05.606Z",
+  "versionId": "86dc643e-e2a4-481e-9897-7386bfcf412a"
+}
