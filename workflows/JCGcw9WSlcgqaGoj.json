@@ -549,8 +549,15 @@
       "recurrenceRules": []
     }
   },
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-05-22T12:15:16.918Z",
+      "updatedAt": "2025-05-22T12:15:16.918Z",
+      "id": "8GDtYBueuuG8eEVm",
+      "name": "finance"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-16T11:11:29.768Z",
-  "versionId": "b05576a7-e091-406f-a532-9ee45e9305b9"
+  "updatedAt": "2025-05-22T12:15:35.644Z",
+  "versionId": "b4eb6fe9-7714-4f22-8918-afe6556769e8"
 }
