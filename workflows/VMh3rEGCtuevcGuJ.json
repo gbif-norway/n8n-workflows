@@ -98,11 +98,21 @@
           }
         ]
       ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-05-21T13:33:24.775Z",
   "id": "VMh3rEGCtuevcGuJ",
-  "isArchived": false,
   "meta": {
     "templateCredsSetupCompleted": true
   },
@@ -474,6 +484,29 @@
           "name": "Postgres account"
         }
       }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a7f0c5d9-ca0d-4983-8d16-343c7e3d522c",
+              "name": "res",
+              "value": "true",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3180,
+        -20
+      ],
+      "id": "7e1fc594-ff36-4f7e-9f81-45759e6b34dc",
+      "name": "Edit Fields1"
     }
   ],
   "pinData": {},
@@ -483,6 +516,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-05-21T14:23:03.504Z",
-  "versionId": "547ac7b8-bf73-4b71-8df6-2d1bc5bc0080"
+  "updatedAt": "2025-05-21T22:36:13.206Z",
+  "versionId": "4b1b4a6f-0838-4532-9972-2dba9f8e7316"
 }
