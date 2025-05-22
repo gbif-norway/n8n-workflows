@@ -127,7 +127,7 @@
       "typeVersion": 1.1,
       "position": [
         0,
-        0
+        -20
       ],
       "id": "03761769-cb3d-45b7-ad4f-1d3fca8675c1",
       "name": "When Executed by Another Workflow"
@@ -149,7 +149,7 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.6,
       "position": [
-        1320,
+        660,
         -20
       ],
       "id": "4bcc882d-c481-4a83-a139-4ef6a538c4ec",
@@ -170,8 +170,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1240,
-        260
+        748,
+        200
       ],
       "id": "fbfbc379-2275-4242-9d4c-68665ec9fb3d",
       "name": "OpenAI Chat Model",
@@ -273,7 +273,7 @@
       "type": "@n8n/n8n-nodes-langchain.informationExtractor",
       "typeVersion": 1,
       "position": [
-        2140,
+        1412,
         -20
       ],
       "id": "6231609e-7b8e-4687-bf2c-4fccc12365cf",
@@ -294,7 +294,7 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.6,
       "position": [
-        1760,
+        1036,
         -20
       ],
       "id": "ef2d6165-701f-45df-9a97-fc8caabb65e9",
@@ -323,7 +323,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2500,
+        1788,
         -20
       ],
       "id": "89e80651-e2a1-4f4c-9ba8-ba963ee0c8a1",
@@ -358,7 +358,7 @@
       "typeVersion": 2.6,
       "position": [
         220,
-        0
+        -20
       ],
       "id": "fb9b9782-f51d-4c95-834c-2e09fba778e5",
       "name": "Postgres",
@@ -379,7 +379,7 @@
       "typeVersion": 1.1,
       "position": [
         440,
-        0
+        -20
       ],
       "id": "3a26c6b3-643e-4c9f-ab60-fcaff2f945d6",
       "name": "Convert to File"
@@ -473,7 +473,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2960,
+        2008,
         -20
       ],
       "id": "7301cbbc-70d8-40c7-ae0c-7d047f825abe",
@@ -502,7 +502,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3180,
+        2228,
         -20
       ],
       "id": "7e1fc594-ff36-4f7e-9f81-45759e6b34dc",
@@ -523,6 +523,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-05-22T12:14:38.752Z",
-  "versionId": "39a02748-484e-4614-953c-84f0295b926a"
+  "updatedAt": "2025-05-22T15:54:14.676Z",
+  "versionId": "30dd9ae6-0964-4ff8-b85d-247629c156a7"
 }
