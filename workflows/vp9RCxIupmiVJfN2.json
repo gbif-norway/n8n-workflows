@@ -1,0 +1,18 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-05-22T08:35:28.838Z",
+  "id": "vp9RCxIupmiVJfN2",
+  "meta": null,
+  "name": "SPLAT test models",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-22T08:35:28.838Z",
+  "versionId": "c0fe8b05-76f9-4b10-9cbf-c851bce2c0b8"
+}
