@@ -1,0 +1,215 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-22T00:07:55.960Z",
+  "id": "hmhWh2q9SgQHhnrc",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "SPLAT get dwc",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9d81d567-3603-4cf0-bbdb-c9da048d1918",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "splat_img",
+          "mode": "list",
+          "cachedResultName": "splat_img"
+        },
+        "returnAll": true,
+        "options": {
+          "outputColumns": [
+            "gbif_key"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "23386e36-367a-4e85-a6dd-c657b8f1d94e",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.gbif.org/v1/occurrence/{{ $json.gbif_key }}/verbatim",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "b3c90da8-93b5-4670-86db-3961d00e3e6a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "/**\n * Keep http-URI keys, shorten them to CURIEs, and\n * drop dc:modified plus any dwc:*ID terms.\n */\nconst prefixes = {\n  'http://rs.tdwg.org/dwc/terms/': 'dwc:',\n  'http://purl.org/dc/terms/':     'dc:',\n  'http://rs.gbif.org/terms/1.0/': 'gbif:',\n};\n\nfunction shortenKey(uri) {\n  for (const [base, curie] of Object.entries(prefixes)) {\n    if (uri.startsWith(base)) return curie + uri.slice(base.length);\n  }\n  return uri;                       // leave unknown bases unchanged\n}\n\nfunction shouldKeep(curie) {\n  if (curie === 'dc:modified') return false;              // explicit drop\n  if (curie.startsWith('dwc:') && curie.endsWith('ID')) return false;\n  return true;\n}\n\nfunction transform(x) {\n  if (Array.isArray(x)) return x.map(transform);          // recurse into arrays\n  if (x && typeof x === 'object') {\n    const out = {};\n    for (const [k, v] of Object.entries(x)) {\n      if (k.startsWith('http')) {\n        const curie = shortenKey(k);\n        if (shouldKeep(curie)) out[curie] = transform(v); // recurse into values\n      }\n    }\n    return out;\n  }\n  return x;                                              // primitive value\n}\n\nreturn { json: transform($json) };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "9bfa85d0-ac3b-4951-9909-4c527012e9a7",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "splat_img",
+          "mode": "list",
+          "cachedResultName": "splat_img"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "gbif_key": "={{ $('Postgres').item.json.gbif_key }}",
+            "dwc": "={{ JSON.stringify($json) }}"
+          },
+          "matchingColumns": [
+            "gbif_key"
+          ],
+          "schema": [
+            {
+              "id": "gbif_key",
+              "displayName": "gbif_key",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "base64",
+              "displayName": "base64",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "dwc",
+              "displayName": "dwc",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        880,
+        0
+      ],
+      "id": "7a0c5bbf-c467-4696-83f7-45558702ebcb",
+      "name": "Postgres1",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-22T00:27:45.990Z",
+  "versionId": "9c410ddd-f65b-4170-a867-69a8bb648419"
+}
