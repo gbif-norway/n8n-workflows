@@ -1,0 +1,289 @@
+{
+  "active": true,
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Edit Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Image": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-22T14:45:55.955Z",
+  "id": "MiJcArQtZ5ErUDPQ",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "SpLAT",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "data",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".jpg, .jpeg, .png",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {
+          "appendAttribution": false,
+          "path": ""
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d7f59a45-5d3e-4616-875c-123b5bd779cd",
+      "name": "On form submission",
+      "webhookId": "cb6c8a0a-d369-4396-9550-c2e5860bba24"
+    },
+    {
+      "parameters": {
+        "operation": "resize",
+        "width": 2000,
+        "height": 2000,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "2a20baf6-1504-4a09-8cd6-5761138d0c96",
+      "name": "Edit Image"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are an experienced biologist specializing in describing herbarium specimens. You have a keen eye for detail and can describe specimens very accurately. Your task is to extract all information from the provided image of a herbarium specimen and create a short description containing all information from the image. Do not provide information on higher taxonomy beyond kingdom. Perform a literal transcription of all text visible on the specimen's label. The text on the label is handwritten.",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        460,
+        0
+      ],
+      "id": "b58d26c5-a505-4e55-957a-b57eea8ac726",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-3-7-sonnet-20250219",
+          "cachedResultName": "Claude 3.7 Sonnet"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        280,
+        320
+      ],
+      "id": "740d1f64-4a95-480d-a9e9-306b7ec962df",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "uKTVj5uaJK4Vqysu",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.text }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "dwc:scientificName",
+              "description": "scientific name"
+            },
+            {
+              "name": "dwc:catalogNumber",
+              "description": "catalog number"
+            },
+            {
+              "name": "dwc:recordNumber",
+              "description": "record identifier"
+            },
+            {
+              "name": "dwc:recordedBy",
+              "description": "recorded By"
+            },
+            {
+              "name": "dwc:year",
+              "type": "number",
+              "description": "year of collection event"
+            },
+            {
+              "name": "dwc:month",
+              "type": "number",
+              "description": "month of collection event"
+            },
+            {
+              "name": "dwc:day",
+              "type": "number",
+              "description": "day of collection event"
+            },
+            {
+              "name": "dwc:dateIdentified",
+              "type": "date",
+              "description": "date identified"
+            },
+            {
+              "name": "dwc:identifiedBy",
+              "description": "identified by"
+            },
+            {
+              "name": "dwc:verbatimIdentification",
+              "description": "verbatim identification"
+            },
+            {
+              "name": "dwc:country",
+              "description": "country"
+            },
+            {
+              "name": "dwc:countryCode",
+              "description": "country code"
+            },
+            {
+              "name": "dwc:decimalLatitude",
+              "type": "number",
+              "description": "decimal latitude"
+            },
+            {
+              "name": "dwc:decimalLongitude",
+              "description": "decimal longitude"
+            },
+            {
+              "name": "dwc:locality",
+              "description": "locality"
+            },
+            {
+              "name": "dwc:minimumElevationInMeters",
+              "type": "number",
+              "description": "minimum elevation in meters"
+            },
+            {
+              "name": "dwc:maximumElevationInMeters",
+              "type": "number",
+              "description": "maximum elevation in meters"
+            },
+            {
+              "name": "dwc:verbatimElevation",
+              "description": "verbatim elevation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        840,
+        0
+      ],
+      "id": "27388a30-dcf1-4d72-9eab-1e8452ab4c7b",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Done",
+        "completionMessage": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        0
+      ],
+      "id": "9eee6eb8-76df-4aa9-879f-7d6f7fea58f5",
+      "name": "Form",
+      "webhookId": "c7d5b9de-8385-4bd0-8ff8-f99aad19534c"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-22T15:55:11.868Z",
+  "versionId": "a216a717-b9bb-48b4-bf93-80341a64eddf"
+}
