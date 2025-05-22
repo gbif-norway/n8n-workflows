@@ -801,11 +801,12 @@
     ]
   },
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
   },
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-05-21T23:56:01.408Z",
-  "versionId": "66f81ec6-5983-47c4-9df3-cfd03822416d"
+  "updatedAt": "2025-05-22T04:00:58.965Z",
+  "versionId": "37898d15-96f5-4a31-9ceb-caab01442ca5"
 }
