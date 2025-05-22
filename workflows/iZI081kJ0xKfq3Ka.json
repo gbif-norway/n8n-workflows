@@ -155,7 +155,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "DISSCo AI4Specimen digitization pipeline v1.0",
+  "name": "DISSCo SPLAT MAS digitization pipeline v1.0",
   "nodes": [
     {
       "parameters": {
@@ -511,6 +511,12 @@
   "staticData": null,
   "tags": [
     {
+      "createdAt": "2025-05-22T12:12:10.306Z",
+      "updatedAt": "2025-05-22T12:12:10.306Z",
+      "id": "2pUeTgt6i4E0TLFj",
+      "name": "SPLAT"
+    },
+    {
       "createdAt": "2025-04-14T09:32:43.504Z",
       "updatedAt": "2025-04-14T09:32:43.504Z",
       "id": "Fh9E3K23MqTlvBaT",
@@ -530,6 +536,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-07T17:39:05.879Z",
-  "versionId": "a4580d80-86e8-4871-ac9f-c2a341109475"
+  "updatedAt": "2025-05-22T12:17:18.915Z",
+  "versionId": "3f4f2772-a119-427f-8454-81bd26600071"
 }
