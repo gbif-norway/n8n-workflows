@@ -1,0 +1,526 @@
+{
+  "active": false,
+  "connections": {
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "xAI Grok Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-22T08:50:59.302Z",
+  "id": "RoklELltTZ66ta5S",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "SPLAT run model eval",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"img_url\": \"url\",\n  \"gbif_key\": 123\n}"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        -20
+      ],
+      "id": "ae7e349b-81be-4fed-bfda-8c40a49fc032",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an experienced biologist specializing in describing herbarium specimens. You have a keen eye for detail and can describe specimens very accurately. Your task is to extract all information from the provided image of a herbarium specimen and create a short description containing all information from the image. Do not provide information on higher taxonomy beyond kingdom. Perform a literal transcription of all text visible on the specimen's label. The text on the label is handwritten.",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "imageDetail": "high"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        660,
+        -20
+      ],
+      "id": "1b7afdda-c99b-4321-b734-a55c526859cc",
+      "name": "Basic LLM Chain",
+      "retryOnFail": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.text }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "dwc:scientificName",
+              "description": "scientific name"
+            },
+            {
+              "name": "dwc:catalogNumber",
+              "description": "catalog number"
+            },
+            {
+              "name": "dwc:recordNumber",
+              "description": "record identifier"
+            },
+            {
+              "name": "dwc:recordedBy",
+              "description": "recorded By"
+            },
+            {
+              "name": "dwc:year",
+              "type": "number",
+              "description": "year of collection event"
+            },
+            {
+              "name": "dwc:month",
+              "type": "number",
+              "description": "month of collection event"
+            },
+            {
+              "name": "dwc:day",
+              "type": "number",
+              "description": "day of collection event"
+            },
+            {
+              "name": "dwc:dateIdentified",
+              "type": "date",
+              "description": "date identified"
+            },
+            {
+              "name": "dwc:identifiedBy",
+              "description": "identified by"
+            },
+            {
+              "name": "dwc:verbatimIdentification",
+              "description": "verbatim identification"
+            },
+            {
+              "name": "dwc:country",
+              "description": "country"
+            },
+            {
+              "name": "dwc:countryCode",
+              "description": "country code"
+            },
+            {
+              "name": "dwc:decimalLatitude",
+              "type": "number",
+              "description": "decimal latitude"
+            },
+            {
+              "name": "dwc:decimalLongitude",
+              "description": "decimal longitude"
+            },
+            {
+              "name": "dwc:locality",
+              "description": "locality"
+            },
+            {
+              "name": "dwc:minimumElevationInMeters",
+              "type": "number",
+              "description": "minimum elevation in meters"
+            },
+            {
+              "name": "dwc:maximumElevationInMeters",
+              "type": "number",
+              "description": "maximum elevation in meters"
+            },
+            {
+              "name": "dwc:verbatimElevation",
+              "description": "verbatim elevation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        1412,
+        -20
+      ],
+      "id": "6e2d6b0c-a568-4191-a2b9-1bd7ec721729",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Standardize the provided information about a preserved specimen into a JSON object using exclusively valid Darwin Core terms. The JSON structure should follow: { \\\"scientificName\\\": \\\"Value\\\", \\\"locality\\\": \\\"Value\\\", ... }."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        1036,
+        -20
+      ],
+      "id": "39a320eb-ba18-458f-85b9-b84cef2626e0",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "11cdca30-ce13-4e06-ac9c-b546dd15cbe4",
+              "name": "output",
+              "value": "={{ $json.output }}",
+              "type": "object"
+            },
+            {
+              "id": "45e06fe1-5bd4-4180-974c-e956b2a559bd",
+              "name": "model",
+              "value": "xai/grok-2-vision-1212",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1780,
+        -20
+      ],
+      "id": "bbefe989-d7b4-4ad5-a17d-5c349ae0a12f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "splat_img",
+          "mode": "list",
+          "cachedResultName": "splat_img"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "gbif_key",
+              "value": "={{ $json.gbif_key }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        220,
+        -20
+      ],
+      "id": "c3f895b9-fbc7-4f59-9115-2a36e8c53f3b",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        440,
+        -20
+      ],
+      "id": "c60f9ea3-cc88-40ed-bca4-22e824dc8589",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "splat_models",
+          "mode": "list",
+          "cachedResultName": "splat_models"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "image_url": "={{ $('When Executed by Another Workflow').item.json.img_url}}",
+            "model": "={{ $json.model }}",
+            "result": "={{ JSON.stringify($json.output) }}",
+            "gbif_key": "={{ $('When Executed by Another Workflow').item.json.gbif_key}}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "image_url",
+              "displayName": "image_url",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "result",
+              "displayName": "result",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "gbif_key",
+              "displayName": "gbif_key",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "eval",
+              "displayName": "eval",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2008,
+        -20
+      ],
+      "id": "a7997a71-0be0-4c65-97d4-a37e66f92314",
+      "name": "Postgres1",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a7f0c5d9-ca0d-4983-8d16-343c7e3d522c",
+              "name": "res",
+              "value": "true",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2228,
+        -20
+      ],
+      "id": "152df112-e8dd-48ad-aa4b-cfec961d8397",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatXAiGrok",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "id": "ffb6ac5d-742e-447f-8c61-ba593a0e0855",
+      "name": "xAI Grok Chat Model",
+      "credentials": {
+        "xAiApi": {
+          "id": "eEjzEyS9Ioj5NJ0p",
+          "name": "xAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "img_url": "https://drive.google.com/uc?id=1j6hi79GgaOMpG3IPGlPEe1cRDz9t56LA&export=download",
+          "gbif_key": 2562093031
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-22T09:41:26.439Z",
+  "versionId": "1230a3e6-65cf-43ac-97a1-04e2270f1723"
+}
