@@ -1,0 +1,419 @@
+{
+  "active": true,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-22T09:44:14.200Z",
+  "id": "SUKCe9M9AaRN6xAd",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "SPLAT Evaluate Models",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0fabfa1d-cdf1-4df6-857d-7d7a09165ec4",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n    sr.id,\n    sr.result,\n    sr.gbif_key,\n    si.dwc\nFROM \n    public.\"splat_models\" sr\nLEFT JOIN \n    splat_img si\nON \n    sr.gbif_key = si.gbif_key",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        240,
+        0
+      ],
+      "id": "7fb17a3e-4522-4f05-8802-3667af285edc",
+      "name": "Postgres1",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 10,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        460,
+        0
+      ],
+      "id": "f6243607-cb90-4bfc-92b1-cf3e06841fdc",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=ORIGINAL:\n {{ $json.dwc }}\n---\nNEW:\n{{ $json.result }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Your are given two Darwin core records of the same record to compare. One ORIGINAL and one one NEW. your task is to judge for each dwc term weather the original NEW contains better/worse/same kind of information then ORIGINAL. Mention ALL the terms that are in booth records."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        1040,
+        20
+      ],
+      "id": "290f0e1a-e5ad-4f6a-8324-06107c323114",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "chatgpt-4o-latest",
+          "mode": "list",
+          "cachedResultName": "chatgpt-4o-latest"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        720,
+        320
+      ],
+      "id": "f47c578e-a690-4130-ab09-d0fe312232c2",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "fVqq5tXe6fuAG0kz",
+          "name": "OpenAi account - NIN Helper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.text }}",
+        "schemaType": "fromJson",
+        "jsonSchemaExample": "{\n\t\"new_better\": [\"dwc:scietificName\", \"dwc:locality\"],\n\t\"new_worse\": [\"dwc:identifiedBy\"],\n    \"same\": [\"dwc:kingdom\"],\n    \"different_unknown\": [\"dwc:year\"]\n}",
+        "options": {
+          "systemPromptTemplate": "You are an expert extraction algorithm.\nOnly extract relevant information from the text.\nIf you do not know the value of an attribute asked to extract, you may omit the attribute's value.\nYou only extract Darwin core terms, and based on the context, assign it onto one of the 4 categories:\nnew_better: when the term is better described in NEW compared to the ORIGINAL,\nnew_worse: when the term is described worse in NEW compared to the ORIGINAL,\nsame: when they are the same,\ndifferent_unknown: when they are different but you cant decide if it's better or worse based on the context"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        20
+      ],
+      "id": "a33bb54b-94fb-4882-848c-91f70d0267cb",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "splat_models",
+          "mode": "list",
+          "cachedResultName": "splat_models"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Loop Over Items').item.json.id }}",
+            "eval": "={{ $json.output }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "image_url",
+              "displayName": "image_url",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "prompt1",
+              "displayName": "prompt1",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "prompt2",
+              "displayName": "prompt2",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "result",
+              "displayName": "result",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "gbif_key",
+              "displayName": "gbif_key",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "eval",
+              "displayName": "eval",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1760,
+        20
+      ],
+      "id": "fe3b3aa2-1eed-4c45-8edc-85f438e11348",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "5e3999a8-2e6e-4886-9fa6-4ca4bb238978",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -20,
+        200
+      ],
+      "id": "85a1e0d0-4ff4-4bb7-9a37-424cbf54cb64",
+      "name": "Webhook",
+      "webhookId": "5e3999a8-2e6e-4886-9fa6-4ca4bb238978"
+    }
+  ],
+  "pinData": {
+    "Basic LLM Chain": [
+      {
+        "json": {
+          "text": "Below is a comparison of all Darwin Core (DwC) terms that are present in both the ORIGINAL and NEW records, evaluating whether the NEW record contains better, worse, or the same kind of information for each shared term:\n\n---\n\n### 1. **dwc:scientificName**\n- **ORIGINAL**: Erysimum burnatii G. Vidal  \n- **NEW**: Erysimum tournetii Vidal  \n- **Assessment**: **Better**  \n  - The NEW record corrects or updates the scientificName. This may represent a taxonomic revision or correction. Provided the update reflects a modern or accepted revision, this is an improvement.\n\n---\n\n### 2. **dwc:identifiedBy**\n- **ORIGINAL**: S. Peccenini 2007-08-31  \n- **NEW**: S. Peccenini  \n- **Assessment**: **Worse**  \n  - The NEW record removes the date present in the ORIGINAL field, making the information less precise.\n\n---\n\n### 3. **dwc:dateIdentified**\n- **ORIGINAL**: not present  \n- **NEW**: 2007-08-31  \n- **Assessment**: **Better**  \n  - This is an improvement since it separates the identification date into its own proper field instead of combining it with the identifiedBy string.\n\n---\n\n### Summary of Shared Fields:\n\n| DwC Term             | Comparison | Comments |\n|----------------------|------------|----------|\n| dwc:scientificName   | Better     | Updated or corrected name |\n| dwc:identifiedBy     | Worse      | Loses specificity (missing date) |\n| dwc:dateIdentified   | Better     | Proper use of field, more structured information |\n\n---\n\n### Other Notes:\nThe NEW record contains significantly fewer terms overall. Many relevant fields such as location (`dwc:locality`), collector (`dwc:recordedBy`), specimen detail (`dwc:basisOfRecord`), coordinates, institution, and references are missing in the NEW record compared to the ORIGINAL. However, they were not directly compared since they appear only in the ORIGINAL."
+        }
+      },
+      {
+        "json": {
+          "text": "To compare the ORIGINAL and NEW Darwin Core (DwC) records and evaluate the quality of information for each shared term, we must identify all terms present in both records and then compare the values. Here's the evaluation of each common DwC term:\n\n### Terms present in both ORIGINAL and NEW records:\n\n1. **dwc:scientificName**  \n   - ORIGINAL: \"Trifolium rigidum Savi\"  \n   - NEW: \"Infuleniu nigellum\"  \n   - **Comparison**: Worse  \n     - The NEW value seems to be incorrectly spelled or fictitious (\"Infuleniu nigellum\" is not a recognized scientific name); the ORIGINAL provides a valid binomial with author attribution, which is more precise and taxonomically useful.\n\n2. **dwc:catalogNumber**  \n   - ORIGINAL: \"003931\"  \n   - NEW: \"387\"  \n   - **Comparison**: Worse  \n     - The catalog number in the NEW record is different and inconsistent with the ORIGINAL. Since this appears to be referring to the same record, a different catalog number could imply an error or misassociation.\n\n3. **dwc:recordNumber**  \n   - ORIGINAL: \"s.n.\"  \n   - NEW: \"003930\"  \n   - **Comparison**: Worse  \n     - \"s.n.\" stands for \"sine numero\" (no number), often used when a record lacks a collector-assigned number. While NEW gives a numeric value (\"003930\"), this might be a misattribution or suggests a record different from the ORIGINAL. Since these values don’t match and the NEW appears to assign a potentially erroneous number, the NEW data is judged worse.\n\n### Final Evaluation:\nThe NEW record contains **worse** information than the ORIGINAL for all shared terms:\n- **dwc:scientificName** – Worse  \n- **dwc:catalogNumber** – Worse  \n- **dwc:recordNumber** – Worse\n\nThe NEW record also includes significantly less information overall than the ORIGINAL, further reducing its utility and fidelity."
+        }
+      },
+      {
+        "json": {
+          "text": "Here is a comparison of the Darwin Core terms found in both the ORIGINAL and NEW records:\n\n---\n\n### 1. **dwc:scientificName**\n\n- **ORIGINAL:** Gastridium scabrum C. Presl\n- **NEW:** Gastidium scabrum Presl\n- **Comparison:** **Worse**  \n  The NEW record has a **misspelling** in the genus (\"Gastidium\" instead of \"Gastridium\") and omits the initial (\"C.\") from the authority, making it less accurate than the ORIGINAL.\n\n---\n\n### 2. **dwc:recordedBy**\n\n- **ORIGINAL:** Chambeiron s.n. [1859-06-10] Flora Galliae et Germaniae exsiccata de C. Billot. 2765|Chambeiron\n- **NEW:** Chambeiron\n- **Comparison:** **Worse**  \n  The NEW entry simplifies the recordedBy field, losing valuable collector information such as:\n  - Collector number (s.n.)\n  - Date ([1859-06-10])\n  - Source/series (\"Flora Galliae et Germaniae exsiccata...\")\n  - Additional reference (Billot)\n  The ORIGINAL record has significantly more detailed context.\n\n---\n\n### 3. **dwc:locality**\n\n- **ORIGINAL:** Champs incultes et siliceux, aux Sablettes à Toulon (Var)\n- **NEW:** Champs incultis et allioni, aux Sablettes à Toulon (Var)\n- **Comparison:** **Worse**  \n  The NEW version alters two terms:\n  - \"incultes\" → \"incultis\": Latinized or misspelled version\n  - \"siliceux\" → \"allioni\": unclear substitution, possibly a misinterpretation or error\n  Overall, the changes make the NEW version less accurate and harder to interpret, therefore it is worse.\n\n---\n\n### Summary of Terms Found in Both Records:\n\n| Term                | Comparison | Notes |\n|---------------------|------------|-------|\n| dwc:scientificName  | Worse      | Misspelling and missing authority initials in NEW |\n| dwc:recordedBy      | Worse      | Loss of detail/context in NEW |\n| dwc:locality        | Worse      | Altered terms possibly due to transcription errors or misinterpretation |\n\n---\n\n**Final Evaluation:** All overlapping fields in the NEW record are **worse** than in the ORIGINAL."
+        }
+      },
+      {
+        "json": {
+          "text": "Let's compare the Darwin Core terms present in both the ORIGINAL and NEW records and evaluate whether the information in the NEW record is better, worse, or the same:\n\n### Terms Present in Both Records:\n\n1. **dwc:scientificName**\n   - ORIGINAL: \"Trifolium rigidum Savi\"\n   - NEW: \"Infusorium xylidum\"\n   - **Evaluation**: **Worse**\n     - The two scientific names are completely different, indicating either a mistake in the NEW record or a misidentification. The original matches the family Fabaceae, which aligns with Trifolium. \"Infusorium xylidum\" is likely a protist, making this a worse or incorrect update.\n\n2. **dwc:recordNumber**\n   - ORIGINAL: \"s.n.\"\n   - NEW: \"003930, 003931\"\n   - **Evaluation**: **Better**\n     - The NEW record supplies actual catalog numbers, improving specificity over the undefined \"s.n.\" (sine numero, or \"without number\").\n\n3. **dwc:recordedBy**\n   - ORIGINAL: \"Sherard,W. s.n. [s.d.]|Sherard,W.\"\n   - NEW: \"ROMA-MARIO ETAL\"\n   - **Evaluation**: **Worse**\n     - The original contains historically traceable collector information (William Sherard), while the NEW has ambiguous or less formal attribution (\"ROMA-MARIO ETAL\").\n\n4. **dwc:locality**\n   - ORIGINAL: \"[...] Londra [...]\"\n   - NEW: \"Kejimbang, Udan Kongsi'ta\"\n   - **Evaluation**: **Worse**\n     - The locality has changed from London (United Kingdom) to what appears to be a Southeast Asian-sounding locality, inconsistent with the rest of the original metadata.\n\n---\n\n### Summary of Matched Terms and Evaluation:\n\n| Term                 | Evaluation |\n|----------------------|------------|\n| dwc:scientificName   | Worse      |\n| dwc:recordNumber     | Better     |\n| dwc:recordedBy       | Worse      |\n| dwc:locality         | Worse      |\n\n### Conclusion:\nOnly one aspect (record number) improved in the NEW version, while other key identifiers (scientific name, collector, and locality) have degraded or are inconsistent with the original context."
+        }
+      },
+      {
+        "json": {
+          "text": "Let's compare the fields (Darwin Core terms) that are present in both the ORIGINAL and NEW records. We will assess for each term whether the NEW record contains **better**, **worse**, or the **same** kind of information as in the ORIGINAL.\n\nOnly one term is shared by both records:\n\n---\n\n### 1. **dwc:scientificName**\n- **ORIGINAL**: \"Trifolium rigidum Savi\"\n- **NEW**: \"Infulium nicthem\"\n\n**Assessment**: **WORSE**\n\n- **Reason**: \"Trifolium rigidum Savi\" is a recognized scientific name in the Fabaceae family, attributed to a known authority (Savi).\n- \"Infulium nicthem\" does not appear to be a recognized or valid species name and may contain a typographical error or be fictitious. It lacks taxonomic verification and authority information.\n\n---\n\n### Summary\n\n| Darwin Core Term        | Comparison |\n|-------------------------|------------|\n| dwc:scientificName      | WORSE      |\n\n**Only one term is common in the NEW and ORIGINAL record, and its value is worse in the NEW version. All other information from the ORIGINAL record is missing in the NEW one.**"
+        }
+      },
+      {
+        "json": {
+          "text": "Based on the comparison between the ORIGINAL and NEW Darwin Core records:\n\nThe NEW record is completely empty:  \n**NEW: {}**\n\nThe ORIGINAL record has multiple Darwin Core (dwc), Dublin Core (dc), and GBIF terms filled with specific information. Since the NEW record contains **no information at all**, the data in the NEW record is unequivocally **worse** for all terms.\n\nHere is a detailed comparison for each term present in the ORIGINAL record:\n\n| Term                        | ORIGINAL Value                                                                                                                                                                         | NEW Value | Evaluation  |\n|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|-------------|\n| gbif:gbifID                | 2562093031                                                                                                                                                                              | —          | Worse       |\n| dc:identifier              | https://pi.jacq.org/PI003930                                                                                                                                                            | —          | Worse       |\n| dwc:country                | Italy                                                                                                                                                                                   | —          | Worse       |\n| dwc:collectionCode         | Herbarium Horti Botanici Pisani (PI)                                                                                                                                                    | —          | Worse       |\n| dwc:recordNumber           | s.n.                                                                                                                                                                                    | —          | Worse       |\n| dwc:locality               | “Scritto dal Prof.re Michelangiolo Tilli [manu Savi] \\| Trifoglio che fece portare il Sig.re Aff. Targioni in questo Giardino, e del quale Sig.re Micheli desidera il seme [manu Tilli] \\| Trifolium rigidum Flor. Pisana [manu Savi]” | —          | Worse       |\n| dwc:identifiedBy           | G. Savi s.d.                                                                                                                                                                             | —          | Worse       |\n| dwc:basisOfRecord          | PreservedSpecimen                                                                                                                                                                       | —          | Worse       |\n| dwc:catalogNumber          | 003930                                                                                                                                                                                  | —          | Worse       |\n| dwc:family                 | Fabaceae                                                                                                                                                                                | —          | Worse       |\n| dc:references              | https://pi.jacq.org/PI003930                                                                                                                                                            | —          | Worse       |\n| dwc:countryCode            | ITA                                                                                                                                                                                     | —          | Worse       |\n| dwc:typeStatus             | Lectotype                                                                                                                                                                               | —          | Worse       |\n| dwc:institutionCode        | PI                                                                                                                                                                                      | —          | Worse       |\n| dwc:recordedBy             | Targioni Tozzetti,G. s.n. [s.d.] \\| Targioni Tozzetti,G.                                                                                                                                | —          | Worse       |\n| gbif:typifiedName          | Trifolium rigidum Savi                                                                                                                                                                  | —          | Worse       |\n| dwc:scientificName         | Trifolium rigidum Savi                                                                                                                                                                  | —          | Worse       |\n\n**Conclusion:**\n- The NEW record lacks every field present in the ORIGINAL.\n- Therefore, for every listed term, the NEW record provides **worse** information than the ORIGINAL."
+        }
+      },
+      {
+        "json": {
+          "text": "We are comparing the Darwin Core (DwC) records term by term to assess whether the NEW record contains better, worse, or the same kind of information compared to the ORIGINAL. The evaluation is based on completeness, accuracy, granularity, and correctness of each value.\n\n### Terms Present in Both Records:\n\n---\n\n#### 1. **dwc:scientificName**\n- **ORIGINAL:** *Gastridium scabrum* C. Presl\n- **NEW:** *Gastridium ventricosum* Presl.\n- **Evaluation:** **Worse**\n  - The species name differs and appears less accurate in NEW. *Gastridium scabrum* is currently accepted by many sources, whereas *Gastridium ventricosum* might be an outdated synonym or identification error. Also, the author abbreviation is inconsistent.\n  \n---\n\n#### 2. **dwc:recordedBy**\n- **ORIGINAL:** Chambeiron s.n. [1859-06-10] Flora Galliae et Germaniae exsiccata de C. Billot. 2765 | Chambeiron\n- **NEW:** Jour Chamberlain\n- **Evaluation:** **Worse**\n  - \"Jour Chamberlain\" appears to be a misinterpretation or error (probably meant to be \"Chambeiron\"). The ORIGINAL has more detailed provenance and name.\n  \n---\n\n#### 3. **dwc:identifiedBy**\n- **ORIGINAL:** A. Scoppola (UTV) 2017-11-10\n- **NEW:** Krau Gerla\n- **Evaluation:** **Worse**\n  - The NEW value seems less accurate, possibly erroneous (no recognized identifier named \"Krau Gerla\"), and lacks institutional detail and the complete identification format. ORIGINAL includes full name, institution, and date.\n\n---\n\n#### 4. **dwc:locality**\n- **ORIGINAL:** Champs incultes et siliceux, aux Sablettes à Toulon (Var)\n- **NEW:** Champs incultes et allions, aux Sablettes à Toulon, Var, France\n- **Evaluation:** **Same**\n  - Both represent the same locality, expressed slightly differently. \"Siliceux\" vs. \"allions\" could be a data entry or OCR error. NEW adds \"France\" at the end, while ORIGINAL lists the département \"Var\" more formally. Overall, difference in form, not informational content.\n\n---\n\n#### 5. **dwc:dateIdentified / dwc:eventDate (split into year, month, day in NEW)**\n- **ORIGINAL (dwc:eventDate):** 1859-06-10  \n- **ORIGINAL (within dwc:identifiedBy):** 2017-11-10  \n- **NEW (dwc:year / month / day):** 1859 / 6 / 10  \n- **NEW (dwc:dateIdentified):** 2017-11-10  \n- **Evaluation:** **Same**\n  - The same date information is encoded differently. Splitting date into components is equivalent in expressive power. The identification date is consistent.\n\n---\n\n### Summary of Evaluation:\n\n| Term                   | Evaluation |\n|------------------------|------------|\n| dwc:scientificName     | Worse      |\n| dwc:recordedBy         | Worse      |\n| dwc:identifiedBy       | Worse      |\n| dwc:locality           | Same       |\n| dwc:dateIdentified     | Same       |\n| dwc:year/month/day     | Same       |\n\n---\n\n### Final Notes:\nIn general, the NEW record contains partial, less reliable, or possibly erroneous data compared to the more complete and accurate ORIGINAL record. Particularly, the taxonomy and collector name are downgraded in NEW."
+        }
+      },
+      {
+        "json": {
+          "text": "Here is a comparison of the dwc terms that appear in both the ORIGINAL and NEW records:\n\n1. **dwc:scientificName**\n   - ORIGINAL: \"Leucobryum juniperoideum\"\n   - NEW: \"Leucobryum juniperoideum (Brid.) Müll.Hal.\"\n   - **Judgment**: **Better** in NEW — the NEW record includes the scientific authorship as part of the scientific name, providing more complete taxonomic information.\n\n2. **dwc:recordNumber**\n   - ORIGINAL: \"41226\"\n   - NEW: \"41226\"\n   - **Judgment**: **Same** — exact match.\n\n3. **dwc:recordedBy**\n   - ORIGINAL: \"Kåre Arnstein Lye\"\n   - NEW: \"Kåre Arnstein Lye\"\n   - **Judgment**: **Same** — exact match.\n\n4. **dwc:country**\n   - ORIGINAL: \"Norway\"\n   - NEW: \"NORWAY\"\n   - **Judgment**: **Same** — same information, difference is only in letter case.\n\n5. **dwc:decimalLatitude**\n   - ORIGINAL: \"59.2367\" (as string)\n   - NEW: 59.2367 (as number)\n   - **Judgment**: **Same** — numerically identical; data type format difference is not significant in context.\n\n6. **dwc:decimalLongitude**\n   - ORIGINAL: \"11.0727\" (as string)\n   - NEW: \"11.0727\"\n   - **Judgment**: **Same** — exact match.\n\n7. **dwc:locality**\n   - ORIGINAL: \"Fredrikstad: Vetatoppen, austsida\"\n   - NEW: \"ØSTFOLD: FREDRIKSTAD\"\n   - **Judgment**: **Worse** in NEW — the ORIGINAL gives a more precise locality (\"Vetatoppen, austsida\"), while the NEW version generalizes the location to just the broader region.\n\n**Summary of judgments:**\n\n- **Better in NEW**: dwc:scientificName  \n- **Same**: dwc:recordNumber, dwc:recordedBy, dwc:country, dwc:decimalLatitude, dwc:decimalLongitude  \n- **Worse in NEW**: dwc:locality\n\nLet me know if you'd like an analysis of the terms found only in the ORIGINAL record."
+        }
+      },
+      {
+        "json": {
+          "text": "Here is a comparison of all Darwin Core (dwc) terms that are common to both the ORIGINAL and the NEW records. Each term is evaluated for whether the NEW version contains **better**, **worse**, or the **same** kind of information compared to the ORIGINAL version.\n\n---\n\n1. **dwc:scientificName**  \n   - ORIGINAL: \"Leucobryum juniperoideum\"  \n   - NEW: \"Leucobryum juniperoideum (Brid.) Müll. Hal.\"  \n   - ❖ **BETTER** — The NEW version includes the full scientific name with authorship, which gives more complete taxonomic information.\n\n2. **dwc:recordedBy**  \n   - Both: \"Kåre Arnstein Lye\"  \n   - ❖ **SAME**\n\n3. **dwc:identifiedBy**  \n   - Both: \"Kåre Arnstein Lye\"  \n   - ❖ **SAME**\n\n4. **dwc:decimalLatitude**  \n   - ORIGINAL: \"59.2367\" (as a string)  \n   - NEW: 59.2367 (as a number)  \n   - ❖ **SAME** — Slight difference in data type (string vs number), but same value.\n\n5. **dwc:decimalLongitude**  \n   - Both: \"11.0727\"  \n   - ❖ **SAME**\n\n6. **dwc:locality**  \n   - ORIGINAL: \"Fredrikstad: Vetatoppen, austsida\"  \n   - NEW: \"Norway, Østfold, Fredrikstad, Vetaoppen, austsida\"  \n   - ❖ **BETTER** — The NEW version expands the locality description to include country and administrative units, giving more precise context.\n\n7. **dwc:minimumElevationInMeters**  \n   - Both: 75  \n   - ❖ **SAME**\n\n---\n\nThe following terms appear **only in the ORIGINAL** and are therefore **missing** in the NEW record:\n\n- **dwc:country** (\"Norway\")\n- **dwc:habitat** (\"på trerot ved bratt berg\")\n- **dwc:collectionCode** (\"B\")\n- **dwc:year** (\"2015\")\n- **dwc:recordNumber** (\"41226\")\n- **dwc:basisOfRecord** (\"Preservedspecimen\")\n- **dwc:month** (\"2\")\n- **dwc:day** (\"20\")\n- **gbif:gbifID** (\"1837441286\")\n- **dwc:coordinateUncertaintyInMeters** (\"71\")\n- **dc:identifier** (\"urn:catalog:O:B:66376/1\")\n- **dwc:county** (\"Fredrikstad\") — not same as full locality\n- **dwc:scientificNameAuthorship** (\"(Brid.) Müll. Hal.\") — merged into dwc:scientificName in NEW\n- **dwc:catalogNumber** (\"66376/1\")\n- **dwc:institutionCode** (\"O\")\n- **dwc:geodeticDatum** (\"WGS84\")\n- **dwc:dateIdentified** (\"2015-02-20\")\n- **dwc:verbatimCoordinates** (\"PL 182,682\")\n\nThese are **losing information** in the NEW record.\n\nThe following term appears **only in the NEW** record:\n\n- **dwc:maximumElevationInMeters**: 75  \n  - ❖ **BETTER** — Adds completeness to the elevation data by including a range, even if min = max.\n\n- **dwc:verbatimElevation**: \"75 m\"  \n  - ❖ **BETTER** — Adds human-readable elevation, aiding understanding and data validation.\n\n---\n\n### Summary:\n\n- Terms with **better** information in NEW:  \n  - dwc:scientificName  \n  - dwc:locality  \n  - dwc:maximumElevationInMeters (new in NEW)  \n  - dwc:verbatimElevation (new in NEW)\n\n- Terms with **same** information:  \n  - dwc:recordedBy  \n  - dwc:identifiedBy  \n  - dwc:decimalLatitude  \n  - dwc:decimalLongitude  \n  - dwc:minimumElevationInMeters\n\n- Terms **missing** in NEW (worse):  \n  - Many terms including dwc:habitat, dwc:basisOfRecord, dwc:country, dwc:year, etc., as listed above.\n\nThe NEW version enhances taxonomic naming and locality details, and adds useful elevation info, but loses numerous valuable metadata elements present in the ORIGINAL."
+        }
+      },
+      {
+        "json": {
+          "text": "Here is a comparison of all Darwin Core terms (dwc terms) that appear in both the ORIGINAL and NEW records. For each term, I will judge whether the information in the NEW record is better, worse, or the same compared to the ORIGINAL record:\n\n### Terms found in both records:\n\n1. **dwc:scientificName**\n   - ORIGINAL: \"Leucobryum juniperoideum\"\n   - NEW: \"Harmonia axyridis\"\n   - 🔄 Judgment: **Same**\n   - 📝 Reasoning: Both provide a scientific name; neither is inherently better than the other — different species, both standard names.\n\n2. **dwc:catalogNumber**\n   - ORIGINAL: \"66376/1\"\n   - NEW: \"12345\"\n   - 🔄 Judgment: **Same**\n   - 📝 Reasoning: Both are valid specimen catalog numbers. Neither is more detailed; they differ in format and number.\n\n3. **dwc:recordedBy**\n   - ORIGINAL: \"Kåre Arnstein Lye\"\n   - NEW: \"John Doe\"\n   - 🔄 Judgment: **Same**\n   - 📝 Reasoning: Both include the full name of the recorder. The level of detail is equivalent.\n\n4. **dwc:year**\n   - ORIGINAL: 2015\n   - NEW: 2021\n   - 🔄 Judgment: **Same**\n   - 📝 Reasoning: Both are fully specified years. While different values, both carry the same type and level of information.\n\n5. **dwc:month**\n   - ORIGINAL: 2\n   - NEW: 6\n   - 🔄 Judgment: **Same**\n   - 📝 Reasoning: Same level of detail. Both are valid.\n\n6. **dwc:day**\n   - ORIGINAL: 20\n   - NEW: 15\n   - 🔄 Judgment: **Same**\n   - 📝 Reasoning: Same level of granularity. Just different values.\n\n7. **dwc:country**\n   - ORIGINAL: \"Norway\"\n   - NEW: \"United States\"\n   - 🔄 Judgment: **Same**\n   - 📝 Reasoning: Both records contain valid country names.\n\n8. **dwc:decimalLatitude**\n   - ORIGINAL: \"59.2367\"\n   - NEW: 34.0522\n   - 🔄 Judgment: **Same**\n   - 📝 Reasoning: Both have decimal latitude values with similar precision.\n\n9. **dwc:decimalLongitude**\n   - ORIGINAL: \"11.0727\"\n   - NEW: \"-118.2437\"\n   - 🔄 Judgment: **Same**\n   - 📝 Reasoning: Again, same level of detail.\n\n---\n\n### Summary of shared terms and their comparison:\n\n| Term                    | Judgment |\n|-------------------------|----------|\n| dwc:scientificName      | Same     |\n| dwc:catalogNumber       | Same     |\n| dwc:recordedBy          | Same     |\n| dwc:year                | Same     |\n| dwc:month               | Same     |\n| dwc:day                 | Same     |\n| dwc:country             | Same     |\n| dwc:decimalLatitude     | Same     |\n| dwc:decimalLongitude    | Same     |\n\n✅ All shared terms are judged to be of the **same** quality/type of information, just differing in content."
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-22T09:49:08.379Z",
+  "versionId": "89ead145-3013-422c-bbd6-306c6978c5c8"
+}
