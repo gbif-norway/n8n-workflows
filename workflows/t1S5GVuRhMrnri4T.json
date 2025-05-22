@@ -76,23 +76,7 @@
       "name": "When clicking ‘Test workflow’"
     },
     {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1F9zvo2qD9EZ4LdBRiVGxZXRn5B1ba7-4cP9Uaee74vg",
-          "mode": "list",
-          "cachedResultName": "AI4Specimen - DISSCo test exmaples",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1F9zvo2qD9EZ4LdBRiVGxZXRn5B1ba7-4cP9Uaee74vg/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1F9zvo2qD9EZ4LdBRiVGxZXRn5B1ba7-4cP9Uaee74vg/edit#gid=0"
-        },
-        "options": {}
-      },
+      "parameters": {},
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
@@ -219,8 +203,15 @@
     "executionOrder": "v1"
   },
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-05-22T12:12:10.306Z",
+      "updatedAt": "2025-05-22T12:12:10.306Z",
+      "id": "2pUeTgt6i4E0TLFj",
+      "name": "SPLAT"
+    }
+  ],
   "triggerCount": 0,
-  "updatedAt": "2025-05-21T14:05:55.188Z",
-  "versionId": "16f55304-52ae-408d-b1b4-34552305daa8"
+  "updatedAt": "2025-05-22T12:14:48.860Z",
+  "versionId": "97eb3e5e-a89b-44fe-aac5-ac28546fd562"
 }
