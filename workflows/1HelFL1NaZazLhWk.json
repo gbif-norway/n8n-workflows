@@ -1,0 +1,231 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Sort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-22T10:44:21.250Z",
+  "id": "1HelFL1NaZazLhWk",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "SPLAT model result aggregate",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6c9e59dc-a425-4e5a-9df0-9bb798690ca7",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH unpacked AS (\n  SELECT \n    model,\n    key,\n    value::jsonb AS val\n  FROM public.splat_models,\n  LATERAL jsonb_each(eval)\n),\nflattened AS (\n  SELECT \n    u.model,\n    u.key,\n    -- Remove prefix before colon from string, cast back to jsonb\n        to_jsonb(regexp_replace(regexp_replace(element::text, '^[^:]+:', ''), '\"', '', 'g')) AS cleaned_element\n  FROM unpacked u,\n  LATERAL jsonb_array_elements(u.val) AS element\n),\nreaggregated AS (\n  SELECT \n    model,\n    key,\n    jsonb_agg(DISTINCT cleaned_element) AS merged_array\n  FROM flattened\n  GROUP BY model, key\n)\nSELECT \n  model,\n  jsonb_object_agg(key, merged_array) AS merged_eval\nFROM reaggregated\nGROUP BY model;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "920ecb3b-be64-427f-9cc9-3872e7cb55ce",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "9Dpjwh2i1R7PMsSP",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b1faa1b6-97ed-4214-a0c0-ffb7f9d7c30b",
+              "name": "model",
+              "value": "={{ $json.model }}",
+              "type": "string"
+            },
+            {
+              "id": "940f6568-5f48-4bb5-b587-681ecb3cbcc3",
+              "name": "merged_eval",
+              "value": "={{ $json.merged_eval }}",
+              "type": "object"
+            },
+            {
+              "id": "f02d490e-b828-49f1-a538-2b3c84f0d7d4",
+              "name": "eval_num",
+              "value": "={{ $json.merged_eval.new_better.length - $json.merged_eval.new_worse.length }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        440,
+        0
+      ],
+      "id": "dfac6499-be9d-4991-a14c-e05900b3635d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "eval_num",
+              "order": "descending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        660,
+        0
+      ],
+      "id": "39327ea4-d65c-4e51-a9bd-bc1f98542045",
+      "name": "Sort"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1INtxDuPN3uYISMUGNbzoWoz9IAdvppD_vPGsdVT6QM0",
+          "mode": "list",
+          "cachedResultName": "SPLAT prompts condensed",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1INtxDuPN3uYISMUGNbzoWoz9IAdvppD_vPGsdVT6QM0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 923265267,
+          "mode": "list",
+          "cachedResultName": "model_compare",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1INtxDuPN3uYISMUGNbzoWoz9IAdvppD_vPGsdVT6QM0/edit#gid=923265267"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "eval_agg": "={{ $json.merged_eval }}",
+            "eval_num": "={{ $json.eval_num }}",
+            "model": "={{ $json.model }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "eval_agg",
+              "displayName": "eval_agg",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "eval_num",
+              "displayName": "eval_num",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        860,
+        -240
+      ],
+      "id": "4fcbc796-033c-4e84-8d5a-f388eb49aec3",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-22T10:48:00.227Z",
+  "versionId": "3a02ee3a-0fd1-494e-bd66-6ae266ca120d"
+}
