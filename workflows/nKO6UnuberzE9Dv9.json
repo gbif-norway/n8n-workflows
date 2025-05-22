@@ -19422,8 +19422,15 @@
     "errorWorkflow": "7MnksaFaiPR7iyVY"
   },
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-05-22T12:12:10.306Z",
+      "updatedAt": "2025-05-22T12:12:10.306Z",
+      "id": "2pUeTgt6i4E0TLFj",
+      "name": "SPLAT"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-22T04:00:58.967Z",
-  "versionId": "81254a70-0a52-4393-beba-abe6d5e58026"
+  "updatedAt": "2025-05-22T12:13:44.467Z",
+  "versionId": "c7229d18-4a0a-46ab-bd2f-ba3e5f286756"
 }
