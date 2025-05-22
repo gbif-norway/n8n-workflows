@@ -100,8 +100,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        80,
-        380
+        20,
+        360
       ],
       "id": "84ff03f2-7a8e-4f9b-a15d-1cea9c744a00",
       "name": "OpenAI Chat Model",
@@ -117,8 +117,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        320,
-        320
+        300,
+        380
       ],
       "id": "efed3da0-4110-4cac-9855-291f55bd3e3e",
       "name": "Simple Memory"
@@ -145,7 +145,7 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        620,
+        700,
         320
       ],
       "id": "1ca9b6eb-41bb-4d29-9744-ecd4ac80e432",
@@ -157,8 +157,15 @@
     "executionOrder": "v1"
   },
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-05-15T14:02:27.816Z",
+      "updatedAt": "2025-05-15T14:02:27.816Z",
+      "id": "8InhUicPRAEJuYeU",
+      "name": "GBIF"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-22T12:00:20.941Z",
-  "versionId": "d8cddaae-361b-4416-900f-5fce61f34890"
+  "updatedAt": "2025-05-22T12:57:03.298Z",
+  "versionId": "a3cc0351-cb78-41fa-8d78-fd6878643d3d"
 }
