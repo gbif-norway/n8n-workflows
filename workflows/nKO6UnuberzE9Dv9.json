@@ -19418,11 +19418,12 @@
     ]
   },
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
   },
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-05-22T01:11:39.886Z",
-  "versionId": "c43929d9-9a45-4044-ac88-de168023ae38"
+  "updatedAt": "2025-05-22T04:00:58.967Z",
+  "versionId": "81254a70-0a52-4393-beba-abe6d5e58026"
 }
