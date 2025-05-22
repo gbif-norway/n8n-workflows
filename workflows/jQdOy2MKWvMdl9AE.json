@@ -1,0 +1,278 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-22T08:41:21.064Z",
+  "id": "jQdOy2MKWvMdl9AE",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "SPLAT model evaluation",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        -495
+      ],
+      "id": "10645b52-1ad4-48a6-921d-3a3728ff0dbd",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "batchSize": 10,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -80,
+        -495
+      ],
+      "id": "61f29837-5a7a-4839-9ae8-3755b248624f",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "path": "5b731a7b-1512-4238-b0dd-aece697bac61",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -960,
+        -240
+      ],
+      "id": "ad25a89e-ea81-4c00-b2f4-862cb149cbde",
+      "name": "Webhook",
+      "webhookId": "5b731a7b-1512-4238-b0dd-aece697bac61",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -740,
+        -495
+      ],
+      "id": "be7ca529-b192-4475-a2d6-2b90c0fed7c9",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "RoklELltTZ66ta5S",
+          "mode": "list",
+          "cachedResultName": "SPLAT run model eval"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "gbif_key": "={{ $json['GBIF KEY'] }}",
+            "img_url": "={{ $json['Image URL'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "img_url",
+              "displayName": "img_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "gbif_key",
+              "displayName": "gbif_key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        140,
+        -570
+      ],
+      "id": "ae6a2030-7dc1-45cc-b5ec-7b257396ac28",
+      "name": "Execute Workflow",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        360,
+        -495
+      ],
+      "id": "d52ae2f2-32ec-49ab-98f2-0deff8d65ec5",
+      "name": "Wait",
+      "webhookId": "38495fe3-2e6f-4a16-a816-0d5c9992a620",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1F9zvo2qD9EZ4LdBRiVGxZXRn5B1ba7-4cP9Uaee74vg",
+          "mode": "list",
+          "cachedResultName": "AI4Specimen - DISSCo test exmaples",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1F9zvo2qD9EZ4LdBRiVGxZXRn5B1ba7-4cP9Uaee74vg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1F9zvo2qD9EZ4LdBRiVGxZXRn5B1ba7-4cP9Uaee74vg/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -540,
+        -500
+      ],
+      "id": "50f4960e-48da-438c-9bbb-1cc60d6bfc11",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "q0iQAvGFBFgqU0OX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 10
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -500
+      ],
+      "id": "5d08c4da-3bf6-4d8b-947c-31bb6ebdf97d",
+      "name": "Limit"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-22T09:40:02.462Z",
+  "versionId": "879d6ce2-2a11-4b72-8a2b-8923d713e1c5"
+}
