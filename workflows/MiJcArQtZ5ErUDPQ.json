@@ -102,8 +102,8 @@
     {
       "parameters": {
         "operation": "resize",
-        "width": 2000,
-        "height": 2000,
+        "width": 1000,
+        "height": 1000,
         "options": {}
       },
       "type": "n8n-nodes-base.editImage",
@@ -284,6 +284,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-05-22T15:55:11.868Z",
-  "versionId": "a216a717-b9bb-48b4-bf93-80341a64eddf"
+  "updatedAt": "2025-05-22T16:03:45.483Z",
+  "versionId": "ce5eb5cc-81e3-4188-8f94-97e9d0f1e37b"
 }
