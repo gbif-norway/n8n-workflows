@@ -1,0 +1,164 @@
+{
+  "active": true,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-22T11:47:44.721Z",
+  "id": "TWMhbSoYJRfuRsQJ",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "GBIF agent",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nI'm GBIF bot. Ask me anything about species and biodiversity",
+        "options": {
+          "subtitle": "",
+          "title": "GBIF Agent"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -60,
+        20
+      ],
+      "id": "754c7899-ea06-43cc-992d-aa39f69aead8",
+      "name": "When chat message received",
+      "webhookId": "d2e33105-b09e-4e2a-8cb5-a84c0e6b2491"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful assistant that specializes in biodiversity information and have access to variety of GBIF tools"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        300,
+        20
+      ],
+      "id": "6d9e0074-a2bd-4018-a2d4-585e887c1cac",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        380
+      ],
+      "id": "84ff03f2-7a8e-4f9b-a15d-1cea9c744a00",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "fVqq5tXe6fuAG0kz",
+          "name": "OpenAi account - NIN Helper"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        320
+      ],
+      "id": "efed3da0-4110-4cac-9855-291f55bd3e3e",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "toolDescription": "search for correct species names",
+        "url": "https://api.gbif.org/v1/species/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "datasetKey",
+              "value": "d7dddbf4-2cf0-4f39-9b2a-bb099caae36c"
+            },
+            {
+              "name": "q",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        620,
+        320
+      ],
+      "id": "1ca9b6eb-41bb-4d29-9744-ecd4ac80e432",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-22T12:00:20.941Z",
+  "versionId": "d8cddaae-361b-4416-900f-5fce61f34890"
+}
