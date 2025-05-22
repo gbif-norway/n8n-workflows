@@ -732,11 +732,12 @@
     ]
   },
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
   },
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-05-21T11:52:05.606Z",
-  "versionId": "86dc643e-e2a4-481e-9897-7386bfcf412a"
+  "updatedAt": "2025-05-22T04:00:58.975Z",
+  "versionId": "aa6a809a-5fe0-4fbb-ac32-2d684343d408"
 }
