@@ -224,8 +224,15 @@
     "executionOrder": "v1"
   },
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-05-22T12:12:10.306Z",
+      "updatedAt": "2025-05-22T12:12:10.306Z",
+      "id": "2pUeTgt6i4E0TLFj",
+      "name": "SPLAT"
+    }
+  ],
   "triggerCount": 0,
-  "updatedAt": "2025-05-22T10:48:00.227Z",
-  "versionId": "3a02ee3a-0fd1-494e-bd66-6ae266ca120d"
+  "updatedAt": "2025-05-22T12:12:34.673Z",
+  "versionId": "a1ca86eb-d8d3-44aa-8509-0b819907ec58"
 }
