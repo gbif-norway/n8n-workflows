@@ -1,0 +1,230 @@
+{
+  "active": true,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-23T10:39:35.453Z",
+  "id": "NXt3SoqrKYEhPvRg",
+  "meta": null,
+  "name": "Check main IPT publication success",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        -140
+      ],
+      "id": "127d1fc7-762a-4745-b780-48c116f7330c",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://ipt.gbif.no/api/resources",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "length",
+              "value": "10000"
+            },
+            {
+              "name": "start",
+              "value": "0"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -300,
+        -140
+      ],
+      "id": "4ea4134f-b55c-4687-9db1-5a3f1e17b620",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "aaData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -140
+      ],
+      "id": "47981b6f-5a3c-47e0-9759-0fa74c06af30",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8181bd6d-802f-4010-b0a7-eacd08ec7c27",
+              "leftValue": "={{ $json['7'] }}",
+              "rightValue": "<",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        140,
+        -140
+      ],
+      "id": "6196ec95-667c-4585-a934-5251cb0de45c",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "qOFpCaIBhvwBEqNt",
+          "mode": "list",
+          "cachedResultName": "Contact admin"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "message": "possible issue in IPT dataset publication"
+          },
+          "matchingColumns": [
+            "message"
+          ],
+          "schema": [
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        360,
+        -140
+      ],
+      "id": "c36a4e32-d715-451e-8c71-98cd550d9c51",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -540,
+        60
+      ],
+      "id": "c57b6611-69c5-4daa-96e8-b73abf746603",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2025-05-15T14:02:27.816Z",
+      "updatedAt": "2025-05-15T14:02:27.816Z",
+      "id": "8InhUicPRAEJuYeU",
+      "name": "GBIF"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-23T11:23:14.454Z",
+  "versionId": "a5bc2d7c-40c9-40e9-b694-ee183e818ca1"
+}
