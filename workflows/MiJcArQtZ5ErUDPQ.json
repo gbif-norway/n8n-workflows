@@ -123,7 +123,8 @@
           "messageValues": [
             {
               "type": "HumanMessagePromptTemplate",
-              "messageType": "imageBinary"
+              "messageType": "imageBinary",
+              "imageDetail": "high"
             }
           ]
         }
@@ -285,6 +286,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-05-23T04:00:24.834Z",
-  "versionId": "a95ebce1-d3f0-4db3-bad1-d055bf7db589"
+  "updatedAt": "2025-05-23T11:25:27.507Z",
+  "versionId": "f6d5f9cd-909a-446f-ada1-dbd470254231"
 }
