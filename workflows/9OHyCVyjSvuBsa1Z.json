@@ -1,7 +1,132 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Summarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize": {
+      "main": [
+        [
+          {
+            "node": "GitHub",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "GitHub1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
       "main": [
         [
           {
@@ -15,8 +140,10 @@
   },
   "createdAt": "2025-05-23T08:26:58.490Z",
   "id": "9OHyCVyjSvuBsa1Z",
-  "meta": null,
-  "name": "My workflow 2",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Check for duplicate datasets from Norway",
   "nodes": [
     {
       "parameters": {},
@@ -24,7 +151,7 @@
       "typeVersion": 1,
       "position": [
         -360,
-        0
+        -460
       ],
       "id": "29941aa4-0024-47d4-87cb-d9d1d8acf2e9",
       "name": "When clicking ‘Test workflow’"
@@ -32,25 +159,283 @@
     {
       "parameters": {
         "url": "https://api.gbif.org/v1/dataset/search?publishingCountry=NO",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "999999"
+            }
+          ]
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
         -140,
-        0
+        -360
       ],
       "id": "51635711-f3ba-4b7c-940a-616de7e6f1b4",
       "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "title",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        300,
+        -210
+      ],
+      "id": "7ea80c15-97da-481c-8a46-7098d453bd00",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "results",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        80,
+        -360
+      ],
+      "id": "65cf437b-4ff9-460c-8be2-3042b7babcd3",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "key",
+        "joinMode": "keepNonMatches",
+        "outputDataFrom": "input1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        520,
+        -285
+      ],
+      "id": "8f00cab2-12be-4abf-9331-a022766efbb5",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "title",
+        "outputDataFrom": "input1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        740,
+        -360
+      ],
+      "id": "3ffcdc9a-fad2-4418-b474-2d71e2ccbc59",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "append",
+              "field": "key"
+            }
+          ]
+        },
+        "fieldsToSplitBy": "title",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        -360
+      ],
+      "id": "88f69392-8e20-4dab-a394-c3d4e0e751df",
+      "name": "Summarize"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "repository",
+        "owner": {
+          "__rl": true,
+          "value": "gbif-norway",
+          "mode": "list",
+          "cachedResultName": "gbif-norway",
+          "cachedResultUrl": "https://github.com/gbif-norway"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "helpdesk",
+          "mode": "list",
+          "cachedResultName": "helpdesk",
+          "cachedResultUrl": "https://github.com/gbif-norway/helpdesk"
+        },
+        "returnAll": true,
+        "getRepositoryIssuesFilters": {
+          "state": "open"
+        }
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        1180,
+        -260
+      ],
+      "id": "d576aec8-9384-4073-90a9-bce12795f546",
+      "name": "GitHub",
+      "webhookId": "85d07c42-f3f0-41b1-98ba-088906491450",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "14PIUiK41wewjwbW",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cd73ab17-1d03-45e4-a6ab-e34d3c280ec5",
+              "name": "title",
+              "value": "=[n8n] Duplicate dataset - {{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "9c18af9e-c198-4c72-ae04-845ba7a675db",
+              "name": "issue",
+              "value": "=Dataset named `{{ $json.title }}` is published multiple times here:\n{{ $json.appended_key.map(el => `[https://www.gbif.org/dataset/${el}](https://www.gbif.org/dataset/${el})`).join('\\n') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1180,
+        -460
+      ],
+      "id": "87d21e88-d2d5-4e6d-b18f-ac4b4ddb0432",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "title",
+              "field2": "title"
+            }
+          ]
+        },
+        "joinMode": "keepNonMatches",
+        "outputDataFrom": "input1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1400,
+        -360
+      ],
+      "id": "b926b3b0-d557-43f7-b3e0-5ecc0ea5ad95",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "owner": {
+          "__rl": true,
+          "value": "gbif-norway",
+          "mode": "list",
+          "cachedResultName": "gbif-norway",
+          "cachedResultUrl": "https://github.com/gbif-norway"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "helpdesk",
+          "mode": "list",
+          "cachedResultName": "helpdesk",
+          "cachedResultUrl": "https://github.com/gbif-norway/helpdesk"
+        },
+        "title": "={{ $json.title }}",
+        "body": "={{ $json.issue }}",
+        "labels": [
+          {
+            "label": "n8n"
+          }
+        ],
+        "assignees": []
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        1620,
+        -360
+      ],
+      "id": "94c28aa0-563d-4fa7-90fe-78ce5130cf8a",
+      "name": "GitHub1",
+      "webhookId": "bfb4bc44-a5ec-48bd-a0ac-8f0fe25be7a0",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "14PIUiK41wewjwbW",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -360,
+        -260
+      ],
+      "id": "59999b0a-bfad-4608-85c0-9f1bbd07979b",
+      "name": "Schedule Trigger"
     }
   ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
-  "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-05-23T08:26:58.490Z",
-  "versionId": "41f26a7b-cb72-464b-90fd-f340f5dcd153"
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2025-05-15T14:02:27.816Z",
+      "updatedAt": "2025-05-15T14:02:27.816Z",
+      "id": "8InhUicPRAEJuYeU",
+      "name": "GBIF"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-23T10:35:55.147Z",
+  "versionId": "11f664d8-8781-434a-b740-75087244dd3e"
 }
