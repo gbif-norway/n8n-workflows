@@ -93,7 +93,7 @@
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2.2,
       "position": [
-        0,
+        -100,
         0
       ],
       "id": "d7f59a45-5d3e-4616-875c-123b5bd779cd",
@@ -267,7 +267,7 @@
       "parameters": {
         "operation": "completion",
         "completionTitle": "Done",
-        "completionMessage": "={{ $json }}",
+        "completionMessage": "={{ JSON.stringify($json.output) }}",
         "options": {}
       },
       "type": "n8n-nodes-base.form",
@@ -289,6 +289,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-05-24T13:56:01.770Z",
-  "versionId": "400fdf72-6740-4c57-b55e-eb59ae022ff9"
+  "updatedAt": "2025-05-24T14:45:09.538Z",
+  "versionId": "50cbb04e-08c6-4152-a5cd-50ddcc9b1ca4"
 }
