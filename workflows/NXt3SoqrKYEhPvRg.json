@@ -59,6 +59,7 @@
   },
   "createdAt": "2025-05-23T10:39:35.453Z",
   "id": "NXt3SoqrKYEhPvRg",
+  "isArchived": false,
   "meta": null,
   "name": "Check main IPT publication success",
   "nodes": [
