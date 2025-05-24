@@ -64,6 +64,7 @@
   },
   "createdAt": "2025-05-22T14:45:55.955Z",
   "id": "MiJcArQtZ5ErUDPQ",
+  "isArchived": false,
   "meta": {
     "templateCredsSetupCompleted": true
   },
@@ -104,7 +105,10 @@
         "operation": "resize",
         "width": 1000,
         "height": 1000,
-        "options": {}
+        "options": {
+          "format": "jpeg",
+          "quality": 40
+        }
       },
       "type": "n8n-nodes-base.editImage",
       "typeVersion": 1,
@@ -123,8 +127,7 @@
           "messageValues": [
             {
               "type": "HumanMessagePromptTemplate",
-              "messageType": "imageBinary",
-              "imageDetail": "high"
+              "messageType": "imageBinary"
             }
           ]
         }
@@ -286,6 +289,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-05-23T11:25:27.507Z",
-  "versionId": "f6d5f9cd-909a-446f-ada1-dbd470254231"
+  "updatedAt": "2025-05-24T13:56:01.770Z",
+  "versionId": "400fdf72-6740-4c57-b55e-eb59ae022ff9"
 }
