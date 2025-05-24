@@ -229,6 +229,7 @@
   },
   "createdAt": "2025-05-07T17:29:05.246Z",
   "id": "UOWENx6VOYVNGI5x",
+  "isArchived": false,
   "meta": {
     "templateCredsSetupCompleted": true
   },
@@ -714,12 +715,14 @@
   "pinData": {},
   "settings": {
     "executionOrder": "v1",
-    "errorWorkflow": "7MnksaFaiPR7iyVY"
+    "errorWorkflow": "7MnksaFaiPR7iyVY",
+    "saveDataSuccessExecution": "none",
+    "callerPolicy": "workflowsFromSameOwner"
   },
   "staticData": {
     "node:Schedule Trigger": {
       "recurrenceRules": [
-        8
+        10
       ]
     }
   },
@@ -738,6 +741,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-07T17:39:05.895Z",
-  "versionId": "8f59e62f-f702-4094-ae5c-ba6b3af28cd9"
+  "updatedAt": "2025-05-24T13:32:25.794Z",
+  "versionId": "b0e88028-0395-479f-b3f7-6b692a6ee9c2"
 }
