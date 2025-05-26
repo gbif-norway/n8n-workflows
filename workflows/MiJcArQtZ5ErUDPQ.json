@@ -68,7 +68,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "My workflow",
+  "name": "SpLAT form",
   "nodes": [
     {
       "parameters": {
@@ -287,8 +287,21 @@
     "errorWorkflow": "7MnksaFaiPR7iyVY"
   },
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-02-07T11:28:34.687Z",
+      "updatedAt": "2025-02-07T11:28:34.687Z",
+      "id": "Sn2wVYnm6ddfUJBf",
+      "name": "DISSCo"
+    },
+    {
+      "createdAt": "2025-05-15T14:02:27.816Z",
+      "updatedAt": "2025-05-15T14:02:27.816Z",
+      "id": "8InhUicPRAEJuYeU",
+      "name": "GBIF"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-24T14:45:09.538Z",
-  "versionId": "50cbb04e-08c6-4152-a5cd-50ddcc9b1ca4"
+  "updatedAt": "2025-05-26T10:59:23.246Z",
+  "versionId": "3df7721f-84e4-4ee4-a196-e0ff0efc57ba"
 }
