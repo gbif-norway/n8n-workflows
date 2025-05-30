@@ -157,8 +157,8 @@
     {
       "parameters": {
         "url": "https://api.digitalocean.com/v2/customers/my/invoices",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "digitalOceanApi",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -173,6 +173,10 @@
         "digitalOceanApi": {
           "id": "be8cVxjUdOlTFFwu",
           "name": "Digital Ocean gbif-norway account"
+        },
+        "httpBearerAuth": {
+          "id": "ygb2H3WjbeFQ8dZs",
+          "name": "Bearer Auth DO - gbif-norway"
         }
       }
     },
@@ -558,6 +562,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-16T04:00:15.778Z",
-  "versionId": "708656b1-7b87-4ae4-8907-650d535fdf41"
+  "updatedAt": "2025-05-30T12:51:39.934Z",
+  "versionId": "169fbbaa-f6da-4da5-8c22-194297ae6f04"
 }
