@@ -157,8 +157,8 @@
     {
       "parameters": {
         "url": "https://api.digitalocean.com/v2/customers/my/invoices",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "digitalOceanApi",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -173,6 +173,10 @@
         "digitalOceanApi": {
           "id": "dOKJkncNBo7acEFZ",
           "name": "Digital Ocean NIE account"
+        },
+        "httpBearerAuth": {
+          "id": "i1JGzeTHKG4xCmrt",
+          "name": "Bearer Auth DO - NIE"
         }
       }
     },
@@ -559,6 +563,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-22T12:15:35.644Z",
-  "versionId": "b4eb6fe9-7714-4f22-8918-afe6556769e8"
+  "updatedAt": "2025-05-30T12:53:26.175Z",
+  "versionId": "86b0cbcb-eda5-4c46-89bd-3b570803b49c"
 }
