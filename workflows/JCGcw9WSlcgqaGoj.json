@@ -211,8 +211,8 @@
     {
       "parameters": {
         "url": "=https://api.digitalocean.com/v2/customers/my/invoices/{{ $json.invoice_uuid }}/pdf",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "digitalOceanApi",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -227,6 +227,10 @@
         "digitalOceanApi": {
           "id": "dOKJkncNBo7acEFZ",
           "name": "Digital Ocean NIE account"
+        },
+        "httpBearerAuth": {
+          "id": "i1JGzeTHKG4xCmrt",
+          "name": "Bearer Auth DO - NIE"
         }
       }
     },
@@ -544,7 +548,25 @@
       "name": "Schedule Trigger"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Schedule Trigger": [
+      {
+        "json": {
+          "timestamp": "2025-06-02T10:00:32.023-04:00",
+          "Readable date": "June 2nd 2025, 10:00:32 am",
+          "Readable time": "10:00:32 am",
+          "Day of week": "Monday",
+          "Year": "2025",
+          "Month": "June",
+          "Day of month": "02",
+          "Hour": "10",
+          "Minute": "00",
+          "Second": "32",
+          "Timezone": "America/New_York (UTC-04:00)"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1",
     "errorWorkflow": "7MnksaFaiPR7iyVY"
@@ -563,6 +585,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-05-30T12:53:26.175Z",
-  "versionId": "86b0cbcb-eda5-4c46-89bd-3b570803b49c"
+  "updatedAt": "2025-06-02T22:27:42.121Z",
+  "versionId": "227d441f-fe62-4404-900c-68608c2687a7"
 }
