@@ -1065,11 +1065,12 @@
     ]
   },
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "errorWorkflow": "7MnksaFaiPR7iyVY"
   },
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-06-16T01:57:29.029Z",
-  "versionId": "80e7efb2-660a-4407-a7c1-9a98b8ac5ddf"
+  "updatedAt": "2025-06-16T04:00:34.398Z",
+  "versionId": "7c6dcfc8-b488-4d1d-bf53-0eaeedb1e1bd"
 }
