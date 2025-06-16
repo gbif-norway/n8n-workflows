@@ -499,7 +499,7 @@
           "assignments": [
             {
               "id": "c53cd9f9-77c1-4331-98ff-bfc9bdf95a3c",
-              "name": "content",
+              "name": "text",
               "type": "string",
               "value": "={{ $('WhatsApp Trigger').item.json.messages[0].text.body }}"
             }
@@ -1041,6 +1041,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-06-16T07:33:46.311Z",
-  "versionId": "75553a4d-ae61-4232-91aa-4ce284312e30"
+  "updatedAt": "2025-06-16T09:22:23.343Z",
+  "versionId": "b1ee31ce-8877-44af-b44f-69b7c817ca4a"
 }
