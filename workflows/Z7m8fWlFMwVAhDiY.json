@@ -31,7 +31,7 @@
   },
   "createdAt": "2025-05-12T12:40:05.440Z",
   "id": "Z7m8fWlFMwVAhDiY",
-  "isArchived": false,
+  "isArchived": true,
   "meta": {
     "templateCredsSetupCompleted": true
   },
@@ -171,6 +171,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-05-13T20:49:20.757Z",
-  "versionId": "8ff544fb-9b77-4d5b-87ac-af9c44baf000"
+  "updatedAt": "2025-06-16T00:05:23.866Z",
+  "versionId": "3998afa7-1666-491a-a160-4fcac84b1586"
 }
