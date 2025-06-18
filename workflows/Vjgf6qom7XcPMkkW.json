@@ -3,13 +3,7 @@
   "connections": {
     "When clicking ‘Execute workflow’": {
       "main": [
-        [
-          {
-            "node": "WhatsApp Business Cloud",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     }
   },
@@ -31,30 +25,6 @@
       ],
       "id": "5214e416-c72d-4414-b5e5-d64e816617a3",
       "name": "When clicking ‘Execute workflow’"
-    },
-    {
-      "parameters": {
-        "operation": "send",
-        "phoneNumberId": "637663046095527",
-        "recipientPhoneNumber": "+4796694778",
-        "textBody": "test",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1,
-      "position": [
-        -80,
-        -140
-      ],
-      "id": "07945c6e-eea8-40d0-9028-960d56aad084",
-      "name": "WhatsApp Business Cloud",
-      "webhookId": "4ad84eae-6c8b-4a77-9593-b3f938313483",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "2fF8n5nPmjxVyoOj",
-          "name": "WhatsApp account"
-        }
-      }
     }
   ],
   "pinData": {},
@@ -64,6 +34,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-06-15T23:53:37.335Z",
-  "versionId": "c1a5028e-d414-4245-b79e-6e87e70ddee3"
+  "updatedAt": "2025-06-17T22:21:37.051Z",
+  "versionId": "1ff41ff9-9dea-4736-b4fa-138c761b9c01"
 }
