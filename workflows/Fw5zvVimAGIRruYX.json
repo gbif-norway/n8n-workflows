@@ -728,7 +728,7 @@
     },
     {
       "parameters": {
-        "modelName": "models/gemini-2.5-flash-preview-04-17",
+        "modelName": "models/gemini-2.5-flash",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
@@ -907,8 +907,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1140,
-        -690
+        1220,
+        -580
       ],
       "id": "a24e9a3c-c782-43e2-87df-1a6ca604dd3b",
       "name": "User free question",
@@ -935,9 +935,9 @@
         "operation": "analyze",
         "modelId": {
           "__rl": true,
-          "value": "chatgpt-4o-latest",
+          "value": "gpt-4o",
           "mode": "list",
-          "cachedResultName": "CHATGPT-4O-LATEST"
+          "cachedResultName": "GPT-4O"
         },
         "text": "=Analyze the provided image of a natural or semi-natural site in Norway. Your task is to generate a concise, objective, and ecologically focused description of the site *strictly based on visible elements in the image*. This description will be used by another AI for ecological classification according to the NiN 3.0 system.\nFocus on providing factual observations relevant to habitat characteristics. Do not interpret beyond what is directly visible or infer conditions that are not clearly evident.\nProvide the description as a bulleted list with the following headings. If a characteristic is not clearly discernible from the image, state 'Not clearly visible' or 'Cannot determine from image'.\n- **General Environment:** (e.g., Terrestrial, Freshwater body, Freshwater bottom, Marine body, Marine bottom, Snow/Ice) - Choose the most dominant.\n- **Substrate Type:** Describe the dominant substrate(s) visible. (e.g., Bare bedrock, Mineral soil, Peat, Sand, Gravel, Stones, Boulders, Mud/Silt, Fine organic material). If loose mineral sediment, note the dominant particle size if discernible.\n- **Moisture/Water Presence:** Describe the visible water regime. (e.g., Dry, Moist ground, Standing water/Waterlogged, Running water/Stream, Submerged, Signs of temporary flooding). Note if a distinct water source (like a spring) is visible.\n- **Vegetation Structure:** Describe the overall structure of the vegetation. (e.g., Open ground with sparse vegetation, Dense low vegetation (like heath or grassland), Forest (specify dominant tree type if possible, e.g., coniferous, deciduous), Wetland vegetation (e.g., moss carpet, tussocks, reeds), Aquatic vegetation).\n- **Dominant Plant Growth Forms:** List the most visibly dominant plant groups. (e.g., Trees, Shrubs, Dwarf shrubs, Grasses, Sedges, Herbs/Forbs, Mosses, Lichens, Algae). Estimate rough relative cover if possible (e.g., 'Dwarf shrubs (~60%), Mosses (~20%), Grasses (~10%)').\n- **Identifiable Plant Species:** List any plant species that are clearly identifiable from the image by their form, color, or other visible features. Use scientific or common names if known. (e.g., 'Calluna vulgaris', 'Sphagnum mosses').\n- **Surface Features/Topography:** Note prominent physical features. (e.g., Flat, Sloping, Steep, Boulders/Rocks on surface, Hummocky, Patterned ground, Dunes, Cliffs, Caves/Overhangs). Note slope angle if estimable.\n- **Exposure:** Describe visual clues related to exposure to elements. (e.g., Appears exposed to wind/waves, Appears sheltered).\n- **Signs of Natural Disturbance:** Note visible evidence of recent natural processes. (e.g., Landslide debris, Erosion patterns, Flood deposits).\n- **Signs of Human Influence/Management:** Note visible evidence of human activity. (e.g., Grazing, Mowing, Ditching, Cultivation, Tracks, Built structures, Logging).\n- **Other Notable Features:** Include anything else ecologically relevant visible in the image. (e.g., Permanent snow patches, Ice features, Bird concentrations, Animal tracks).\nEnsure the output is purely descriptive and uses the specified bullet point format.\"\n\n{{ \"NOTE FROM THE USER: \" + $('Telegram Trigger').item.json.message?.text ?? '' }}",
         "inputType": "base64",
@@ -1716,6 +1716,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-06-17T23:22:29.253Z",
-  "versionId": "ce37ccc3-0133-477b-8a8d-0b59df3dc022"
+  "updatedAt": "2025-06-20T09:28:47.906Z",
+  "versionId": "8219ee25-8bc2-42f6-afad-e2c711230284"
 }
