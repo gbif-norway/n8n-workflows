@@ -16,7 +16,7 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "Filter",
             "type": "main",
             "index": 0
           }
@@ -28,7 +28,7 @@
         [],
         [
           {
-            "node": "Summarization Chain",
+            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
@@ -63,6 +63,28 @@
           {
             "node": "Summarization Chain",
             "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Summarization Chain",
+            "type": "main",
             "index": 0
           }
         ]
@@ -131,7 +153,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        340,
+        560,
         -160
       ],
       "id": "3732126c-93d0-4c76-aaa9-04cf5b14483a",
@@ -143,7 +165,7 @@
       "name": "Replace Me",
       "typeVersion": 1,
       "position": [
-        1060,
+        1940,
         -140
       ],
       "id": "fe27fe5c-dfcd-4a58-b22f-2c5bbacd6e94"
@@ -156,8 +178,8 @@
       "type": "@n8n/n8n-nodes-langchain.chainSummarization",
       "typeVersion": 2.1,
       "position": [
-        700,
-        -160
+        1600,
+        -140
       ],
       "id": "6018bb7b-dba1-4cf7-ae70-9839bf3498e8",
       "name": "Summarization Chain",
@@ -172,11 +194,58 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1,
       "position": [
-        820,
+        1700,
         280
       ],
       "id": "7a3f9b59-0ddf-446c-a59b-8d71c380629e",
       "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "77d39c3a-aa1c-4aec-92e1-1d904b042962",
+              "leftValue": "={{ $json.comments }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        160,
+        -140
+      ],
+      "id": "dae5c1ec-2cd3-4309-8689-4526e5d003db",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.comments_url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        800,
+        -140
+      ],
+      "id": "db8188d6-4570-451d-8c51-752becb14901",
+      "name": "HTTP Request"
     }
   ],
   "pinData": {},
@@ -186,6 +255,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-06-29T23:40:29.692Z",
-  "versionId": "6037a17f-8a69-4193-97d5-ad75e558b7a3"
+  "updatedAt": "2025-06-30T08:14:02.175Z",
+  "versionId": "615ad632-1098-447b-bbb2-0cb40bda7140"
 }
