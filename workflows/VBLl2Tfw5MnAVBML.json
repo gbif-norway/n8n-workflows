@@ -1,0 +1,191 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Summarization Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarization Chain": {
+      "main": [
+        [
+          {
+            "node": "Replace Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Summarization Chain",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-29T22:32:47.169Z",
+  "id": "VBLl2Tfw5MnAVBML",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Get GBIF knowledge base",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -380,
+        0
+      ],
+      "id": "54af2e69-0243-4c00-bc1c-610522932ef5",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "repository",
+        "owner": {
+          "__rl": true,
+          "value": "gbif",
+          "mode": "list",
+          "cachedResultName": "gbif",
+          "cachedResultUrl": "https://github.com/gbif"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "portal-feedback",
+          "mode": "list",
+          "cachedResultName": "portal-feedback",
+          "cachedResultUrl": "https://github.com/gbif/portal-feedback"
+        },
+        "getRepositoryIssuesFilters": {}
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        -60,
+        -140
+      ],
+      "id": "0885cfb8-fd15-4c52-baf2-48d33ee21179",
+      "name": "GitHub",
+      "webhookId": "02d4be0a-cac4-4882-b721-c138041d2386",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "14PIUiK41wewjwbW",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        340,
+        -160
+      ],
+      "id": "3732126c-93d0-4c76-aaa9-04cf5b14483a",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        -140
+      ],
+      "id": "fe27fe5c-dfcd-4a58-b22f-2c5bbacd6e94"
+    },
+    {
+      "parameters": {
+        "operationMode": "documentLoader",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainSummarization",
+      "typeVersion": 2.1,
+      "position": [
+        700,
+        -160
+      ],
+      "id": "6018bb7b-dba1-4cf7-ae70-9839bf3498e8",
+      "name": "Summarization Chain",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $('GitHub').item.json.body }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        820,
+        280
+      ],
+      "id": "7a3f9b59-0ddf-446c-a59b-8d71c380629e",
+      "name": "Default Data Loader"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-29T23:40:29.692Z",
+  "versionId": "6037a17f-8a69-4193-97d5-ad75e558b7a3"
+}
