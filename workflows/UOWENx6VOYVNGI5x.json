@@ -722,22 +722,22 @@
   "staticData": {
     "node:Schedule Trigger": {
       "recurrenceRules": [
-        0
+        2
       ]
     }
   },
   "tags": [
     {
-      "createdAt": "2025-02-07T11:28:26.663Z",
-      "updatedAt": "2025-02-07T11:28:26.663Z",
-      "id": "g8oSFBAe80JqymS9",
-      "name": "production"
-    },
-    {
       "createdAt": "2025-04-10T17:13:54.372Z",
       "updatedAt": "2025-04-10T17:13:54.372Z",
       "id": "DV4EPZYl9AgHRDON",
       "name": "tools"
+    },
+    {
+      "createdAt": "2025-02-07T11:28:26.663Z",
+      "updatedAt": "2025-02-07T11:28:26.663Z",
+      "id": "g8oSFBAe80JqymS9",
+      "name": "production"
     }
   ],
   "triggerCount": 1,
