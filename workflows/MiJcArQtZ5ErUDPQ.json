@@ -289,16 +289,16 @@
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-02-07T11:28:34.687Z",
-      "updatedAt": "2025-02-07T11:28:34.687Z",
-      "id": "Sn2wVYnm6ddfUJBf",
-      "name": "DISSCo"
-    },
-    {
       "createdAt": "2025-05-15T14:02:27.816Z",
       "updatedAt": "2025-05-15T14:02:27.816Z",
       "id": "8InhUicPRAEJuYeU",
       "name": "GBIF"
+    },
+    {
+      "createdAt": "2025-02-07T11:28:34.687Z",
+      "updatedAt": "2025-02-07T11:28:34.687Z",
+      "id": "Sn2wVYnm6ddfUJBf",
+      "name": "DISSCo"
     }
   ],
   "triggerCount": 1,
